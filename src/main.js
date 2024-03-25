@@ -11,3 +11,5 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsIm
 export const client = supabase.createClient(supabaseUrl, supabaseKey)
 
 console.log({client})
+
+export const __swc = {client}

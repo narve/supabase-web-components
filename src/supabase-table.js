@@ -11,6 +11,7 @@ export class SupabaseTable extends SWCElement {
         // The default disables shadow-dom, enabling global CSS to affect components
         shadow: {},
         hitsPrPage: {},
+        sourceDisplay: {},
 
         // Internal:
         order: {state: true},

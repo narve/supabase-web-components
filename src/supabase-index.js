@@ -1,5 +1,5 @@
 import {LitElement, css, html} from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
-import {client} from './main.js'
+import {__swc as swc, client} from './main.js'
 import {SupabaseTable} from "./supabase-table.js";
 import {SWCElement} from "./SWCElement.js";
 
@@ -10,6 +10,8 @@ export class SupabaseIndex extends SWCElement {
     static properties = {
         sources: {},
         source: {},
+
+        api: {state: true},
     };
 
     constructor() {
@@ -39,10 +41,11 @@ export class SupabaseIndex extends SWCElement {
 
     connectedCallback() {
         super.connectedCallback()
-        client.from("").select().then(({data, error}) => {
+        swc.client.from("").select().then(({data, error}) => {
             if (error) {
                 console.error(error)
             } else {
+                swc.api = data
                 console.log({paths: data.paths})
                 const sources = Object.getOwnPropertyNames(data.paths)
                     .filter(s => s !== '/')
