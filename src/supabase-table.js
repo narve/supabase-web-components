@@ -1,6 +1,7 @@
 import {LitElement, css, html, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/dist@3.1.2/all/lit-all.min.js';
 import {__swc as swc} from './main.js'
 import {SWCElement} from "./SWCElement.js";
+import {showToastMessage, toastTypes} from "./toast.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
@@ -39,12 +40,12 @@ export class SupabaseTable extends SWCElement {
     connectedCallback() {
         super.connectedCallback();
         window.addEventListener('supabase-source-selected',
-                e => this._handleSourceSelected(e));
+            e => this._handleSourceSelected(e));
     }
 
     disconnectedCallback() {
         window.removeEventListener('supabase-source-selected',
-                e =>this._handleSourceSelected(e));
+            e => this._handleSourceSelected(e));
         super.disconnectedCallback();
     }
 
@@ -65,25 +66,36 @@ export class SupabaseTable extends SWCElement {
 
 
     _fetch = async () => {
+        if (!this.source)
+            return
+
         const response = await swc.client
             .from(this.source)
             .select('*', {count: 'exact'})
             .range(this.range[0], this.range[1])
             .order(this.order.column, {ascending: this.order.ascending})
-        console.log('response: ', response)
+
         const {data, error, count} = response
 
-        // This should trigger an re-render:
-        this.data = data
-        this.count = count
+        if (error) {
+            showToastMessage(toastTypes.error, "Error", error.message, 3000)
+
+        } else {
+            // This should trigger an re-render:
+            this.data = data
+            this.count = count
+
+            const msg = `${this.source} (${this.data.length} of ${count} items)`
+            showToastMessage(toastTypes.info, 'Fetched', msg)
+        }
     }
 
     _rows() {
-        if(!this.source)
+        if (!this.source)
             return this._noRows('No source selected')
-        else if(!this.data)
+        else if (!this.data)
             return this._noRows('No data')
-        else if(!this.data[0])
+        else if (!this.data[0])
             return this._noRows('No rows')
         return this.data.map(row => this._row(row))
     }
@@ -141,9 +153,12 @@ export class SupabaseTable extends SWCElement {
     }
 
     _paginationRow() {
+        if(!this.data)
+            return ""
         return html`
             <td colspan="99">
-                ${Math.min(this.count, this.range[0] + 1)}-${Math.min(this.range[1] + 1, this.count)} of ${this.count} rows
+                ${Math.min(this.count, this.range[0] + 1)}-${Math.min(this.range[1] + 1, this.count)} of ${this.count}
+                rows
                 <span style=${styleMap(this.buttonStyles)}>
                     <button @click="${() => this._prev()}">&lt;</button>
                     <button @click="${() => this._next()}">&gt;</button>

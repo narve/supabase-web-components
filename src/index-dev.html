@@ -5,16 +5,20 @@
     <meta charset="UTF-8">
     <title>SWC-DEV</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<!--    <script type="module" src="https://cdn.jsdelivr.net/npm/cb-toast@1.0.2/dist/cb-toast/cb-toast.esm.js"></script>-->
+
+
     <script src="main.js" type="module"></script>
     <script src="supabase-table.js" type="module"></script>
     <script src="supabase-index.js" type="module"></script>
     <script src="supabase-site.js" type="module"></script>
+    <script src="supabase-auth.js" type="module"></script>
+    <script src="toast.js" type="module"></script>
 
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://unpkg.com/chimeracss/build/chimera.css"
-    />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/chimeracss/build/chimera.css"/>
+
+
 
     <style>
         li {
@@ -39,6 +43,9 @@
 </head>
 
 <body>
+
+<cb-toast></cb-toast>
+
 
 <supabase-site></supabase-site>
 
