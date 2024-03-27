@@ -3,7 +3,7 @@ import {LitElement, css, html, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/d
 export class SWCElement extends LitElement {
     createRenderRoot() {
         // return super.createRenderRoot()
-        console.log(`SWCElement::${this.constructor.name} createRenderRoot`, {shadow: this.shadow})
+        // console.log(`SWCElement::${this.constructor.name} createRenderRoot`, {shadow: this.shadow})
 
         return (this.shadow || this.shadow === "")
             ? super.createRenderRoot()
@@ -11,6 +11,6 @@ export class SWCElement extends LitElement {
     }
     connectedCallback() {
         super.connectedCallback()
-        console.log(`SWCElement::${this.constructor.name}  connectedCallback`, { shadow: this.shadow})
+        // console.log(`SWCElement::${this.constructor.name}  connectedCallback`, { shadow: this.shadow})
     }
 }

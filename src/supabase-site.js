@@ -9,10 +9,11 @@ export class SupabaseSite extends SWCElement {
 
     render() {
         return html`
-            <h1>Supabase</h1>
+            <h1>Supabase 2</h1>
             <supabase-auth></supabase-auth>
             <supabase-index></supabase-index>
             <supabase-table></supabase-table>
+            <supabase-item></supabase-item>
         `
     }
 }

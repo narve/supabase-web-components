@@ -2,6 +2,7 @@ import {LitElement, css, html, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/d
 import {__swc as swc} from './main.js'
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
+import {SourceSelected} from "./events.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
@@ -23,7 +24,7 @@ export class SupabaseTable extends SWCElement {
 
     constructor() {
         super();
-        console.log('SupabaseTable constructor', {source: this.source, shadow: this.shadow})
+        // console.log('SupabaseTable constructor', {source: this.source, shadow: this.shadow})
         // Declare reactive properties
         this.order = {
             column: 'id',
@@ -39,12 +40,12 @@ export class SupabaseTable extends SWCElement {
 
     connectedCallback() {
         super.connectedCallback();
-        window.addEventListener('supabase-source-selected',
+        window.addEventListener(SourceSelected,
             e => this._handleSourceSelected(e));
     }
 
     disconnectedCallback() {
-        window.removeEventListener('supabase-source-selected',
+        window.removeEventListener(SourceSelected,
             e => this._handleSourceSelected(e));
         super.disconnectedCallback();
     }
@@ -166,6 +167,10 @@ export class SupabaseTable extends SWCElement {
             </td>`
     }
 
+    _newItem() {
+
+    }
+
     render() {
         return html`
             <div class="supabase-table" part="container">
@@ -174,9 +179,14 @@ export class SupabaseTable extends SWCElement {
                     <tr>
                         <th colspan="99">
                             Table: ${this.source}
-                            <button style=${styleMap(this.buttonStyles)} class="reload" @click="${() => this._fetch()}">
-                                &#x21BB;
-                            </button>
+                            <div style=${styleMap(this.buttonStyles)} class="reload">
+                                <button style=${styleMap(this.buttonStyles)} class="reload" @click="${() => this._newItem()}">
+                                    &plus;
+                                </button>
+                                <button style=${styleMap(this.buttonStyles)} class="reload" @click="${() => this._fetch()}">
+                                    &#x21BB;
+                                </button>
+                            </div>
                         </th>
                     </tr>
                     ${this._headers()}
