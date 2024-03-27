@@ -21,7 +21,20 @@ export class SupabaseIndex extends SWCElement {
     }
 
     _selectSource(source) {
-        this.source = source
+        // this.source = source
+
+        let event = new CustomEvent('supabase-source-selected', {
+
+            detail: {
+                source,
+                message: 'Something important happened'
+
+            }
+
+        });
+
+        window.dispatchEvent(event);
+        // console.log('dispatched: ', event)
     }
 
     render() {
@@ -36,7 +49,7 @@ export class SupabaseIndex extends SWCElement {
 
             ${this.source ?
                     html`
-                        <supabase-table enableShadowDom source="${this.source}"></supabase-table>`
+                        <supabase-table enableShadowDom xxxsource="${this.source}"></supabase-table>`
                     : html`<p>Select a source</p>`
             }
         `

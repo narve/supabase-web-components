@@ -38,16 +38,22 @@ export class SupabaseTable extends SWCElement {
 
     connectedCallback() {
         super.connectedCallback();
-        globalThis.addEventListener('supabase-source-selected', this._handleResize);
+        window.addEventListener('supabase-source-selected',
+                e => this._handleSourceSelected(e));
     }
 
     disconnectedCallback() {
-        window.removeEventListener('supabase-source-selected', this._handleResize);
+        window.removeEventListener('supabase-source-selected',
+                e =>this._handleSourceSelected(e));
         super.disconnectedCallback();
     }
 
-    _sourceSelected() {
-        console.log('source-selected??')
+    async _handleSourceSelected(event) {
+        this.source = event.detail.source
+        // const args = new Map(Object.entries(event.detail))
+        // console.log('source-selected: ', args)
+        // await this.updated(args)
+        // await this._fetch()
     }
 
 
@@ -73,7 +79,13 @@ export class SupabaseTable extends SWCElement {
     }
 
     _rows() {
-        return this.data ? this.data.map(row => this._row(row)) : this._noRows()
+        if(!this.source)
+            return this._noRows('No source selected')
+        else if(!this.data)
+            return this._noRows('No data')
+        else if(!this.data[0])
+            return this._noRows('No rows')
+        return this.data.map(row => this._row(row))
     }
 
     _headers() {
@@ -111,10 +123,10 @@ export class SupabaseTable extends SWCElement {
             <td>${cell}</td>`
     }
 
-    _noRows() {
+    _noRows(msg) {
         return html`
             <tr>
-                <td colspan="99">No rows</td>
+                <td colspan="99">${msg}</td>
             </tr>`
     }
 

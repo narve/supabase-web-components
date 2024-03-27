@@ -5,7 +5,13 @@ A set of simple, build-less, framework-agnostic, plain vanilla js web components
 with a Supabase frontend. 
 
 
-Usage: 
+Demo
+===
+https://narve.github.io/supabase-web-components/
+
+
+Usage
+===
 
 ```html
     ...
