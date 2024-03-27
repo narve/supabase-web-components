@@ -46,13 +46,12 @@ export class SupabaseIndex extends SWCElement {
                             ${source}
                         </a></li>`)}
             </ul>
-
-            ${this.source ?
-                    html`
-                        <supabase-table enableShadowDom xxxsource="${this.source}"></supabase-table>`
-                    : html`<p>Select a source</p>`
-            }
         `
+        // ${this.source ?
+        //         html`
+        //             <supabase-table enableShadowDom xxxsource="${this.source}"></supabase-table>`
+        //         : html`<p>Select a source</p>`
+        // }
     }
 
     connectedCallback() {

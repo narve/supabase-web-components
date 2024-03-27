@@ -10,6 +10,7 @@ export class SupabaseSite extends SWCElement {
         return html`
             <h1>Supabase</h1>
             <supabase-index></supabase-index>
+            <supabase-table></supabase-table>
         `
     }
 }
