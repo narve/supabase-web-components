@@ -1,5 +1,5 @@
 import {LitElement, css, html, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/dist@3.1.2/all/lit-all.min.js';
-import {client} from './main.js'
+import {__swc as swc} from './main.js'
 import {SWCElement} from "./SWCElement.js";
 
 export class SupabaseTable extends SWCElement {
@@ -36,7 +36,19 @@ export class SupabaseTable extends SWCElement {
         }
     }
 
+    connectedCallback() {
+        super.connectedCallback();
+        globalThis.addEventListener('supabase-source-selected', this._handleResize);
+    }
 
+    disconnectedCallback() {
+        window.removeEventListener('supabase-source-selected', this._handleResize);
+        super.disconnectedCallback();
+    }
+
+    _sourceSelected() {
+        console.log('source-selected??')
+    }
 
 
     async updated(changedProperties) {
@@ -47,7 +59,7 @@ export class SupabaseTable extends SWCElement {
 
 
     _fetch = async () => {
-        const response = await client
+        const response = await swc.client
             .from(this.source)
             .select('*', {count: 'exact'})
             .range(this.range[0], this.range[1])

@@ -1,5 +1,5 @@
 import {LitElement, css, html} from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
-import {__swc as swc, client} from './main.js'
+import {__swc as swc} from './main.js'
 import {SupabaseTable} from "./supabase-table.js";
 import {SWCElement} from "./SWCElement.js";
 
@@ -20,13 +20,16 @@ export class SupabaseIndex extends SWCElement {
         this.source = this.sources[0]
     }
 
+    _selectSource(source) {
+        this.source = source
+    }
+
     render() {
         return html`
-            <h1>Supabase</h1>
             <ul>
                 ${this.sources.map(source => html`
                     <li>
-                        <a href="#${source}" @click="${() => this.source = source}">
+                        <a href="#${source}" @click="${() => this._selectSource(source)}">
                             ${source}
                         </a></li>`)}
             </ul>
@@ -49,7 +52,7 @@ export class SupabaseIndex extends SWCElement {
                 console.log({paths: data.paths})
                 const sources = Object.getOwnPropertyNames(data.paths)
                     .filter(s => s !== '/')
-                    .slice(0, 10)
+                    // .slice(0, 5)
                     .map(s => s.substring(1))
                 console.log({sources})
                 this.sources = sources

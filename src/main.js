@@ -8,7 +8,7 @@ console.log({supabase})
 const supabaseUrl = 'https://xupzhicrqmyvtgztrmjb.supabase.co'
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxMDExNjg5NCwiZXhwIjoxOTI1NjkyODk0fQ.cvK8Il2IbFqU03Q4uOhSQ9jxFkWELLACX7mJKyy_Ue0"
 
-export const client = supabase.createClient(supabaseUrl, supabaseKey)
+const client = supabase.createClient(supabaseUrl, supabaseKey)
 
 console.log({client})
 
