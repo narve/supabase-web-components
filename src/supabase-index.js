@@ -2,7 +2,7 @@ import {LitElement, css, html} from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core
 import {__swc as swc} from './main.js'
 import {SWCElement} from "./SWCElement.js";
 import {SourceSelected} from "./events.js";
-import {SourceSelected} from "./events.js";
+// import {SourceSelected} from "./events.js";
 
 
 // const sources = ['item', 'countries']
