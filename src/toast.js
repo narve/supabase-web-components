@@ -1,4 +1,4 @@
-import * as IDontNeedThis from "https://cdn.jsdelivr.net/npm/cb-toast@1.0.2/dist/cb-toast/cb-toast.esm.js"
+import "https://cdn.jsdelivr.net/npm/cb-toast@1.0.2/dist/cb-toast/cb-toast.esm.js"
 
 const cbToast = document.querySelector('cb-toast')
 
