@@ -16,7 +16,7 @@ export class SupabaseItem extends SWCElement {
 
     constructor() {
         super();
-
+        this.item = null
     }
 
     connectedCallback() {
@@ -153,7 +153,10 @@ export class SupabaseItem extends SWCElement {
     }
 
     render() {
-        return html`ITEM: ${JSON.stringify(this.item)}
+        if(!this.item)
+            return null
+        return html`
+<!--            ITEM: ${JSON.stringify(this.item)}-->
 
         ${this._form()}
 

@@ -58,7 +58,7 @@ export class SupabaseTable extends SWCElement {
         // await this.updated(args)
         // await this._fetch()
 
-        this._newItem()
+        // this._newItem()
     }
 
 
