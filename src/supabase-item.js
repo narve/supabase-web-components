@@ -158,7 +158,7 @@ export class SupabaseItem extends SWCElement {
         ${this._form()}
 
 
-        <pre>${JSON.stringify(this.schema, null, '  ')}</pre>
+<!--        <pre>${JSON.stringify(this.schema, null, '  ')}</pre>-->
 
         `
     }
