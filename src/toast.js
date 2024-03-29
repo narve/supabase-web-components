@@ -10,8 +10,10 @@ export const toastTypes = {
 }
 
 export const showToastMessage = (type, title, description, timeOut = 1000) => {
-    if(!cbToast)
+    if(!cbToast) {
+        console.error('No cbToast found')
         return
+    }
     cbToast.Toast({
         title, //default
         description, //: 'success message', //default

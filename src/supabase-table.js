@@ -2,7 +2,7 @@ import {LitElement, css, html, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/d
 import {__swc as swc} from './main.js'
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
-import {SourceSelected} from "./events.js";
+import { SourceSelected, NewItem, EditItem, DeleteItem} from "./events.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
@@ -52,10 +52,13 @@ export class SupabaseTable extends SWCElement {
 
     async _handleSourceSelected(event) {
         this.source = event.detail.source
+        this.api = event.detail.api
         // const args = new Map(Object.entries(event.detail))
-        // console.log('source-selected: ', args)
+        console.log('source-selected: ', event.detail)
         // await this.updated(args)
         // await this._fetch()
+
+        this._newItem()
     }
 
 
@@ -104,7 +107,10 @@ export class SupabaseTable extends SWCElement {
     _headers() {
         return (this.data && this.data[0])
             ? html`
-                    <tr> ${Object.keys(this.data[0]).map((h) => this._headerCell(h))}</tr>`
+                    <tr>
+                        <th>Actions</th>
+                        ${Object.keys(this.data[0]).map((h) => this._headerCell(h))}
+                    </tr>`
             : html``
     }
 
@@ -128,7 +134,13 @@ export class SupabaseTable extends SWCElement {
     _row(row) {
         // return html` <em>ROWS</em>`
         return html`
-            <tr>${Object.values(row).map(this._cell)}</tr>`
+            <tr>
+                <th>
+                    <button @click="${() => this._edit(row)}">&#9998;</button>
+                    <button @click="${() => this._delete(row)}">&#x1F5D1;</button>
+                </th>
+                ${Object.values(row).map(this._cell)}
+            </tr>`
     }
 
     _cell(cell) {
@@ -141,6 +153,32 @@ export class SupabaseTable extends SWCElement {
             <tr>
                 <td colspan="99">${msg}</td>
             </tr>`
+    }
+
+    async _edit(row) {
+        const detail = {
+            item: row,
+            source: this.source,
+            api: this.api,
+            // client: swc.client,
+            message: 'Edit item'
+        }
+        window.dispatchEvent(new CustomEvent(EditItem, {detail}));
+    }
+
+    async _delete(row) {
+        const {id} = row
+        const response = await swc.client
+            .from(this.source)
+            .delete()
+            .eq('id', id)
+        const {error} = response
+        if (error) {
+            showToastMessage(toastTypes.error, "Error", error.message, 3000)
+        } else {
+            showToastMessage(toastTypes.info, "Deleted", `Item ${id} deleted`, 3000)
+            await this._fetch()
+        }
     }
 
     async _prev() {
@@ -168,7 +206,14 @@ export class SupabaseTable extends SWCElement {
     }
 
     _newItem() {
-
+        const detail = {
+            item: {},
+            source: this.source,
+            api: this.api,
+            // client: swc.client,
+            message: 'New item'
+        }
+        window.dispatchEvent(new CustomEvent(NewItem, {detail}));
     }
 
     render() {
