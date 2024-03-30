@@ -1,4 +1,4 @@
-import {LitElement, css, html} from './index-supabase.js';
+import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {EditItem, NewItem} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
@@ -40,8 +40,7 @@ export class SupabaseItem extends SWCElement {
             const ref = s.substring(2).split('/')
             console.log('refs: ', s, ref)
             const o1 = this.api[ref[0]]
-            const o2 = o1[ref[1]]
-            return o2
+            return o1[ref[1]]
         }
 
         const p0Ref = this.api.paths['/' + this.source]['post']['parameters'][0]['$ref']

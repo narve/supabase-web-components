@@ -1,4 +1,4 @@
-import {LitElement, css, html, styleMap} from './index-supabase.js';
+import {LitElement} from './index-supabase.js';
 
 export class SWCElement extends LitElement {
     createRenderRoot() {
