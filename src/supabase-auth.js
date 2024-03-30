@@ -1,4 +1,4 @@
-import {html, when, map, css} from './index-supabase.js';
+import {html, when, map} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated} from "./events.js";
 
@@ -16,10 +16,10 @@ export class SupabaseAuth extends SWCElement {
         generatedUrl: {state:true},
     }
 
-    static styles = css`
-        .auth_section {
-            display: none;
-        }`
+    // static styles = css`
+    //     .auth_section {
+    //         display: none;
+    //     }`
 
 
     constructor() {
