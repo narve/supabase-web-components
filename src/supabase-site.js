@@ -7,7 +7,7 @@ export class SupabaseSite extends SWCElement {
 
     render() {
         return html`
-            <h1>Supabase 4</h1>
+            <h1>Supabase</h1>
             <supabase-auth></supabase-auth>
             <supabase-index></supabase-index>
             <supabase-table></supabase-table>
