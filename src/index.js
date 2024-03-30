@@ -1,4 +1,6 @@
-export {LitElement, css, html} from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js'
+
+import "./supabase-auth.js"
+
 
 export {NewItem, SourceSelected} from "./events.js"
 export {SWCElement} from "./SWCElement.js"

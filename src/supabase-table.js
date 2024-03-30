@@ -1,8 +1,7 @@
-import {html, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/dist@3.1.2/all/lit-all.min.js';
-import {__swc as swc} from './main.js'
+import {html, styleMap} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
-import { SourceSelected, NewItem, EditItem, DeleteItem} from "./events.js";
+import { SourceSelected, NewItem, EditItem} from "./events.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
@@ -40,8 +39,7 @@ export class SupabaseTable extends SWCElement {
 
     connectedCallback() {
         super.connectedCallback();
-        window.addEventListener(SourceSelected,
-            e => this._handleSourceSelected(e));
+        window.addEventListener(SourceSelected,e => this._handleSourceSelected(e));
     }
 
     disconnectedCallback() {
@@ -53,6 +51,7 @@ export class SupabaseTable extends SWCElement {
     async _handleSourceSelected(event) {
         this.source = event.detail.source
         this.api = event.detail.api
+        this.client = event.detail.client
         // const args = new Map(Object.entries(event.detail))
         console.log('source-selected: ', event.detail)
         // await this.updated(args)
@@ -73,7 +72,7 @@ export class SupabaseTable extends SWCElement {
         if (!this.source)
             return
 
-        const response = await swc.client
+        const response = await this.client
             .from(this.source)
             .select('*', {count: 'exact'})
             .range(this.range[0], this.range[1])
@@ -160,7 +159,7 @@ export class SupabaseTable extends SWCElement {
             item: row,
             source: this.source,
             api: this.api,
-            // client: swc.client,
+            client: this.client,
             message: 'Edit item'
         }
         window.dispatchEvent(new CustomEvent(EditItem, {detail}));
@@ -210,7 +209,7 @@ export class SupabaseTable extends SWCElement {
             item: {},
             source: this.source,
             api: this.api,
-            // client: swc.client,
+            client: this.client,
             message: 'New item'
         }
         window.dispatchEvent(new CustomEvent(NewItem, {detail}));

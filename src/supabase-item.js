@@ -1,5 +1,4 @@
-import {LitElement, css, html} from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
-import {__swc as swc} from './main.js'
+import {LitElement, css, html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {EditItem, NewItem} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
@@ -35,6 +34,7 @@ export class SupabaseItem extends SWCElement {
         this.item = evt.detail.item
         this.source = evt.detail.source
         this.api = evt.detail.api
+        this.client = evt.detail.client
 
         const getRef = s => {
             const ref = s.substring(2).split('/')
@@ -119,7 +119,7 @@ export class SupabaseItem extends SWCElement {
         console.log('SAVE: ', event, this.item)
 
 
-        const {data, error} = await swc.client.from(this.source)
+        const {data, error} = await this.client.from(this.source)
             .upsert([this.item])
             .select()
         console.log({data, error})
@@ -129,18 +129,6 @@ export class SupabaseItem extends SWCElement {
             showToastMessage(toastTypes.success, 'UPSERTED', ' ')
         }
     }
-
-    // } else {
-    //     await swc.client.from(this.source).insert([this.item]).then(({data, error}) => {
-    //         if (error) {
-    //             console.error(error)
-    //         } else {
-    //             console.log('INSERTED: ', data)
-    //         }
-    //     })
-// }
-
-// }
 
     _setProp(e, name) {
         this.item[name] = e.target.value

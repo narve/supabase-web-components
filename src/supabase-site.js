@@ -1,6 +1,6 @@
-import {LitElement, css, html} from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
-import {__swc as swc} from './main.js'
+import {LitElement, css, html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
+import './index.js'
 
 
 export class SupabaseSite extends SWCElement {
