@@ -4,13 +4,6 @@ import {ClientCreated} from "./events.js";
 
 console.log('auth module')
 
-// const sections = [
-//     {
-//         title: 'Connection',
-//         render: () => this.connectionSection()
-//     }
-// ]
-
 export class SupabaseAuth extends SWCElement {
     static properties = {
         generatedUrl: {state:true},
