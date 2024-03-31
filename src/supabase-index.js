@@ -33,8 +33,9 @@ export class SupabaseIndex extends SWCElement {
                 ${this.sources.map(source => html`
                     <li>
                         <a href="#${source}" @click="${() => this._selectSource(source)}">
-                            ${source}
-                        </a></li>`)}
+                            ${source[0]}
+                        </a> (${Object.keys(source[1]).join(",")})
+                    </li>`)}
             </ul>
         `
     }
@@ -53,11 +54,12 @@ export class SupabaseIndex extends SWCElement {
                 console.error(error)
             } else {
                 this.api = data
-                // console.log({paths: data.paths})
-                const sources = Object.getOwnPropertyNames(data.paths)
-                    .filter(s => s !== '/')
+                console.log({paths: Object.entries(data.paths)})
+                // Object.getOwnPropertyDescriptors(data.paths)
+                const sources = Object.entries(data.paths)
+                    .filter(s => s[0] !== '/')
                     // .slice(0, 5)
-                    .map(s => s.substring(1))
+                    // .map(s => s.substring(1))
                 // console.log({sources})
                 this.sources = sources
                 this._selectSource(sources[1])

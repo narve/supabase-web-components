@@ -14,11 +14,20 @@ export const showToastMessage = (type, title, description, timeOut = 1000) => {
         console.error('No cbToast found')
         return
     }
-    cbToast.Toast({
+
+    console.log({
         title, //default
         description, //: 'success message', //default
         timeOut, //default
         position: 'top-right', //default
         type, //default
+    })
+
+    cbToast.Toast({
+        title,
+        description,
+        timeOut,
+        position: 'top-right',
+        type,
     })
 }

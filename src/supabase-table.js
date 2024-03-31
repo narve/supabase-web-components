@@ -1,7 +1,7 @@
 import {html, styleMap} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
-import {SourceSelected, NewItem, EditItem, RequestSelector} from "./events.js";
+import {SourceSelected, NewItem, EditItem} from "./events.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
@@ -26,10 +26,11 @@ export class SupabaseTable extends SWCElement {
         super();
         // console.log('SupabaseTable constructor', {source: this.source, shadow: this.shadow})
         // Declare reactive properties
-        this.order = {
-            column: 'id',
-            ascending: true
-        }
+        // this.order = {
+        //     column: 'id',
+        //     // ascending: true
+        // }
+        this.order = null
         this.shadow = false
         this.hitsPrPage = 5
         this.range = [0, this.hitsPrPage - 1]
@@ -52,6 +53,7 @@ export class SupabaseTable extends SWCElement {
 
     async _handleSourceSelected(event) {
         this.source = event.detail.source
+        this.order = null
         this.api = event.detail.api
         this.client = event.detail.client
         // const args = new Map(Object.entries(event.detail))
@@ -74,11 +76,18 @@ export class SupabaseTable extends SWCElement {
         if (!this.source)
             return
 
+        const sourceUrl = this.source[0].substring(1)
+
         const response = await this.client
-            .from(this.source)
+            .from(sourceUrl)
             .select('*', {count: 'exact'})
             .range(this.range[0], this.range[1])
-            .order(this.order.column, {ascending: this.order.ascending})
+        // const response =
+        // this.order
+        // ? await responsePreOrder
+        //     .order(this.order?.column || null, {ascending: this.order?.ascending || true})
+        // :
+        //     await responsePreOrder
 
         const {data, error, count} = response
 
@@ -90,7 +99,7 @@ export class SupabaseTable extends SWCElement {
             this.data = data
             this.count = count
 
-            const msg = `${this.source} (${this.data.length} of ${count} items)`
+            const msg = `${this.source[0]} (${this.data.length} of ${count} items)`
             showToastMessage(toastTypes.info, 'Fetched', msg)
         }
     }
@@ -137,8 +146,16 @@ export class SupabaseTable extends SWCElement {
         return html`
             <tr>
                 <th>
-                    <button @click="${() => this._edit(row)}">&#9998;</button>
-                    <button @click="${() => this._delete(row)}">&#x1F5D1;</button>
+                    ${this.source[1].put || this.source[1].patch
+                            ? html`
+                                <button @click="${() => this._edit(row)}">&#9998;</button>`
+                            : null
+                    }
+                    ${this.source[1].delete
+                            ? html`
+                                <button @click="${() => this._delete(row)}">&#x1F5D1;</button>`
+                            : null
+                    }
                 </th>
                 ${Object.values(row).map(this._cell)}
             </tr>`
@@ -193,7 +210,7 @@ export class SupabaseTable extends SWCElement {
     }
 
     _paginationRow() {
-        if(!this.data)
+        if (!this.data)
             return ""
         return html`
             <td colspan="99">
@@ -217,19 +234,38 @@ export class SupabaseTable extends SWCElement {
         window.dispatchEvent(new CustomEvent(NewItem, {detail}));
     }
 
+    get sourceName() {
+        return this.source[0].substring(1).charAt(0).toUpperCase()
+            + this.source[0].substring(2).replace("_", " ")
+
+    }
+
     render() {
+        if (!this.source) return null
+
+        if(!Array.isArray(this.data)) {
+            return html`
+                <h3>Non-table data: </h3>
+                <pre>${this.data}</pre>
+            `
+        }
         return html`
             <div class="supabase-table" part="container">
                 <table>
                     <thead>
                     <tr>
                         <th colspan="99">
-                            Table: ${this.source}
+                            Table: ${this.sourceName}
                             <div style=${styleMap(this.buttonStyles)} class="reload">
-                                <button style=${styleMap(this.buttonStyles)} class="reload" @click="${() => this._newItem()}">
-                                    &plus;
-                                </button>
-                                <button style=${styleMap(this.buttonStyles)} class="reload" @click="${() => this._fetch()}">
+                                ${this.source[1].post
+                                        ? html`
+                                            <button style=${styleMap(this.buttonStyles)} class="reload"
+                                                    @click="${() => this._newItem()}">
+                                                &plus;
+                                            </button>`
+                                        : null}
+                                <button style=${styleMap(this.buttonStyles)} class="reload"
+                                        @click="${() => this._fetch()}">
                                     &#x21BB;
                                 </button>
                             </div>
