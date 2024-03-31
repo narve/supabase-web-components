@@ -150,6 +150,21 @@ export class SupabaseAuth extends SWCElement {
 
     render() {
         return html`
+            
+            ${map(this.sections, s => html`
+                <details>
+                    <summary>${s.title}</summary>
+                    <div>
+                        ${s.render()}
+
+                    </div>
+
+                </details>
+            `)}
+        
+
+            
+            
             <details open>
                 <summary>Supabase configuration</summary>
                 
