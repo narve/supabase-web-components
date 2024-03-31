@@ -1,6 +1,6 @@
 import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
-import {EditItem, NewItem} from "./events.js";
+import {EditItem, NewItem, RequestSelector} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
 
 
@@ -66,6 +66,18 @@ export class SupabaseItem extends SWCElement {
             const table = parts[1]
             const column = parts[2]
             console.log({table, column})
+            window.dispatchEvent(new CustomEvent(RequestSelector, {
+                detail: {
+                    table, column, client: this.client
+                }
+            }))
+            return html`
+                <label for="${name}">${name} </label>
+                <input id="${name}" name="${name}" value="${this.item[name]}" list="${table}__${column}"
+                       @change="${e => this._setProp(e, name)}"                
+                >
+
+            `
         }
 
         const noteIndex = value.description?.indexOf("Note:\n")
@@ -85,8 +97,6 @@ export class SupabaseItem extends SWCElement {
                 <label for="${name}">${label} </label>
                 <input type="text" id="${name}" name="${name}" value="${this.item[name]}" readonly disabled>
             `
-        } else if (isFk) {
-
         }
 
         return html`
@@ -94,8 +104,11 @@ export class SupabaseItem extends SWCElement {
             <input type="text" id="${name}" name="${name}" value="${this.item[name]}"
                    @change="${e => this._setProp(e, name)}"
             >
+
         `
+
     }
+
 
     _form() {
         if (!this.schema) {
@@ -140,15 +153,15 @@ export class SupabaseItem extends SWCElement {
     }
 
     render() {
-        if(!this.item)
+        if (!this.item)
             return null
         return html`
-<!--            ITEM: ${JSON.stringify(this.item)}-->
+            <!--            ITEM: ${JSON.stringify(this.item)}-->
 
-        ${this._form()}
+            ${this._form()}
 
 
-<!--        <pre>${JSON.stringify(this.schema, null, '  ')}</pre>-->
+            <!--        <pre>${JSON.stringify(this.schema, null, '  ')}</pre>-->
 
         `
     }

@@ -1,7 +1,7 @@
 import {html, styleMap} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
-import { SourceSelected, NewItem, EditItem} from "./events.js";
+import {SourceSelected, NewItem, EditItem, RequestSelector} from "./events.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
@@ -19,6 +19,7 @@ export class SupabaseTable extends SWCElement {
         data: {state: true},
         count: {state: true},
         range: {state: true},
+        selectors: {state: true},
     };
 
     constructor() {
@@ -40,6 +41,7 @@ export class SupabaseTable extends SWCElement {
     connectedCallback() {
         super.connectedCallback();
         window.addEventListener(SourceSelected,e => this._handleSourceSelected(e));
+        window.addEventListener(RequestSelector,e => this._handleSelectorRequested(e));
     }
 
     disconnectedCallback() {
@@ -244,7 +246,31 @@ export class SupabaseTable extends SWCElement {
                     </tr>
                     </tfoot>
                 </table>
-            </div>`
+            </div>
+        `
+    }
+
+    async _handleSelectorRequested(event) {
+        console.log('selector requested: ', event.detail)
+        const {table, column, client} = event.detail
+        const e = document.createElement('div')
+
+        const {data, error, count} = await this.client
+            .from(table)
+            .select('*', {count: 'exact'})
+
+
+
+        e.innerHTML = `
+            <datalist id="${table}__${column}">
+            ${data.map(row => `
+                <option value='${row[column]}'>
+                ${Object.values(row).join(', ')}
+                </option>`)
+            .join('')}
+            </datalist>
+        `
+        document.body.appendChild(e)
     }
 }
 
