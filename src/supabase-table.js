@@ -1,7 +1,7 @@
 import {html, styleMap} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
-import {SourceSelected, NewItem, EditItem} from "./events.js";
+import {SourceSelected, RequestSelector, NewItem, EditItem} from "./events.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {

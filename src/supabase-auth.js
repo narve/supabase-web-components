@@ -1,19 +1,14 @@
 import {html, when, map} from './index-supabase.js';
+import {createClient} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated} from "./events.js";
 
-console.log('auth module')
+
 
 export class SupabaseAuth extends SWCElement {
     static properties = {
         generatedUrl: {state:true},
     }
-
-    // static styles = css`
-    //     .auth_section {
-    //         display: none;
-    //     }`
-
 
     constructor() {
         super();
@@ -46,7 +41,7 @@ export class SupabaseAuth extends SWCElement {
 
         const supabaseUrl = 'https://xupzhicrqmyvtgztrmjb.supabase.co'
         const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxMDExNjg5NCwiZXhwIjoxOTI1NjkyODk0fQ.cvK8Il2IbFqU03Q4uOhSQ9jxFkWELLACX7mJKyy_Ue0"
-        const client = supabase.createClient(supabaseUrl, supabaseKey)
+        const client = createClient(supabaseUrl, supabaseKey)
         this.client = client
 
         console.log('auth: ', {client})
@@ -65,7 +60,7 @@ export class SupabaseAuth extends SWCElement {
 
         const supabaseUrl = 'https://xupzhicrqmyvtgztrmjb.supabase.co'
         const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxMDExNjg5NCwiZXhwIjoxOTI1NjkyODk0fQ.cvK8Il2IbFqU03Q4uOhSQ9jxFkWELLACX7mJKyy_Ue0"
-        const client = supabase.createClient(supabaseUrl, supabaseKey)
+        const client = createClient(supabaseUrl, supabaseKey)
 
         this.client = client
         console.log('auth: ', {client})
@@ -103,11 +98,47 @@ export class SupabaseAuth extends SWCElement {
         `
     }
 
+    setConfig(config) {
+        console.log('setConfig: ', config)
+    }
+
     connectionSection() {
+
+        const configs = [
+            {
+                name: 'DV8MultiApp',
+                supabaseUrl: 'https://xupzhicrqmyvtgztrmjb.supabase.co',
+                supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxMDExNjg5NCwiZXhwIjoxOTI1NjkyODk0fQ.cvK8Il2IbFqU03Q4uOhSQ9jxFkWELLACX7mJKyy_Ue0',
+            },
+            {
+                name: 'FOBS DEV',
+                supabaseUrl: 'https://ckckpffruooypdyizcaq.supabase.co',
+                supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxMDExNjg5NCwiZXhwIjoxOTI1NjkyODk0fQ.cvK8Il2IbFqU03Q4uOhSQ9jxFkWELLACX7mJKyy_Ue0',
+            },
+            {
+                name: 'FOBS STAGING',
+                supabaseUrl: 'https://cmrdcggpmoswwmzcdcxx.supabase.co',
+                supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtcmRjZ2dwbW9zd3dtemNkY3h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjE3OTYwOTcsImV4cCI6MTk3NzM3MjA5N30.LTa9fTKZuHLhh2wBR6dJEw7gyGFrq2kl08yqemqkq7w',
+            },
+        ]
+
+        const isDedica=location.href.indexOf('dedica')>0
+        console.log({isDedica, href:location.href})
+        const dedicaSection = !isDedica
+        ?null
+            : html`
+                ${configs.map( c => html`
+                    <a @click="${()=>this.setConfig(c)}" href="#">${c.name}</a>
+                `)}
+            `
+
         return html`
         <form id="form_auth">
             <fieldset>
                 <legend>Connection</legend>
+                
+                ${dedicaSection}
+                
                 <label for="supabaseUrl">
                     <input type="text" id="supabaseUrl" name="supabaseUrl" placeholder="Supabase URL"
                            value="https://xupzhicrqmyvtgztrmjb.supabase.co">
@@ -152,7 +183,7 @@ export class SupabaseAuth extends SWCElement {
         return html`
             
             ${map(this.sections, s => html`
-                <details>
+                <details open>
                     <summary>${s.title}</summary>
                     <div>
                         ${s.render()}
@@ -165,8 +196,8 @@ export class SupabaseAuth extends SWCElement {
 
             
             
-            <details open>
-                <summary>Supabase configuration</summary>
+<!--            <details open>-->
+<!--                <summary>Supabase configuration</summary>-->
                 
                 <nav>
                 ${map(this.sections, s => html`
@@ -183,10 +214,10 @@ export class SupabaseAuth extends SWCElement {
                 `)}
                 
                 
-                <div>
-                
-                </div>
-            </details>
+<!--                <div>-->
+<!--                -->
+<!--                </div>-->
+<!--            </details>-->
         `
     }
 }
