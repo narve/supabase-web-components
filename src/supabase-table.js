@@ -289,16 +289,22 @@ export class SupabaseTable extends SWCElement {
     async _handleSelectorRequested(event) {
         console.log('selector requested: ', event.detail)
         const {table, column, client} = event.detail
+        const ref = `${table}__${column}`
         const e = document.createElement('div')
 
-        const {data, error, count} = await this.client
+        const {data, error, count} = await client
             .from(table)
             .select('*', {count: 'exact'})
 
+        if(error) {
+            showToastMessage(toastTypes.error, "Error", error.message, 3000)
+            return
+        }
 
+        showToastMessage(toastTypes.info, `Fetched selector ${ref}`, '')
 
         e.innerHTML = `
-            <datalist id="${table}__${column}">
+            <datalist id="${ref}">
             ${data.map(row => `
                 <option value='${row[column]}'>
                 ${Object.values(row).join(', ')}

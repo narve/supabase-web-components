@@ -43,7 +43,7 @@ export class SupabaseItem extends SWCElement {
             return o1[ref[1]]
         }
 
-        const p0Ref = this.api.paths['/' + this.source]['post']['parameters'][0]['$ref']
+        const p0Ref = this.api.paths[this.source[0]]['post']['parameters'][0]['$ref']
         // console.log({p0})
         // const p0ref = p0.substring("#/parameters/".length)
         const pDef = getRef(p0Ref)

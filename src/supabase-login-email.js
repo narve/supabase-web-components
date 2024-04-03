@@ -1,8 +1,6 @@
-import {html, when, map} from './index-supabase.js';
+import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated} from "./events.js";
-// import {SupabaseAuth} from "./supabase-auth";
-
 
 export class SupabaseLoginEmail extends SWCElement {
 
@@ -20,8 +18,6 @@ export class SupabaseLoginEmail extends SWCElement {
 
     login(event) {
         event.preventDefault()
-        // const formData = new FormData(event.target.form);
-        // console.log(Object.fromEntries(formData));
         this.client.auth.signInWithPassword({
             email: this.email,
             password: this.password,

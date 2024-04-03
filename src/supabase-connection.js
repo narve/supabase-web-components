@@ -1,9 +1,7 @@
-import {html, when, map, createClient} from './index-supabase.js';
+import {html, when, createClient} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated} from "./events.js";
 import {showToastMessage, toastTypes} from "./index.js";
-// import {SupabaseAuth} from "./supabase-auth";
-
 
 const configs = [
     {
@@ -57,7 +55,7 @@ export class SupabaseConnection extends SWCElement {
         super.connectedCallback();
         if (showConfigs()) {
             this.setConfig(configs[0])
-            // For now: Apply immediately
+            // Apply immediately:
             // this.apply(new Event('click'))
         }
     }

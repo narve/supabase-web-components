@@ -26,7 +26,7 @@ export class SupabaseAuth extends SWCElement {
 
     connectedCallback() {
         super.connectedCallback();
-        window.addEventListener(ClientCreated, e => {
+        window.addEventListener(ClientCreated, () => {
             const section = document.querySelector('supabase-connection')
                 .parentElement
                 .parentElement
