@@ -1,4 +1,4 @@
-import {html} from './index-supabase.js';
+import {html, ifDefined} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated, SourceSelected} from "./events.js";
 
@@ -15,7 +15,7 @@ export class SupabaseIndex extends SWCElement {
 
     constructor() {
         super();
-        // this.sources = ['item', 'countries']
+        this.sources = []
         // this.source = this.sources[0]
     }
 
@@ -31,16 +31,19 @@ export class SupabaseIndex extends SWCElement {
     }
 
     render() {
-        if(!this.sources) return null
+        // if(!this.sources) return null
         return html`
-            <ul>
-                ${this.sources.map(source => html`
-                    <li>
-                        <a href="#${source}" @click="${() => this._selectSource(source)}">
-                            ${source[0]}
-                        </a> (${Object.keys(source[1]).join(",")})
-                    </li>`)}
-            </ul>
+            <details open="${ifDefined(this.client)}">
+                <summary>Index</summary>
+                <ul>
+                    ${this.sources.map(source => html`
+                        <li>
+                            <a href="#${source}" @click="${() => this._selectSource(source)}">
+                                ${source[0]}
+                            </a> (${Object.keys(source[1]).join(",")})
+                        </li>`)}
+                </ul>
+            </details>
         `
     }
 

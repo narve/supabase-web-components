@@ -28,7 +28,8 @@ export class SupabaseLoginEmail extends SWCElement {
         if(error) {
             showToastMessage(toastTypes.error, 'Login failed', error.message)
         } else {
-            showToastMessage(toastTypes.success, 'Login success', this.email)
+            console.log('Login success: ', data)
+            showToastMessage(toastTypes.success, 'Login success', data.user.email)
         }
     }
 

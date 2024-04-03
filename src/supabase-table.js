@@ -186,8 +186,8 @@ export class SupabaseTable extends SWCElement {
 
     async _delete(row) {
         const {id} = row
-        const response = await swc.client
-            .from(this.source)
+        const response = await this.client
+            .from(this.source[0].substring(1))
             .delete()
             .eq('id', id)
         const {error} = response

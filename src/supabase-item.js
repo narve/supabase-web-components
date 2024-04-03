@@ -131,7 +131,7 @@ export class SupabaseItem extends SWCElement {
         console.log('SAVE: ', event, this.item)
 
 
-        const {data, error} = await this.client.from(this.source)
+        const {data, error} = await this.client.from(this.source[0].substring(1))
             .upsert([this.item])
             .select()
         console.log({data, error})
