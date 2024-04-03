@@ -42,9 +42,9 @@ export class SupabaseAuth extends SWCElement {
     }
 
     render() {
+    // <!--            <supabase-connection @supabase-client-created="${e => console.log('@client-created: ', e)}"></supabase-connection>-->
         return html`
             
-            <supabase-connection @supabase-client-created="${e => console.log('@client-created: ', e)}"></supabase-connection>
             
             ${map(this.sections, s => html`
                 <details open="${ifDefined(s.title ==='Connection'?true:null)}" name="${s.title}">
