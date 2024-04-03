@@ -2,6 +2,10 @@ import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated, SourceSelected} from "./events.js";
 
+import "./supabase-login-email.js";
+import "./supabase-connection.js";
+
+
 export class SupabaseIndex extends SWCElement {
     static properties = {
         sources: {},

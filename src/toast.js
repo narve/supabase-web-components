@@ -1,7 +1,5 @@
 import "https://cdn.jsdelivr.net/npm/cb-toast@1.0.2/dist/cb-toast/cb-toast.esm.js"
 
-const cbToast = document.querySelector('cb-toast')
-
 export const toastTypes = {
     success: 'success',
     info: 'info',
@@ -10,12 +8,15 @@ export const toastTypes = {
 }
 
 export const showToastMessage = (type, title, description, timeOut = 1000) => {
+    let cbToast = document.querySelector('cb-toast')
+
     if(!cbToast) {
-        console.error('No cbToast found')
-        return
+        console.debug('Appending cbToast element')
+        cbToast = document.createElement('cb-toast')
+        document.body.append(cbToast)
     }
 
-    console.log({
+    console.debug({
         title, //default
         description, //: 'success message', //default
         timeOut, //default
@@ -23,6 +24,10 @@ export const showToastMessage = (type, title, description, timeOut = 1000) => {
         type, //default
     })
 
+    if(!cbToast) {
+        console.error('Could not find cbToast element')
+        return
+    }
     cbToast.Toast({
         title,
         description,
