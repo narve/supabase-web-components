@@ -18,7 +18,7 @@ export const showToastMessage = (type, title, description, timeOut = 1000) => {
 
     console.debug({
         title, //default
-        description, //: 'success message', //default
+        description: description || '', // override default
         timeOut, //default
         position: 'top-right', //default
         type, //default

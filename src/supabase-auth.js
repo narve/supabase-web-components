@@ -1,4 +1,4 @@
-import {html, map} from './index-supabase.js';
+import {html, map, ifDefined} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated} from "./events.js";
 
@@ -26,37 +26,34 @@ export class SupabaseAuth extends SWCElement {
 
     connectedCallback() {
         super.connectedCallback();
+        const setOpen = (sectionName, open) => {
+            const section = document.querySelector(`details[name="${sectionName}"]`)
+            section.open = open;
+        }
         window.addEventListener(ClientCreated, () => {
-            const section = document.querySelector('supabase-connection')
-                .parentElement
-                .parentElement
-            console.log('closing section: ', section)
-            section.open = false;
+            setOpen('Connection', false)
+            setOpen('Login with email', true)
+            // const section = document.querySelector('details[name="Connection"]')
+            //     // .parentElement
+            //     // .parentElement
+            // console.log('closing section: ', section)
+            // section.open = false;
         })
-
     }
-
-    // setActiveSection(section) {
-    //     const allSections = document.querySelectorAll(`[tab-title]`)
-    //     for (const s of allSections) {
-    //         s.style.display = 'none'
-    //     }
-    //     const activeElement = document.querySelector(`[tab-title="${section.title}"]`)
-    //     activeElement.style.display = 'block'
-    //     console.log('setActiveSection: ', section, activeElement)
-    // }
 
     render() {
         return html`
+            
+            <supabase-connection @supabase-client-created="${e => console.log('@client-created: ', e)}"></supabase-connection>
+            
             ${map(this.sections, s => html`
-                <details open>
+                <details open="${ifDefined(s.title ==='Connection'?true:null)}" name="${s.title}">
                     <summary>${s.title}</summary>
                     <div>
                         ${s.render()}
                     </div>
                 </details>
             `)}
-
         `
     }
 }
