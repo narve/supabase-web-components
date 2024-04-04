@@ -17,11 +17,11 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
     }
 
     console.debug('TOAST: ', {
-        title, //default
-        description: description || '', // override default
-        timeOut, //default
-        position: 'top-right', //default
-        type, //default
+        title,
+        description: description || '', // override nonsensical default
+        timeOut,
+        position: 'top-right',
+        type,
     })
 
     if(!cbToast) {

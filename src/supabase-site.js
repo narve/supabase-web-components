@@ -1,4 +1,4 @@
-import {html, ifFalsy, ifTruthy} from './index-supabase.js';
+import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import './index.js'
 import {NamedJSONComparer} from "./main.js";
@@ -18,7 +18,7 @@ export class SupabaseSite extends SWCElement {
         return html`
             <h1>Supabase </h1>
 
-            <details open="${ifFalsy(this.client)}">
+            <details ?open="${!this.client}">
                 <summary>${this.client ? 'Connected!' : 'Connect'}</summary>
                 <div>
                     <supabase-connection
@@ -30,7 +30,7 @@ export class SupabaseSite extends SWCElement {
                 </div>
             </details>
 
-            <details open="${ifTruthy(this.client && !this.user)}">
+            <details ?open="${this.client && !this.user}">
                 <summary>${this.user ? `Logged in as ${this.user.email}` : 'Log in'}</summary>
                 <div>
                     <supabase-login-email
@@ -40,7 +40,7 @@ export class SupabaseSite extends SWCElement {
                 </div>
             </details>
 
-            <details open="${ifTruthy(this.client)}">
+            <details ?open="${this.client}">
                 <summary>Index</summary>
                 <div>
                     <supabase-index
@@ -54,7 +54,7 @@ export class SupabaseSite extends SWCElement {
                 </div>
             </details>
 
-            <details open="${ifTruthy(this.client && this.source)}">
+            <details ?open="${this.client && this.source}">
                 <summary>Data</summary>
                 <div>
                     <supabase-table
@@ -64,7 +64,7 @@ export class SupabaseSite extends SWCElement {
                 </div>
             </details>
 
-            <details open="${ifTruthy(this.item)}">
+            <details ?open="${this.item}">
                 <summary>Item</summary>
                 <div>
                     <supabase-item

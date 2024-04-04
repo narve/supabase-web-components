@@ -17,17 +17,6 @@ export class SupabaseItem extends SWCElement {
         this.item = null
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-        window.addEventListener(NewItem, e => this._handleNewItem(e));
-        window.addEventListener(EditItem, e => this._handleNewItem(e));
-    }
-
-    disconnectedCallback() {
-        window.removeEventListener(NewItem, e => this._handleNewItem(e));
-        super.disconnectedCallback();
-    }
-
     _handleNewItem(evt) {
         console.log('NEW ITEM: ', evt.detail)
         this.item = evt.detail.item
@@ -113,9 +102,6 @@ export class SupabaseItem extends SWCElement {
         if (!this.schema) {
             return html`<p>No schema</p>`
         }
-        // this.item = {
-        // id: 123
-        // }
         const fields = Object.entries(this.schema.properties)
         return html`
             <form>

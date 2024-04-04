@@ -1,4 +1,4 @@
-import {html, ifTruthy} from './index-supabase.js';
+import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {UserLoggedIn} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
@@ -57,7 +57,7 @@ export class SupabaseLoginEmail extends SWCElement {
                     </label>
                     <label>
                         <input type="submit" value="Login" @click="${this.login}"
-                               disabled="${ifTruthy(disabled)}"
+                               ?disabled="${disabled}"
                         >
                     </label>
                 </fieldset>

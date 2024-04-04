@@ -41,18 +41,18 @@ export class SupabaseTable extends SWCElement {
             float: 'right',
         }
     }
-
-    connectedCallback() {
-        super.connectedCallback();
-        window.addEventListener(SourceSelected,e => this._handleSourceSelected(e));
-        window.addEventListener(RequestSelector,e => this._handleSelectorRequested(e));
-    }
-
-    disconnectedCallback() {
-        window.removeEventListener(SourceSelected,
-            e => this._handleSourceSelected(e));
-        super.disconnectedCallback();
-    }
+    //
+    // connectedCallback() {
+    //     super.connectedCallback();
+    //     window.addEventListener(SourceSelected,e => this._handleSourceSelected(e));
+    //     window.addEventListener(RequestSelector,e => this._handleSelectorRequested(e));
+    // }
+    //
+    // disconnectedCallback() {
+    //     window.removeEventListener(SourceSelected,
+    //         e => this._handleSourceSelected(e));
+    //     super.disconnectedCallback();
+    // }
 
     async _handleSourceSelected(event) {
         this.source = event.detail.source

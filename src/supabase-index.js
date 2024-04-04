@@ -52,7 +52,7 @@ export class SupabaseIndex extends SWCElement {
 
     set client(client) {
         // We need this, for some reason, otherwise we get infinite loops or multiple fetches
-        if(client===this._client)
+        if (client === this._client)
             return
 
         this._client = client
@@ -68,7 +68,7 @@ export class SupabaseIndex extends SWCElement {
                 showToastMessage(toastTypes.error, 'Fetching API failed', error.message)
             } else {
                 showToastMessage(toastTypes.success, 'API fetched')
-                this.dispatchEvent(new CustomEvent(ApiFetched, {detail: {api:data}}))
+                this.dispatchEvent(new CustomEvent(ApiFetched, {detail: {api: data}}))
                 // console.log({paths: Object.entries(data.paths)})
                 this.api = data
                 // Object.getOwnPropertyDescriptors(data.paths)
