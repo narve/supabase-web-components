@@ -1,4 +1,4 @@
-import {html, ifDefined} from './index-supabase.js';
+import {html, ifDefined, ifTruthy} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
@@ -39,9 +39,8 @@ export class SupabaseLoginEmail extends SWCElement {
     }
 
     render() {
-        const disabled = (!this.client || this.email.length===0 || this.password.length === 0) ? "disabled" : null
-        // const ifSet = (value, attr) => value ? attr : attr
-        // ifSet="${ifSet(disabled, "disabled")}"
+        const disabled = !this.client || this.email.length===0 || this.password.length === 0
+
         return html`
             <form>
                 <fieldset>
@@ -60,7 +59,7 @@ export class SupabaseLoginEmail extends SWCElement {
                     </label>
                     <label>
                         <input type="submit" value="Login" @click="${this.login}"
-                               disabled="${ifDefined(disabled)}"
+                               disabled="${ifTruthy(disabled)}"
                         >
                     </label>
                 </fieldset>
