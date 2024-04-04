@@ -1,4 +1,4 @@
-import {html, when, createClient} from './index-supabase.js';
+import {html, when, createClient} from './index-externals.js';
 import {SWCElement} from "./SWCElement.js";
 import {ClientCreated} from "./events.js";
 import {showToastMessage, toastTypes} from "./index.js";

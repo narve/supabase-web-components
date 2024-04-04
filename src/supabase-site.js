@@ -1,4 +1,4 @@
-import {html} from './index-supabase.js';
+import {html} from './index-externals.js';
 import {SWCElement} from "./SWCElement.js";
 import './index.js'
 import {NamedJSONComparer} from "./main.js";

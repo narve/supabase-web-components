@@ -1,4 +1,4 @@
-import {html} from './index-supabase.js';
+import {html} from './index-externals.js';
 import {SWCElement} from "./SWCElement.js";
 import {UserLoggedIn} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";

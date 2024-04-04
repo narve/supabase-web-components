@@ -1,4 +1,4 @@
-import {html, styleMap} from './index-supabase.js';
+import {html, styleMap} from './index-externals.js';
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
 import {SourceSelected, RequestSelector, NewItem, EditItem} from "./events.js";
