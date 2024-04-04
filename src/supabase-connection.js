@@ -45,10 +45,11 @@ export class SupabaseConnection extends SWCElement {
 
     apply(event) {
         event.preventDefault()
-        console.log('SupabaseConnection::apply: ', {siteTitle: this.siteTitle, supabaseUrl: this.supabaseUrl, supabaseKey: this.supabaseKey})
+        showToastMessage(toastTypes.info, 'Connecting to ' + this.siteTitle)
+        // console.log('SupabaseConnection::apply: ', {siteTitle: this.siteTitle, supabaseUrl: this.supabaseUrl, supabaseKey: this.supabaseKey})
         const client = createClient(this.supabaseUrl, this.supabaseKey)
-        showToastMessage(toastTypes.info, 'Connected to ' + this.siteTitle)
-        window.dispatchEvent(new CustomEvent(ClientCreated, {detail: {client, siteTitle: this.siteTitle}}))
+        showToastMessage(toastTypes.success, 'Connected to ' + this.siteTitle)
+        this.dispatchEvent(new CustomEvent(ClientCreated, {detail: {client, siteTitle: this.siteTitle}}))
     }
 
     connectedCallback() {

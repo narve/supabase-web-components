@@ -1,6 +1,6 @@
-import {html, ifDefined, ifTruthy} from './index-supabase.js';
+import {html, ifTruthy} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
-import {ClientCreated} from "./events.js";
+import {UserLoggedIn} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
 
 export class SupabaseLoginEmail extends SWCElement {
@@ -30,12 +30,8 @@ export class SupabaseLoginEmail extends SWCElement {
         } else {
             console.log('Login success: ', data)
             showToastMessage(toastTypes.success, 'Login success', data.user.email)
+            this.dispatchEvent(new CustomEvent(UserLoggedIn, {detail: {client: this.client, user: data.user}}))
         }
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
-        window.addEventListener(ClientCreated, e => this.client = e.detail.client)
     }
 
     render() {
@@ -43,6 +39,8 @@ export class SupabaseLoginEmail extends SWCElement {
 
         return html`
             <form>
+                client: ${this.client}
+                
                 <fieldset>
                     <legend>Login with email</legend>
                     <label for="email">

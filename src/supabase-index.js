@@ -1,21 +1,25 @@
-import {html, ifDefined} from './index-supabase.js';
+import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
-import {ClientCreated, SourceSelected} from "./events.js";
+import {ApiFetched, SourceSelected} from "./events.js";
 
 import "./supabase-login-email.js";
 import "./supabase-connection.js";
+import {JSONComparer, NamedJSONComparer} from "./main.js";
+import {showToastMessage, toastTypes} from "./toast.js";
 
 
 export class SupabaseIndex extends SWCElement {
     static properties = {
-        sources: {},
-        source: {},
-        api: {state: true},
+        client: {state: true, hasChanged: NamedJSONComparer('SupabaseIndex.client')},
+        sources: {state: true, hasChanged: NamedJSONComparer('SupabaseIndex.sources')},
+        source: {state: true, hasChanged: NamedJSONComparer('SupabaseIndex.source')},
+        api: {state: true, hasChanged: NamedJSONComparer('SupabaseIndex.api')},
     };
 
     constructor() {
         super();
         this.sources = []
+        this.client = null
         // this.source = this.sources[0]
     }
 
@@ -24,49 +28,54 @@ export class SupabaseIndex extends SWCElement {
         const detail = {
             source,
             api: this.api,
-            client: this.client,
-            message: 'Something important happened'
+            // client: this.client,
+            // message: 'Something important happened'
         }
-        window.dispatchEvent(new CustomEvent(SourceSelected, {detail}));
+        this.dispatchEvent(new CustomEvent(SourceSelected, {detail}));
     }
 
     render() {
         // if(!this.sources) return null
         return html`
-            <details open="${ifDefined(this.client)}">
-                <summary>Index</summary>
-                <ul>
-                    ${this.sources.map(source => html`
-                        <li>
-                            <a href="#${source}" @click="${() => this._selectSource(source)}">
-                                ${source[0]}
-                            </a> (${Object.keys(source[1]).join(",")})
-                        </li>`)}
-                </ul>
-            </details>
+            client: ${this.client}
+            <ul>
+                ${this.sources.map(source => html`
+                    <li>
+                        <a href="#${source}" @click="${() => this._selectSource(source)}">
+                            ${source[0]}
+                        </a> (${Object.keys(source[1]).join(",")})
+                    </li>`)}
+            </ul>
         `
     }
 
-    connectedCallback() {
-        super.connectedCallback()
-        window.addEventListener(ClientCreated, e => this._handleClientCreated(e))
-    }
 
-    _handleClientCreated(event) {
-        const {client} = event.detail
-        this.client = client
-        console.log('index: ', {client})
-        client.from("").select().then(({data, error}) => {
+    set client(client) {
+        // We need this, for some reason, otherwise we get infinite loops or multiple fetches
+        if(client===this._client)
+            return
+
+        this._client = client
+        if (!this._client)
+            return
+
+        console.log('index::client:.set ', new Date(), {client})
+
+        showToastMessage(toastTypes.info, 'Fetching API')
+        this._client.from("").select().then(({data, error}) => {
             if (error) {
                 console.error(error)
+                showToastMessage(toastTypes.error, 'Fetching API failed', error.message)
             } else {
+                showToastMessage(toastTypes.success, 'API fetched')
+                this.dispatchEvent(new CustomEvent(ApiFetched, {detail: {api:data}}))
+                // console.log({paths: Object.entries(data.paths)})
                 this.api = data
-                console.log({paths: Object.entries(data.paths)})
                 // Object.getOwnPropertyDescriptors(data.paths)
                 const sources = Object.entries(data.paths)
                     .filter(s => s[0] !== '/')
-                    // .slice(0, 5)
-                    // .map(s => s.substring(1))
+                // .slice(0, 5)
+                // .map(s => s.substring(1))
                 // console.log({sources})
                 this.sources = sources
                 this._selectSource(sources[1])

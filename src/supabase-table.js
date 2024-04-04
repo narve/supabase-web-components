@@ -11,11 +11,14 @@ export class SupabaseTable extends SWCElement {
         title: {},
         // The default disables shadow-dom, enabling global CSS to affect components
         shadow: {},
+
         hitsPrPage: {},
         sourceDisplay: {},
+        client: {state:true},
 
         // Internal:
         order: {state: true},
+        api: {state: true},
         data: {state: true},
         count: {state: true},
         range: {state: true},
@@ -73,6 +76,7 @@ export class SupabaseTable extends SWCElement {
 
 
     _fetch = async () => {
+        // return
         if (!this.source)
             return
 
@@ -241,6 +245,7 @@ export class SupabaseTable extends SWCElement {
     }
 
     render() {
+
         if (!this.source) return null
 
         if(!Array.isArray(this.data)) {
@@ -250,6 +255,9 @@ export class SupabaseTable extends SWCElement {
             `
         }
         return html`
+            
+            client: ${this.client}
+            
             <div class="supabase-table" part="container">
                 <table>
                     <thead>

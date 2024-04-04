@@ -2,15 +2,14 @@ import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {EditItem, NewItem, RequestSelector} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
-
-
-// const sources = ['item', 'countries']
+import {JSONComparer} from "./main.js";
 
 export class SupabaseItem extends SWCElement {
     static properties = {
-        item: {
-            state: true, hasChanged: (e1, e2) => JSON.stringify(e1) !== JSON.stringify(e2)
-        }, source: {state: true}, api: {state: true}, meta: {state: true}
+        item: {state: true, hasChanged: JSONComparer},
+        source: {state: true, hasChanged: JSONComparer},
+        api: {state: true},
+        meta: {state: true}
     }
 
     constructor() {
@@ -74,7 +73,7 @@ export class SupabaseItem extends SWCElement {
             return html`
                 <label for="${name}">${name} </label>
                 <input id="${name}" name="${name}" value="${this.item[name]}" list="${table}__${column}"
-                       @change="${e => this._setProp(e, name)}"                
+                       @change="${e => this._setProp(e, name)}"
                 >
 
             `

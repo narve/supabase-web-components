@@ -7,7 +7,7 @@ export const toastTypes = {
     error: 'error'
 }
 
-export const showToastMessage = (type, title, description, timeOut = 1000) => {
+export const showToastMessage = (type, title, description = '', timeOut = 1000) => {
     let cbToast = document.querySelector('cb-toast')
 
     if(!cbToast) {
@@ -16,7 +16,7 @@ export const showToastMessage = (type, title, description, timeOut = 1000) => {
         document.body.append(cbToast)
     }
 
-    console.debug({
+    console.debug('TOAST: ', {
         title, //default
         description: description || '', // override default
         timeOut, //default
