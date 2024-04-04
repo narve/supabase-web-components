@@ -22,10 +22,7 @@ export class SupabaseSite extends SWCElement {
                 <summary>${this.client ? 'Connected!' : 'Connect'}</summary>
                 <div>
                     <supabase-connection
-                            @client-created="${e => {
-                                console.log('client-created', e.detail.client)
-                                return this.client = e.detail.client;
-                            }}"
+                            @client-created="${e => this.client = e.detail.client}"
                     ></supabase-connection>
                 </div>
             </details>
@@ -46,10 +43,7 @@ export class SupabaseSite extends SWCElement {
                     <supabase-index
                             .client="${this.client}"
                             @supabase-source-selected="${e => this.source = e.detail.source}"
-                            @api-fetched="${e => {
-                                console.log('api-fetched', e.detail.api)
-                                return this.api = e.detail.api;
-                            }}"
+                            @api-fetched="${e => this.api = e.detail.api}"
                     ></supabase-index>
                 </div>
             </details>
@@ -69,14 +63,13 @@ export class SupabaseSite extends SWCElement {
                 <div>
                     <supabase-item
                             .api="${this.api}"
+                            .source="${this.source}"
                             .client="${this.client}"
                             .item="${this.item}"
                     ></supabase-item>
                 </div>
             </details>
         `
-
-
     }
 }
 

@@ -9,7 +9,8 @@ export class SupabaseItem extends SWCElement {
         item: {state: true, hasChanged: NamedJSONComparer('SupabaseItem.item')},
         source: {state: true, hasChanged: NamedJSONComparer('SupabaseItem.source')},
         api: {state: true},
-        meta: {state: true}
+        meta: {state: true},
+        schema: {state: true},
     }
 
     constructor() {
@@ -17,30 +18,31 @@ export class SupabaseItem extends SWCElement {
         this.item = null
     }
 
-    _handleNewItem(evt) {
-        console.log('NEW ITEM: ', evt.detail)
-        this.item = evt.detail.item
-        this.source = evt.detail.source
-        this.api = evt.detail.api
-        this.client = evt.detail.client
+    // get item(){
+    //     return this._item
+    // }
 
-        const getRef = s => {
-            const ref = s.substring(2).split('/')
-            console.log('refs: ', s, ref)
-            const o1 = this.api[ref[0]]
-            return o1[ref[1]]
+    async updated(changedProperties) {
+        if (changedProperties.has('source') ) {
+
+            // Re-calculate which schema to use
+            const getRef = s => {
+                const ref = s.substring(2).split('/')
+                console.log('refs: ', s, ref)
+                const o1 = this.api[ref[0]]
+                return o1[ref[1]]
+            }
+
+            const p0Ref = this.api.paths[this.source[0]]['post']['parameters'][0]['$ref']
+            // console.log({p0})
+            // const p0ref = p0.substring("#/parameters/".length)
+            const pDef = getRef(p0Ref)
+            console.log({pDef})
+
+            const schema = getRef(pDef.schema['$ref'])
+            console.log({sRef: schema})
+            this.schema = schema
         }
-
-        const p0Ref = this.api.paths[this.source[0]]['post']['parameters'][0]['$ref']
-        // console.log({p0})
-        // const p0ref = p0.substring("#/parameters/".length)
-        const pDef = getRef(p0Ref)
-        console.log({pDef})
-
-        const schema = getRef(pDef.schema['$ref'])
-        console.log({sRef: schema})
-        this.schema = schema
-
     }
 
     _field(name, value) {
@@ -54,17 +56,19 @@ export class SupabaseItem extends SWCElement {
             const table = parts[1]
             const column = parts[2]
             console.log({table, column})
-            window.dispatchEvent(new CustomEvent(RequestSelector, {
-                detail: {
-                    table, column, client: this.client
-                }
-            }))
+            console.log(`SWCElement::${this.constructor.name} dispatch`, RequestSelector, {
+                table,
+                column,
+                client: this.client
+            })
+
+            // TODO: Is there a better way?
+            window.dispatchEvent(new CustomEvent(RequestSelector, {detail: {table, column, client: this.client}}))
             return html`
                 <label for="${name}">${name} </label>
                 <input id="${name}" name="${name}" value="${this.item[name]}" list="${table}__${column}"
-                       @change="${e => this._setProp(e, name)}"
+                       @input="${e => this._setProp(e, name)}"
                 >
-
             `
         }
 
@@ -90,9 +94,8 @@ export class SupabaseItem extends SWCElement {
         return html`
             <label for="${name}">${label} </label>
             <input type="text" id="${name}" name="${name}" value="${this.item[name]}"
-                   @change="${e => this._setProp(e, name)}"
+                   @input="${e => this._setProp(e, name)}"
             >
-
         `
 
     }
@@ -131,23 +134,24 @@ export class SupabaseItem extends SWCElement {
         this.item[name] = e.target.value
         console.log('SET PROP: ', name, e.target.value)
         e.preventDefault()
-        // this.item = {...this.item}
-        // this.updated(new Map(Object.entries(this.item))) //['item', this.item]))
-        // console.log('SET PROP 2: ', this.item)
         this.requestUpdate();
     }
 
     render() {
-        if (!this.item)
-            return null
         return html`
-            <!--            ITEM: ${JSON.stringify(this.item)}-->
 
-            ${this._form()}
+            ${this.item ? this._form() : html`<p>No item</p>`}
 
+            <div class="debugging">
+                <h3>Item</h3>
+                <pre>${JSON.stringify(this.item, null, '  ')}</pre>
 
-            <!--        <pre>${JSON.stringify(this.schema, null, '  ')}</pre>-->
-
+                <h3>Schema</h3>
+                <pre>${JSON.stringify(this.schema, null, '  ')}</pre>
+                
+                <h3>API</h3>
+                <pre>${JSON.stringify(this.api, null, '  ')}</pre>
+            </div>
         `
     }
 }

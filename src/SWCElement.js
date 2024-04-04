@@ -7,4 +7,9 @@ export class SWCElement extends LitElement {
             ? super.createRenderRoot()
             : this;
     }
+
+    dispatch(eventType, detail) {
+        console.log(`SWCElement::${this.constructor.name} dispatch`, eventType, detail)
+        this.dispatchEvent(new CustomEvent(eventType, {detail}))
+    }
 }

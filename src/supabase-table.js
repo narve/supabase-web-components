@@ -1,20 +1,16 @@
 import {html, styleMap} from './index-externals.js';
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
-import {NewItem, EditItem} from "./events.js";
+import {NewItem, EditItem, RequestSelector} from "./events.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
-        // Mandatory:
         source: {},
-        // Optional:
         title: {},
-        // The default disables shadow-dom, enabling global CSS to affect components
-        shadow: {},
 
         hitsPrPage: {},
         sourceDisplay: {},
-        client: {state:true},
+        client: {state: true},
 
         // Internal:
         order: {state: true},
@@ -41,32 +37,11 @@ export class SupabaseTable extends SWCElement {
             float: 'right',
         }
     }
-    //
-    // connectedCallback() {
-    //     super.connectedCallback();
-    //     window.addEventListener(SourceSelected,e => this._handleSourceSelected(e));
-    //     window.addEventListener(RequestSelector,e => this._handleSelectorRequested(e));
-    // }
-    //
-    // disconnectedCallback() {
-    //     window.removeEventListener(SourceSelected,
-    //         e => this._handleSourceSelected(e));
-    //     super.disconnectedCallback();
-    // }
 
-    async _handleSourceSelected(event) {
-        this.source = event.detail.source
-        this.order = null
-        this.api = event.detail.api
-        this.client = event.detail.client
-        // const args = new Map(Object.entries(event.detail))
-        console.log('source-selected: ', event.detail)
-        // await this.updated(args)
-        // await this._fetch()
-
-        // this._newItem()
+    connectedCallback() {
+        super.connectedCallback();
+        window.addEventListener(RequestSelector, e => this._handleSelectorRequested(e));
     }
-
 
     async updated(changedProperties) {
         if (changedProperties.has('source') || changedProperties.has('range')) {
@@ -74,9 +49,7 @@ export class SupabaseTable extends SWCElement {
         }
     }
 
-
     _fetch = async () => {
-        // return
         if (!this.source)
             return
 
@@ -185,7 +158,7 @@ export class SupabaseTable extends SWCElement {
             client: this.client,
             message: 'Edit item'
         }
-        window.dispatchEvent(new CustomEvent(EditItem, {detail}));
+        this.dispatch(EditItem, detail);
     }
 
     async _delete(row) {
@@ -235,7 +208,7 @@ export class SupabaseTable extends SWCElement {
             client: this.client,
             message: 'New item'
         }
-        window.dispatchEvent(new CustomEvent(NewItem, {detail}));
+        this.dispatch(NewItem, detail);
     }
 
     get sourceName() {
@@ -248,16 +221,13 @@ export class SupabaseTable extends SWCElement {
 
         if (!this.source) return null
 
-        if(!Array.isArray(this.data)) {
+        if (!Array.isArray(this.data)) {
             return html`
                 <h3>Non-table data: </h3>
                 <pre>${this.data}</pre>
             `
         }
         return html`
-            
-            client: ${this.client}
-            
             <div class="supabase-table" part="container">
                 <table>
                     <thead>
@@ -303,7 +273,7 @@ export class SupabaseTable extends SWCElement {
             .from(table)
             .select('*', {count: 'exact'})
 
-        if(error) {
+        if (error) {
             showToastMessage(toastTypes.error, "Error", error.message, 3000)
             return
         }

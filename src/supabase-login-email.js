@@ -28,9 +28,8 @@ export class SupabaseLoginEmail extends SWCElement {
         if(error) {
             showToastMessage(toastTypes.error, 'Login failed', error.message)
         } else {
-            console.log('Login success: ', data)
             showToastMessage(toastTypes.success, 'Login success', data.user.email)
-            this.dispatchEvent(new CustomEvent(UserLoggedIn, {detail: {client: this.client, user: data.user}}))
+            this.dispatch(UserLoggedIn, {client: this.client, user: data.user})
         }
     }
 
@@ -39,8 +38,6 @@ export class SupabaseLoginEmail extends SWCElement {
 
         return html`
             <form>
-                client: ${this.client}
-                
                 <fieldset>
                     <legend>Login with email</legend>
                     <label for="email">
