@@ -2,12 +2,12 @@ import {html} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import {EditItem, NewItem, RequestSelector} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
-import {JSONComparer} from "./main.js";
+import {NamedJSONComparer} from "./main.js";
 
 export class SupabaseItem extends SWCElement {
     static properties = {
-        item: {state: true, hasChanged: JSONComparer},
-        source: {state: true, hasChanged: JSONComparer},
+        item: {state: true, hasChanged: NamedJSONComparer('SupabaseItem.item')},
+        source: {state: true, hasChanged: NamedJSONComparer('SupabaseItem.source')},
         api: {state: true},
         meta: {state: true}
     }

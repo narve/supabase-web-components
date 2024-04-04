@@ -298,7 +298,6 @@ export class SupabaseTable extends SWCElement {
         console.log('selector requested: ', event.detail)
         const {table, column, client} = event.detail
         const ref = `${table}__${column}`
-        const e = document.createElement('div')
 
         const {data, error, count} = await client
             .from(table)
@@ -309,8 +308,9 @@ export class SupabaseTable extends SWCElement {
             return
         }
 
-        showToastMessage(toastTypes.info, `Fetched selector ${ref}`, '')
+        showToastMessage(toastTypes.info, `Fetched selector ${ref}`, count + ' items fetched')
 
+        const e = document.createElement('div')
         e.innerHTML = `
             <datalist id="${ref}">
             ${data.map(row => `

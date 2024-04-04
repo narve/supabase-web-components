@@ -1,7 +1,7 @@
 import {html, ifFalsy, ifTruthy} from './index-supabase.js';
 import {SWCElement} from "./SWCElement.js";
 import './index.js'
-import {JSONComparer, NamedJSONComparer} from "./main.js";
+import {NamedJSONComparer} from "./main.js";
 
 
 export class SupabaseSite extends SWCElement {
@@ -10,7 +10,7 @@ export class SupabaseSite extends SWCElement {
         client: {state: true},
         api: {state: true},
         user: {state: true},
-        source: {state: true, hasChanged: JSONComparer},
+        source: {state: true, hasChanged: NamedJSONComparer('SupabaseSite.source')},
         item: {state: true, hasChanged: NamedJSONComparer('SupabaseSite.item')},
     }
 

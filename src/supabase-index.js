@@ -4,7 +4,7 @@ import {ApiFetched, SourceSelected} from "./events.js";
 
 import "./supabase-login-email.js";
 import "./supabase-connection.js";
-import {JSONComparer, NamedJSONComparer} from "./main.js";
+import {NamedJSONComparer} from "./main.js";
 import {showToastMessage, toastTypes} from "./toast.js";
 
 
