@@ -1,8 +1,17 @@
+
+/**
+ * @typedef PathObject
+ * @prop {?object} get
+ * @prop {?object} post
+ * @prop {?object} put
+ * @prop {?object} delete
+ */
+
 /**
  * @typedef OpenAPI
  * @prop {string} swagger
  * @prop {object} info
- * @prop {object} paths
+ * @prop {PathObject} paths
  */
 
 /** Returns a string[] of all the paths in the OpenAPI document,
