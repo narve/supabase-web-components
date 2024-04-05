@@ -266,8 +266,16 @@ export class SupabaseTable extends SWCElement {
 
     async _handleSelectorRequested(event) {
         console.log('selector requested: ', event.detail)
+
         const {table, column, client} = event.detail
         const ref = `${table}__${column}`
+
+        const found = document.getElementById(ref)
+        if(found) {
+            console.log('Selector already exists: ', ref)
+            return
+        }
+
 
         const {data, error, count} = await client
             .from(table)
