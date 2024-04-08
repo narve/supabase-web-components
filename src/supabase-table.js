@@ -2,6 +2,7 @@ import {html, styleMap} from './index-externals.js';
 import {SWCElement} from "./SWCElement.js";
 import {showToastMessage, toastTypes} from "./toast.js";
 import {NewItem, EditItem, RequestSelector} from "./events.js";
+import {getFatSelect} from "./supabase-utils.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
@@ -11,6 +12,8 @@ export class SupabaseTable extends SWCElement {
         hitsPrPage: {},
         sourceDisplay: {},
         client: {state: true},
+
+        select: {state:true},
 
         // Internal:
         order: {state: true},
@@ -30,6 +33,7 @@ export class SupabaseTable extends SWCElement {
         //     // ascending: true
         // }
         this.order = null
+        this.select = "*"
         this.shadow = false
         this.hitsPrPage = 5
         this.range = [0, this.hitsPrPage - 1]
@@ -45,7 +49,10 @@ export class SupabaseTable extends SWCElement {
 
     async updated(changedProperties) {
         if (changedProperties.has('source') || changedProperties.has('range')) {
-            await this._fetch();
+            if(this.source) {
+                this.select = getFatSelect(this.api, this.source[0])
+                await this._fetch();
+            }
         }
     }
 
@@ -54,10 +61,11 @@ export class SupabaseTable extends SWCElement {
             return
 
         const sourceUrl = this.source[0].substring(1)
+        // const sourceUrl = this.select
 
         const response = await this.client
             .from(sourceUrl)
-            .select('*', {count: 'exact'})
+            .select(this.select, {count: 'exact'})
             .range(this.range[0], this.range[1])
         // const response =
         // this.order
@@ -139,6 +147,13 @@ export class SupabaseTable extends SWCElement {
     }
 
     _cell(cell) {
+        if(cell instanceof Object) {
+            return html`
+                <td>
+<!--                    <pre>${JSON.stringify(cell, null, 2)}</pre>-->
+                    <span>${cell.name} (#${cell.id})</span>
+                </td>`
+        }
         return html`
             <td>${cell}</td>`
     }
@@ -247,6 +262,11 @@ export class SupabaseTable extends SWCElement {
                                     &#x21BB;
                                 </button>
                             </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="99">
+                            <input value="${this.select}" >
                         </th>
                     </tr>
                     ${this._headers()}

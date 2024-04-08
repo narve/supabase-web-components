@@ -2,7 +2,7 @@ import {api as sampleApi} from './openapi-sample.js'
 
 import {expect, test} from '@jest/globals';
 
-import {getPathArray, getPathObjects, getPaths} from '../src/openapi-util.js'
+import {getPathArray, getPathObjects, getPaths} from '../src/openapi-utils.js'
 
 
 test('itShouldExtractPaths', () => {

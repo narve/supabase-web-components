@@ -12,6 +12,7 @@
  * @prop {string} swagger
  * @prop {object} info
  * @prop {PathObject} paths
+ * @prop {object} definitions
  */
 
 /** Returns a string[] of all the paths in the OpenAPI document,
@@ -47,4 +48,27 @@ export const getPathObjects = (api) =>
         }))
 
 
+const getRef = s => {
+    const ref = s.substring(2).split('/')
+    console.log('refs: ', s, ref)
+    const o1 = this.api[ref[0]]
+    return o1[ref[1]]
+}
 
+/** Returns the schema of the operation on the path.
+ * @returns {{path: string, title: string, object: object}[]}
+ * @param {OpenAPI} api
+ * @param {string} path
+ * @param {string} method
+ */
+export const getSchema = (api, path, method) => {
+    const pathObject = api.paths[path]
+    if(!pathObject)
+        throw new Error('Schema not found for path: ' + path)
+    const schemaObj = pathObject[method].responses[200].schema
+    const fullRef = schemaObj.items['$ref']
+    const ref = fullRef.substring(2).split('/')
+    const obj1 = api[ref[0]]
+    const obj2 = obj1[ref[1]]
+    return obj2
+ }
