@@ -5,10 +5,15 @@ import {showToastMessage, toastTypes} from "./index.js";
 
 const configs = [
     {
-        siteTitle: 'DV8MultiApp',
-        supabaseUrl: 'https://xupzhicrqmyvtgztrmjb.supabase.co',
-        supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxMDExNjg5NCwiZXhwIjoxOTI1NjkyODk0fQ.cvK8Il2IbFqU03Q4uOhSQ9jxFkWELLACX7mJKyy_Ue0',
+        siteTitle: 'Enrest',
+        supabaseUrl: 'https://wuxcrmvzflfdqccxkeig.supabase.co',
+        supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1eGNybXZ6ZmxmZHFjY3hrZWlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1Nzk1OTYsImV4cCI6MjAyODE1NTU5Nn0.48D1wN5alsizO3mT28Ct3C8rT6JkOF2XCS39PUgc6u8',
     },
+    // {
+    //     siteTitle: 'DV8MultiApp',
+    //     supabaseUrl: 'https://xupzhicrqmyvtgztrmjb.supabase.co',
+    //     supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxMDExNjg5NCwiZXhwIjoxOTI1NjkyODk0fQ.cvK8Il2IbFqU03Q4uOhSQ9jxFkWELLACX7mJKyy_Ue0',
+    // },
     {
         siteTitle: 'FOBS DEV',
         supabaseUrl: 'https://ckckpffruooypdyizcaq.supabase.co',

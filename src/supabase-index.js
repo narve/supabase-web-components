@@ -75,7 +75,7 @@ export class SupabaseIndex extends SWCElement {
                 // .map(s => s.substring(1))
                 // console.log({sources})
                 this.sources = sources
-                this._selectSource(sources[1])
+                this._selectSource(sources[0])
             }
         })
     }

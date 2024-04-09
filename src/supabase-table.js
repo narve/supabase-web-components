@@ -151,7 +151,8 @@ export class SupabaseTable extends SWCElement {
             return html`
                 <td>
 <!--                    <pre>${JSON.stringify(cell, null, 2)}</pre>-->
-                    <span>${cell.name} (#${cell.id})</span>
+<!--                    <span>${cell.name} (#${cell.id})</span>-->
+                    <span>${Object.entries(cell).map(sa=>sa[1])[1]} (#${cell.id})</span>
                 </td>`
         }
         return html`
@@ -173,7 +174,7 @@ export class SupabaseTable extends SWCElement {
             client: this.client,
             message: 'Edit item'
         }
-        this.dispatch(EditItem, detail);
+        this.dispatch(NewItem, detail);
     }
 
     async _delete(row) {

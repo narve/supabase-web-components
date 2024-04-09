@@ -3,6 +3,7 @@ import {SWCElement} from "./SWCElement.js";
 import {RequestSelector} from "./events.js";
 import {showToastMessage, toastTypes} from "./toast.js";
 import {NamedJSONComparer} from "./main.js";
+import {getSchema} from "./openapi-utils.js";
 
 export class SupabaseItem extends SWCElement {
     static properties = {
@@ -42,6 +43,8 @@ export class SupabaseItem extends SWCElement {
             const schema = getRef(pDef.schema['$ref'])
             console.log({sRef: schema})
             this.schema = schema
+
+            this.schema = getSchema(this.api, this.source[0], 'post')
         }
     }
 

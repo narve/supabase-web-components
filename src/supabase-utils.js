@@ -8,34 +8,66 @@ import {getPaths, getSchema} from './openapi-utils.js'
  */
 export const getFatSelect = (api, path) => {
     const schema = getSchema(api, path, 'get')
-    const fks = getFKs(schema)
 
+    let selects = []
+    for (const [colName, colInfo] of Object.entries(schema.properties)) {
+        if (isFK(colInfo)) {
 
-    let select = "*";
-    for (const fkProp of fks) {
+            // const referencedTableLabelColumn = 'name'
+            const [table, column] = getFKRef(colName, colInfo)
 
+            if (table === 'users') {
+                // This does not work without special care, as 'user' is a view, and auth.users is not visible :(
+                selects.push('owner_id: owner(id, email)')
+            } else {
+                const referencedSchema = getSchema(api, `/${table}`, 'get')
+                const candidates = ['name', 'title', 'label', 'description', 'email', column, 'id']
+                const referencedTableLabelColumn = candidates.find(c => c in referencedSchema.properties) || 'id'
+                // select += `, ${fk.fk.table}!${fk.name} ( id, ${fk.fk.select} )`;
+                // select += `, ${fk.fk.table}!${fk.fk.fk_name} ( id, ${fk.fk.select} )`;
 
-        // const referencedTableLabelColumn = 'name'
-        const [table, column] = getFKRef(fkProp[0], fkProp[1])
+                // NB: To include fk-name, use this:
+                // select += `, ${fkProp[0]}!${fkName} (${column}, ${referencedTableLabelColumn})`;
 
-        if(table === 'user') {
-            // This does not work, as 'user' is a view, and auth.users is not visible :(
-            continue
+                selects.push(`${colName} (${column}, ${referencedTableLabelColumn})`);
+
+            }
+
+        } else {
+            selects.push(colName)
         }
-
-        const referencedSchema = getSchema(api, `/${table}`, 'get')
-        const candidates = ['name', 'title', 'label', 'description', 'email', column, 'id']
-        const referencedTableLabelColumn = candidates.find(c => c in referencedSchema.properties) || 'id'
-        // select += `, ${fk.fk.table}!${fk.name} ( id, ${fk.fk.select} )`;
-        // select += `, ${fk.fk.table}!${fk.fk.fk_name} ( id, ${fk.fk.select} )`;
-
-        // NB: To include fk-name, use this:
-        // select += `, ${fkProp[0]}!${fkName} (${column}, ${referencedTableLabelColumn})`;
-
-        select += `, ${fkProp[0]} (${column}, ${referencedTableLabelColumn})`;
     }
-
-    return select
+    return selects.join(', ')
+    //
+    // const fks = getFKs(schema)
+    //
+    //
+    // let select = "*";
+    // for (const fkProp of fks) {
+    //
+    //
+    //     // const referencedTableLabelColumn = 'name'
+    //     const [table, column] = getFKRef(fkProp[0], fkProp[1])
+    //
+    //     if(table === 'users') {
+    //         select += ', owner(id, email)'
+    //         // This does not work, as 'user' is a view, and auth.users is not visible :(
+    //         continue
+    //     }
+    //
+    //     const referencedSchema = getSchema(api, `/${table}`, 'get')
+    //     const candidates = ['name', 'title', 'label', 'description', 'email', column, 'id']
+    //     const referencedTableLabelColumn = candidates.find(c => c in referencedSchema.properties) || 'id'
+    //     // select += `, ${fk.fk.table}!${fk.name} ( id, ${fk.fk.select} )`;
+    //     // select += `, ${fk.fk.table}!${fk.fk.fk_name} ( id, ${fk.fk.select} )`;
+    //
+    //     // NB: To include fk-name, use this:
+    //     // select += `, ${fkProp[0]}!${fkName} (${column}, ${referencedTableLabelColumn})`;
+    //
+    //     select += `, ${fkProp[0]} (${column}, ${referencedTableLabelColumn})`;
+    // }
+    //
+    // return select
 }
 
 export const isFK = (prop) => {

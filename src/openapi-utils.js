@@ -60,15 +60,25 @@ const getRef = s => {
  * @param {OpenAPI} api
  * @param {string} path
  * @param {string} method
+ * @param {?number} responseCode
  */
-export const getSchema = (api, path, method) => {
+export const getSchema = (api, path, method, responseCode = null) => {
     const pathObject = api.paths[path]
+    if(!responseCode) {
+        responseCode = method === 'get' ? 200 : 201
+    }
     if(!pathObject)
         throw new Error('Schema not found for path: ' + path)
-    const schemaObj = pathObject[method].responses[200].schema
+    if(!pathObject[method])
+        throw new Error('Schema not found for method: ' + method)
+    if(!pathObject[method].responses[responseCode])
+        throw new Error('Schema not found for response code: ' + responseCode)
+    const schemaObj = pathObject[method].responses[responseCode].schema
     const fullRef = schemaObj.items['$ref']
     const ref = fullRef.substring(2).split('/')
     const obj1 = api[ref[0]]
     const obj2 = obj1[ref[1]]
     return obj2
  }
+
+ // TODO: create get-operation-parameters, similar to getSchema, based on code in supabase-item
