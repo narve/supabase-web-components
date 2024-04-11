@@ -62,7 +62,7 @@ export class SupabaseConnection extends SWCElement {
         if (showConfigs()) {
             this.setConfig(configs[0])
             // Apply immediately:
-            // this.apply(new Event('click'))
+            this.apply(new Event('click'))
         }
     }
 

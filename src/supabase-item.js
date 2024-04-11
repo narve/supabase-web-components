@@ -24,7 +24,7 @@ export class SupabaseItem extends SWCElement {
     // }
 
     async updated(changedProperties) {
-        if (changedProperties.has('source') ) {
+        if (changedProperties.has('source')) {
 
             // Re-calculate which schema to use
             const getRef = s => {
@@ -44,7 +44,7 @@ export class SupabaseItem extends SWCElement {
             console.log({sRef: schema})
             this.schema = schema
 
-            this.schema = getSchema(this.api, this.source[0], 'post')
+            this.schema = getSchema(this.api, this.source[0], 'get')
         }
     }
 
@@ -121,15 +121,23 @@ export class SupabaseItem extends SWCElement {
         event.preventDefault()
         console.log('SAVE: ', event, this.item)
 
+        const item = {}
+
+        for (const [n, v] of Object.entries(this.item)) {
+            if (v instanceof Object)
+                item[n] = v.id
+            else
+                item[n] = v
+        }
 
         const {data, error} = await this.client.from(this.source[0].substring(1))
-            .upsert([this.item])
+            .upsert([item])
             .select()
         console.log({data, error})
         if (error) {
-            showToastMessage(toastTypes.error, 'Could not UPSERT', error.message, 5000)
+            showToastMessage(toastTypes.error, 'Could not save item', error.message, 5000)
         } else {
-            showToastMessage(toastTypes.success, 'UPSERTED', ' ')
+            showToastMessage(toastTypes.success, 'Item saved', ' ')
         }
     }
 
@@ -151,7 +159,7 @@ export class SupabaseItem extends SWCElement {
 
                 <h3>Schema</h3>
                 <pre>${JSON.stringify(this.schema, null, '  ')}</pre>
-                
+
                 <h3>API</h3>
                 <pre>${JSON.stringify(this.api, null, '  ')}</pre>
             </div>

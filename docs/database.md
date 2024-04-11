@@ -14,6 +14,15 @@ To revert to non-fake-user mode
     set role postgres
 
 
+Reload cache
+---
+
+```postgresql
+    NOTIFY pgrst, 'reload schema'
+
+
+```
+
 Creating id columns
 ---
 
@@ -22,16 +31,22 @@ Creating id columns
 
 To create a function to set owner_id
 ---
+```postgresql
 
-    create function public.tg_before_insert() returns trigger
+    create or replace function public.tg_before_insert() returns trigger
     language plpgsql
     as
     $$
     begin
-    new.owner_id = auth.uid();
+    new.created_by = auth.uid();
+    new.modified_by = auth.uid();
+    new.created_at = now();
+    new.modified_at = now();
     return new;
     end;
     $$;
+
+```
 
 
 Add trigger to a new table
@@ -47,5 +62,70 @@ Add trigger to a new table
 To set password for a user
 ---
 
-    select crypt('my-password', gen_salt('bf'))
-    update auth.users set pass = crypt('my-password', gen_salt('bf')) where XXX = 'XXX';
+```postgresql
+
+    select crypt('my-password', gen_salt('bf'));
+    update auth.users set encrypted_password = crypt('my-password', gen_salt('bf')) where email = 'mrnarve@gmail.com';
+
+
+```
+
+
+Add created/modified by/at
+---
+
+```postgresql
+
+    alter table location drop column owner_id;
+    delete from location;
+
+    alter table location add column created_by uuid not null references auth.users (id);
+    alter table location add column modified_by uuid not null references auth.users (id);
+    alter table location add column created_at timestamp not null default now();
+    alter table location add column modified_at timestamp not null default now();
+
+
+
+```
+
+Add policy to manage own records
+---
+
+````postgresql
+alter table location enable row level security ;
+
+drop policy if exists "CRUD OWN RECORDS" on location;
+create policy "CRUD OWN RECORDS"
+
+    on "public"."location"
+
+    as PERMISSIVE
+
+    for ALL
+
+    to public
+
+    using (
+        created_by = auth.uid()
+    );
+
+
+````
+
+
+Policy to view public todos
+---
+
+```postgresql
+
+alter table todo rename column public to is_public;
+
+update todo set is_public = false where title = 'mrnarves todo 2';
+
+drop policy if exists "Read public items" on todo;
+create policy "Read public items" on todo 
+as permissive for select to public
+using (is_public = true)
+
+
+```

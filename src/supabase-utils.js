@@ -9,6 +9,8 @@ import {getPaths, getSchema} from './openapi-utils.js'
 export const getFatSelect = (api, path) => {
     const schema = getSchema(api, path, 'get')
 
+    const mainTable = path.substring(1)
+
     let selects = []
     for (const [colName, colInfo] of Object.entries(schema.properties)) {
         if (isFK(colInfo)) {
@@ -18,7 +20,8 @@ export const getFatSelect = (api, path) => {
 
             if (table === 'users') {
                 // This does not work without special care, as 'user' is a view, and auth.users is not visible :(
-                selects.push('owner_id: owner(id, email)')
+                // const name = colName.split("_")[0]
+                selects.push(`${colName} : users!${mainTable}_${colName}_fkey (id, email)`)
             } else {
                 const referencedSchema = getSchema(api, `/${table}`, 'get')
                 const candidates = ['name', 'title', 'label', 'description', 'email', column, 'id']

@@ -142,11 +142,12 @@ export class SupabaseTable extends SWCElement {
                             : null
                     }
                 </th>
-                ${Object.values(row).map(this._cell)}
+                ${Object.values(row).map((c,i) => this._cell(c,i))}
             </tr>`
     }
 
-    _cell(cell) {
+    _cell(cell, index) {
+
         if(cell instanceof Object) {
             return html`
                 <td>
@@ -154,6 +155,10 @@ export class SupabaseTable extends SWCElement {
 <!--                    <span>${cell.name} (#${cell.id})</span>-->
                     <span>${Object.entries(cell).map(sa=>sa[1])[1]} (#${cell.id})</span>
                 </td>`
+        } else if(cell instanceof Date) {
+            return html`
+            <td><time datetime="${cell}">${cell}</time> </td>
+            `
         }
         return html`
             <td>${cell}</td>`
@@ -237,7 +242,7 @@ export class SupabaseTable extends SWCElement {
 
         if (!this.source) return null
 
-        if (!Array.isArray(this.data)) {
+        if (this.data && !Array.isArray(this.data)) {
             return html`
                 <h3>Non-table data: </h3>
                 <pre>${this.data}</pre>

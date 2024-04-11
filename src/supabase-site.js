@@ -35,10 +35,10 @@ export class SupabaseSite extends SWCElement {
             <details ?open="${this.client && !this.user}">
                 <summary>${this.user ? `Logged in as ${this.user.email}` : 'Log in'}</summary>
                 <div>
-                    <html-include no-shadow src="../html/login-email.html"></html-include>
+<!--                    <html-include no-shadow src="../html/login-email.html"></html-include>-->
 
 
-                    ${true ? '' : html`
+                    ${false ? '' : html`
                     <supabase-login-email
                             my-atrriubte="cool"
                             .client="${this.client}"
