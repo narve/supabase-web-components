@@ -4,6 +4,9 @@ Create a view that references `auth.users`:
     create view public.users as (select id, email from auth.users)
 
 
+
+
+
 Create user references: 
 ---
 
