@@ -2,6 +2,7 @@ import {html} from './index-externals.js';
 import {SWCElement} from "./SWCElement.js";
 import './index.js'
 import {NamedJSONComparer} from "./main.js";
+import {showToastMessage, toastTypes} from "./toast.js";
 
 
 export class SupabaseSite extends SWCElement {
@@ -12,6 +13,10 @@ export class SupabaseSite extends SWCElement {
         user: {state: true},
         source: {state: true, hasChanged: NamedJSONComparer('SupabaseSite.source')},
         item: {state: true, hasChanged: NamedJSONComparer('SupabaseSite.item')},
+    }
+
+    constructor() {
+        super()
     }
 
     render() {
@@ -30,10 +35,16 @@ export class SupabaseSite extends SWCElement {
             <details ?open="${this.client && !this.user}">
                 <summary>${this.user ? `Logged in as ${this.user.email}` : 'Log in'}</summary>
                 <div>
+                    <html-include no-shadow src="../html/login-email.html"></html-include>
+
+
+                    ${true ? '' : html`
                     <supabase-login-email
+                            my-atrriubte="cool"
                             .client="${this.client}"
                             @user-logged-in="${e => this.user = e.detail.user}"
                     ></supabase-login-email>
+                    `}
                 </div>
             </details>
 

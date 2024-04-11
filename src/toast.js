@@ -36,3 +36,12 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
         type,
     })
 }
+
+window.addEventListener('error', event => {
+    // console.error('My error: ', {event})
+    showToastMessage(toastTypes.error, 'Internal error', event.error.message)
+})
+window.addEventListener('unhandledrejection', event => {
+    // console.error(`My unhandledrejection: ${event.promise}, ${event.reason}`)
+    showToastMessage(toastTypes.error, 'Internal error in promise handling', event.reason?.toString())
+})

@@ -42,3 +42,10 @@ Add trigger to a new table
     on public.XXX
     for each row
     execute procedure public.tg_before_insert();
+
+
+To set password for a user
+---
+
+    select crypt('my-password', gen_salt('bf'))
+    update auth.users set pass = crypt('my-password', gen_salt('bf')) where XXX = 'XXX';

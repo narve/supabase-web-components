@@ -8,8 +8,14 @@
     <script src="index.js" type="module"></script>
 
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/chimeracss/build/chimera.css"/>
-
+<!--    <script type="module" src='https://unpkg.com/html-include-element'></script>-->
     <style>
+        /*:defined {*/
+        /*    outline: 2px solid green ;*/
+        /*}*/
+        :not(:defined) {
+            outline: dashed red ;
+        }
         details summary {
             cursor: pointer;
         }
@@ -28,8 +34,10 @@
 
 <body>
 
-<supabase-site></supabase-site>
+<supabase-site>
+</supabase-site>
 <cb-toast></cb-toast>
+
 </body>
 
 </html>
