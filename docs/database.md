@@ -129,3 +129,14 @@ using (is_public = true)
 
 
 ```
+
+Snoke tables
+---
+```postgresql
+create table snoke_request (
+    id uuid primary key default gen_random_uuid(),
+    full_name text not null,
+    county text,
+    year_of_birth int4
+)
+```

@@ -1,4 +1,4 @@
-import {getPaths, getSchema} from './openapi-utils.js'
+import {getSchema} from './openapi-utils.js'
 
 
 /** Returns a suitable select-part.

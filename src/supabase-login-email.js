@@ -39,7 +39,7 @@ export class SupabaseLoginEmail extends SWCElement {
         if (changedProperties.has('client') && this.client) {
             const { data: { user } } = await this.client.auth.getUser()
             this.user = user.email
-            console.log('user: ', this.user)
+            // console.log('user: ', this.user)
         }
     }
 
