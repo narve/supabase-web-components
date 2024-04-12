@@ -11,7 +11,7 @@
 5||-9223372036854775808|T|G
 5||10|T|G
 5||16595|T|G</Grants>
-      <IntrospectionStateNumber>1336</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1340</IntrospectionStateNumber>
       <ServerVersion>15.1</ServerVersion>
       <StartupTime>1712579638</StartupTime>
       <TimeZones>true ACDT
@@ -1498,7 +1498,7 @@ true posixrules
 16949||16732|C|G
 16949||16420|U|G
 16949||16732|U|G</Grants>
-      <IntrospectionStateNumber>1336</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1340</IntrospectionStateNumber>
       <ObjectId>5</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -5618,8 +5618,8 @@ idle_in_transaction_session_timeout=60000</Config>
 28573||10|w|G
 28573||16535|w|G
 28573||16595|w|G</Grants>
-      <IntrospectionStateNumber>1336</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-04-11.23:35:41</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>1340</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-04-11.23:37:46</LastIntrospectionLocalTimestamp>
       <ObjectId>16488</ObjectId>
       <StateNumber>859</StateNumber>
       <OwnerName>supabase_admin</OwnerName>
@@ -5767,8 +5767,8 @@ idle_in_transaction_session_timeout=60000</Config>
 29072||16478|X|G
 29072||16479|X|G
 29072||16480|X|G</Grants>
-      <IntrospectionStateNumber>1336</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-04-11.23:35:41</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>1340</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-04-11.23:37:46</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>749</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -6077,7 +6077,7 @@ webauthn</Labels>
     </routine>
     <table id="330" parent="290" name="location">
       <ObjectId>29046</ObjectId>
-      <StateNumber>1323</StateNumber>
+      <StateNumber>1337</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -7982,33 +7982,26 @@ default</CollationNames>
       <StateNumber>1318</StateNumber>
       <UsingExpression>(created_by = auth.uid())</UsingExpression>
     </security-policy>
-    <security-policy id="594" parent="331" name="Read public items">
-      <ObjectId>29138</ObjectId>
-      <OperationType>select</OperationType>
-      <Permissive>1</Permissive>
-      <StateNumber>1335</StateNumber>
-      <UsingExpression>(is_public = true)</UsingExpression>
-    </security-policy>
-    <trigger id="595" parent="331" name="location_before_insert">
+    <trigger id="594" parent="331" name="location_before_insert">
       <Events>I</Events>
       <ObjectId>29045</ObjectId>
       <StateNumber>1172</StateNumber>
       <Turn>before-row</Turn>
       <CallRoutineId>29038</CallRoutineId>
     </trigger>
-    <trigger id="596" parent="331" name="todo_before_insert">
+    <trigger id="595" parent="331" name="todo_before_insert">
       <Events>I</Events>
       <ObjectId>29039</ObjectId>
       <StateNumber>1160</StateNumber>
       <Turn>before-row</Turn>
       <CallRoutineId>29038</CallRoutineId>
     </trigger>
-    <column id="597" parent="332" name="id">
+    <column id="596" parent="332" name="id">
       <DasType>uuid|0s</DasType>
       <Position>1</Position>
       <StateNumber>1222</StateNumber>
     </column>
-    <column id="598" parent="332" name="email">
+    <column id="597" parent="332" name="email">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1222</StateNumber>
