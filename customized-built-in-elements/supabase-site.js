@@ -1,8 +1,9 @@
-import {html} from './index-externals.js';
+import {html} from '../src/index-externals.js';
 import {SWCElement} from "./SWCElement.js";
-import './index.js'
-import {NamedJSONComparer} from "./main.js";
-import {showToastMessage, toastTypes} from "./toast.js";
+import '../src'
+import {NamedJSONComparer} from "../src/main.js";
+import {showToastMessage, toastTypes} from "../src/toast.js";
+import {UserLoggedIn} from "../src/events.js";
 
 
 export class SupabaseSite extends SWCElement {
@@ -17,6 +18,14 @@ export class SupabaseSite extends SWCElement {
 
     constructor() {
         super()
+        // this.addEventListener(UserLoggedIn, e => {
+        //     this.logAndHandle( e, () => this.user = e.detail.user)
+        // })
+    }
+
+    logAndHandle(event, action) {
+        console.log(`${this.constructor.name}: Handling event: `, event, action)
+        action()
     }
 
     render() {
@@ -35,15 +44,17 @@ export class SupabaseSite extends SWCElement {
             <details ?open="${this.client && !this.user}">
                 <summary>${this.user ? `Logged in as ${this.user.email}` : 'Log in'}</summary>
                 <div>
-<!--                    <html-include no-shadow src="../html/login-email.html"></html-include>-->
+                    <html-include no-shadow src="../html/login-email.html"
+                                  @user-logged-in="${e => this.logAndHandle( e, () => this.user = e.detail.user)}"
+                    ></html-include>
 
 
                     
                     
-                    ${false ? '' : html`
+                    ${true ? '' : html`
                     <supabase-login-email
                             .client="${this.client}"
-                            @user-logged-in="${e => this.user = e.detail.user}"
+                            @user-logged-in="${e => this.logAndHandle( e, () => this.user = e.detail.user)}"
                     ></supabase-login-email>
                     `}
                 </div>

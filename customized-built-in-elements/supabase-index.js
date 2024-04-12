@@ -1,11 +1,11 @@
-import {html} from './index-externals.js';
+import {html} from '../src/index-externals.js';
 import {SWCElement} from "./SWCElement.js";
-import {ApiFetched, SourceSelected} from "./events.js";
+import {ApiFetched, SourceSelected} from "../src/events.js";
 
 import "./supabase-login-email.js";
 import "./supabase-connection.js";
-import {NamedJSONComparer} from "./main.js";
-import {showToastMessage, toastTypes} from "./toast.js";
+import {NamedJSONComparer} from "../src/main.js";
+import {showToastMessage, toastTypes} from "../src/toast.js";
 
 
 export class SupabaseIndex extends SWCElement {
@@ -58,7 +58,7 @@ export class SupabaseIndex extends SWCElement {
         if (!this._client)
             return
 
-        showToastMessage(toastTypes.info, 'Fetching API')
+        showToastMessage(toastTypes.startOperation, 'Fetching API')
         this._client.from("").select().then(({data, error}) => {
             if (error) {
                 console.error(error)

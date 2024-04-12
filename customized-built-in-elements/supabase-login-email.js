@@ -1,8 +1,8 @@
-import {html} from './index-externals.js';
+import {html} from '../src/index-externals.js';
 import {SWCElement} from "./SWCElement.js";
-import {UserLoggedIn} from "./events.js";
-import {showToastMessage, toastTypes} from "./toast.js";
-import {getFatSelect} from "./supabase-utils.js";
+import {UserLoggedIn} from "../src/events.js";
+import {showToastMessage, toastTypes} from "../src/toast.js";
+import {getFatSelect} from "../src/supabase-utils.js";
 
 export class SupabaseLoginEmail extends SWCElement {
 
@@ -22,7 +22,7 @@ export class SupabaseLoginEmail extends SWCElement {
 
     async login(event) {
         event.preventDefault()
-        showToastMessage(toastTypes.info, 'Logging in with email', 'E-mail: ' + this.email)
+        showToastMessage(toastTypes.startOperation, 'Logging in with email', 'E-mail: ' + this.email)
         const {data, error} = await this.client.auth.signInWithPassword({
             email: this.email,
             password: this.password,

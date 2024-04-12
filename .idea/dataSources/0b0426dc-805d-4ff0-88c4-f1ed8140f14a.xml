@@ -3,7 +3,15 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.52">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <Grants>5||-9223372036854775808|c|G
+      <Grants>1||-9223372036854775808|c|G
+1||10|c|G
+1||10|C|G
+1||10|T|G
+4||-9223372036854775808|c|G
+4||10|c|G
+4||10|C|G
+4||10|T|G
+5||-9223372036854775808|c|G
 5||10|c|G
 5||16595|c|G
 5||10|C|G
@@ -11,7 +19,7 @@
 5||-9223372036854775808|T|G
 5||10|T|G
 5||16595|T|G</Grants>
-      <IntrospectionStateNumber>1344</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1346</IntrospectionStateNumber>
       <ServerVersion>15.1</ServerVersion>
       <StartupTime>1712579638</StartupTime>
       <TimeZones>true ACDT
@@ -1498,7 +1506,7 @@ true posixrules
 16949||16732|C|G
 16949||16420|U|G
 16949||16732|U|G</Grants>
-      <IntrospectionStateNumber>1344</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1346</IntrospectionStateNumber>
       <ObjectId>5</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -5618,7 +5626,6 @@ idle_in_transaction_session_timeout=60000</Config>
 28573||10|w|G
 28573||16535|w|G
 28573||16595|w|G</Grants>
-      <IntrospectionStateNumber>1344</IntrospectionStateNumber>
       <LastIntrospectionLocalTimestamp>2024-04-12.00:12:16</LastIntrospectionLocalTimestamp>
       <ObjectId>16488</ObjectId>
       <StateNumber>859</StateNumber>
@@ -5795,7 +5802,6 @@ idle_in_transaction_session_timeout=60000</Config>
 29139||16478|w|G
 29139||16479|w|G
 29139||16480|w|G</Grants>
-      <IntrospectionStateNumber>1344</IntrospectionStateNumber>
       <LastIntrospectionLocalTimestamp>2024-04-12.00:12:16</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>749</StateNumber>
@@ -5872,8 +5878,8 @@ idle_in_transaction_session_timeout=60000</Config>
       <Event>ddl_command_end</Event>
       <ObjectId>16947</ObjectId>
       <StateNumber>911</StateNumber>
-      <Tags>SECURITY LABEL
-ALTER TABLE</Tags>
+      <Tags>ALTER TABLE
+SECURITY LABEL</Tags>
       <CallRoutineId>16831</CallRoutineId>
     </trigger>
     <object-type id="303" parent="281" name="aal_level">

@@ -1,15 +1,23 @@
-export {NewItem, SourceSelected} from "./events.js"
-export {SWCElement} from "./SWCElement.js"
+/** @module index
+ *  This file will export all the components, events, etc. that are part of the SWC library.
+ *  It will also import the external libraries that are used by the components.
+ *
+ *  To reference the external libraries, please import them from the `index-externals.js` file.
+ *
+ */
 
-export {SupabaseIndex} from "./supabase-index.js"
-export {SupabaseItem} from "./supabase-item.js"
-export {SupabaseTable} from "./supabase-table.js"
-export {SupabaseSite} from "./supabase-site.js"
-export {SupabaseLoginEmail} from "./supabase-login-email.js"
-export {SupabaseLoginEmail2} from "./supabase-login-email2.js"
+export {NewItem, SourceSelected} from "./events.js"
+export {SWCElement} from "../customized-built-in-elements/SWCElement.js"
+
+export {SupabaseIndex} from "../customized-built-in-elements/supabase-index.js"
+export {SupabaseItem} from "../customized-built-in-elements/supabase-item.js"
+export {SupabaseTable} from "../customized-built-in-elements/supabase-table.js"
+export {SupabaseSite} from "../customized-built-in-elements/supabase-site.js"
+export {SupabaseLoginEmail} from "../customized-built-in-elements/supabase-login-email.js"
+export {SupabaseLoginHandler} from "../customized-built-in-elements/supabase-login-handler.js"
 
 export {showToastMessage, toastTypes} from "./toast.js"
 
 
-import 'https://unpkg.com/html-include-element'
-// import './html-include-element.js'
+import './index-externals.js'
+

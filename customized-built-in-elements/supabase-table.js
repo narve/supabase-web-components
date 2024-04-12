@@ -1,8 +1,8 @@
-import {html, styleMap} from './index-externals.js';
+import {html, styleMap} from '../src/index-externals.js';
 import {SWCElement} from "./SWCElement.js";
-import {showToastMessage, toastTypes} from "./toast.js";
-import {NewItem, EditItem, RequestSelector} from "./events.js";
-import {getFatSelect} from "./supabase-utils.js";
+import {showToastMessage, toastTypes} from "../src";
+import {NewItem, EditItem, RequestSelector} from "../src/events.js";
+import {getFatSelect} from "../src/supabase-utils.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {
@@ -192,7 +192,7 @@ export class SupabaseTable extends SWCElement {
         if (error) {
             showToastMessage(toastTypes.error, "Error", error.message, 3000)
         } else {
-            showToastMessage(toastTypes.info, "Deleted", `Item ${id} deleted`, 3000)
+            showToastMessage(toastTypes.success, "Deleted", `Item ${id} deleted`, 3000)
             await this._fetch()
         }
     }
@@ -302,6 +302,7 @@ export class SupabaseTable extends SWCElement {
             return
         }
 
+        showToastMessage(toastTypes.startOperation, "Fetching selector", `${table}`)
 
         const {data, error, count} = await client
             .from(table)

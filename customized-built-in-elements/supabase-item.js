@@ -1,9 +1,9 @@
-import {html} from './index-externals.js';
+import {html} from '../src/index-externals.js';
 import {SWCElement} from "./SWCElement.js";
-import {RequestSelector} from "./events.js";
-import {showToastMessage, toastTypes} from "./toast.js";
-import {NamedJSONComparer} from "./main.js";
-import {getSchema} from "./openapi-utils.js";
+import {RequestSelector} from "../src/events.js";
+import {showToastMessage, toastTypes} from "../src/toast.js";
+import {NamedJSONComparer} from "../src/main.js";
+import {getSchema} from "../src/openapi-utils.js";
 
 export class SupabaseItem extends SWCElement {
     static properties = {

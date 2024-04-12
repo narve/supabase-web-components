@@ -4,8 +4,20 @@ export const toastTypes = {
     success: 'success',
     info: 'info',
     warning: 'warning',
-    error: 'error'
+    error: 'error',
+    startOperation: 'start_operation'
 }
+
+
+window.addEventListener('error', event => {
+    // console.error('My error: ', {event})
+    showToastMessage(toastTypes.error, 'Internal error', event.error.message, 5000)
+})
+window.addEventListener('unhandledrejection', event => {
+    // console.error(`My unhandledrejection: ${event.promise}, ${event.reason}`)
+    showToastMessage(toastTypes.error, 'Internal error in promise handling',
+        event.reason?.toString(), 5000)
+})
 
 export const showToastMessage = (type, title, description = '', timeOut = 1000) => {
     let cbToast = document.querySelector('cb-toast')
@@ -17,12 +29,17 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
     }
 
     console.debug('TOAST: ', {
+        type,
         title,
-        description: description || '', // override nonsensical default
+        description,
         timeOut,
         position: 'top-right',
-        type,
     })
+
+    if(type === toastTypes.startOperation) {
+        // Don't show this to users
+        return
+    }
 
     if(!cbToast) {
         console.error('Could not find cbToast element')
@@ -30,19 +47,9 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
     }
     cbToast.Toast({
         title,
-        description,
+        description: description || '', // Override default ,
         timeOut,
         position: 'top-right',
         type,
     })
 }
-
-window.addEventListener('error', event => {
-    // console.error('My error: ', {event})
-    showToastMessage(toastTypes.error, 'Internal error', event.error.message, 5000)
-})
-window.addEventListener('unhandledrejection', event => {
-    // console.error(`My unhandledrejection: ${event.promise}, ${event.reason}`)
-    showToastMessage(toastTypes.error, 'Internal error in promise handling',
-        event.reason?.toString(), 5000)
-})

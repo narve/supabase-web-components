@@ -1,7 +1,7 @@
-import {html, when, createClient} from './index-externals.js';
+import {html, when, createClient} from '../src/index-externals.js';
 import {SWCElement} from "./SWCElement.js";
-import {ClientCreated} from "./events.js";
-import {showToastMessage, toastTypes} from "./index.js";
+import {ClientCreated} from "../src/events.js";
+import {showToastMessage, toastTypes} from "../src";
 
 const configs = [
     {
@@ -50,7 +50,7 @@ export class SupabaseConnection extends SWCElement {
 
     apply(event) {
         event.preventDefault()
-        showToastMessage(toastTypes.info, 'Connecting to ' + this.siteTitle)
+        showToastMessage(toastTypes.startOperation, 'Connecting to ' + this.siteTitle)
         // console.log('SupabaseConnection::apply: ', {siteTitle: this.siteTitle, supabaseUrl: this.supabaseUrl, supabaseKey: this.supabaseKey})
         const client = createClient(this.supabaseUrl, this.supabaseKey)
         showToastMessage(toastTypes.success, 'Connected to ' + this.siteTitle)

@@ -1,7 +1,7 @@
-import {UserLoggedIn} from "./events.js";
-import {showToastMessage, toastTypes} from "./toast.js";
+import {UserLoggedIn} from "../src/events.js";
+import {showToastMessage, toastTypes} from "../src/toast.js";
 
-export class SupabaseLoginEmail2 extends HTMLFormElement {
+export class SupabaseLoginHandler extends HTMLFormElement {
 
     constructor() {
         super();
@@ -11,7 +11,7 @@ export class SupabaseLoginEmail2 extends HTMLFormElement {
 
     dispatch(eventType, detail) {
         console.debug(`${this.constructor.name} dispatch`, eventType, detail)
-        this.dispatchEvent(new CustomEvent(eventType, {detail}))
+        this.dispatchEvent(new CustomEvent(eventType, {detail, bubbles: true}))
     }
 
     get supabaseRoot() {
@@ -31,7 +31,7 @@ export class SupabaseLoginEmail2 extends HTMLFormElement {
         const formData = new FormData(this);
         const email = formData.get('email')
         const password = formData.get('password')
-        showToastMessage(toastTypes.info, 'Logging in with email', 'E-mail: ' + email)
+        showToastMessage(toastTypes.startOperation, 'Logging in with email', 'E-mail: ' + email)
         const {data, error} = await this.client.auth.signInWithPassword({
             email,
             password,
@@ -45,4 +45,4 @@ export class SupabaseLoginEmail2 extends HTMLFormElement {
     }
 }
 
-customElements.define('supabase-login-email2', SupabaseLoginEmail2, { extends: "form" });
+customElements.define('supabase-login-handler', SupabaseLoginHandler, { extends: "form" });

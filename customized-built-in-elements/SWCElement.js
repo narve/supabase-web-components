@@ -1,4 +1,4 @@
-import {LitElement} from './index-externals.js';
+import {LitElement} from '../src/index-externals.js';
 
 export class SWCElement extends LitElement {
     createRenderRoot() {

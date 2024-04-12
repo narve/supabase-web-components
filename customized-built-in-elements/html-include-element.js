@@ -18,7 +18,7 @@ function instantiateCustomElements(fragment) {
 
 /**
  * Firefox may throw an error when accessing a not-yet-loaded cssRules property.
- * @param {HTMLLinkElement}
+ * @param {HTMLLinkElement} link
  * @return {boolean}
  */
 function isLinkAlreadyLoaded(link) {
@@ -57,10 +57,10 @@ async function linkLoaded(link) {
  * The HTML is fetched from the URL contained in the `src` attribute, using the
  * fetch() API. A 'load' event is fired when the HTML is updated.
  *
- * The request is made using CORS by default. This can be chaned with the `mode`
+ * The request is made using CORS by default. This can be changed with the `mode`
  * attribute.
  *
- * By default, the HTML is embedded into a shadow root. If the `no-shadow`
+ * By default, the HTML will be embedded into a shadow root. If the `no-shadow`
  * attribute is present, the HTML will be embedded into the child content.
  *
  */
@@ -146,7 +146,7 @@ export class HTMLIncludeElement extends HTMLElement {
             const parser = new DOMParser();
             const doc = parser.parseFromString(text, "text/html");
             const element = doc.body;
-            instantiateCustomElements(element);
+            // instantiateCustomElements(element);
 
             // Don't destroy the light DOM if we're using shadow DOM, so that slotted content is respected
             if (this.noShadow) {
