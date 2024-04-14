@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <title>Snok</title>
@@ -12,7 +12,7 @@
           href="https://unpkg.com/chimeracss/build/chimera.css"/>
 
     <script type="module" src="src/index.js"></script>
-
+    <script type="module" src="app/index.js"></script>
 
     <link rel="stylesheet" type="text/css" href="app/app.css"/>
     <link rel="stylesheet" type="text/css" href="app/accordion.css"/>
@@ -39,7 +39,7 @@
         <div>
             <p>
                 Skattelistene har alltid vært offentlig tilgjengelig i Norge, helt anonymt
-                - helt frem ti 2014. Da innførte Skatteetaten loggføring av søk i skattelistene.
+                - helt frem til 2014. Da innførte Skatteetaten loggføring av søk i skattelistene.
                 Man kan fortsatt se på hvem som helst sin skatteinformasjon - men den du søker
                 frem vil nå få beskjed om dette, og se navn og fødselsdato på den som har søkt.
             </p>
@@ -50,18 +50,15 @@
                 firma overholder likelønnsprinsipper, etc.
             </p>
             <p>
-                forklaring
-            </p>
-            <p>
-                forklaring
-            </p>
-            <p>
-                forklaring
+                Dette er en tjeneste der du kan få <strong>andre</strong> til å søke opp
+                skatteinformasjon for de du ønsker, slik at ingen vet at det var akkurat
+                deg som ønsket den informasjon. Til gjengjeld må du selv søke opp andre
+                (tilfeldige fremmede) sin skatteinformasjon for andre.
             </p>
         </div>
     </details>
 
-    <details open>
+    <details>
         <summary>1 - Registrering (anonymt om ønskelig)</summary>
         <div>
             <p>
@@ -83,7 +80,6 @@
                         <input id="signup_email" name="email" type="email" placeholder="e-postadresse">
                     </label>
                     <input type="submit">
-
                 </form>
 
             </div>
@@ -91,22 +87,22 @@
     </details>
 
 
-    <details>
+    <details open>
         <summary>2 - Legg inn hvem du ønsker å SNOKE på</summary>
         <div>
             <p>Legg inn navn her. Hvis du vet sted og fødselsår, legg også inn dette,
                 spesielt dersom navnet ikke er helt unikt. </p>
-            <form>
+            <form is="snoke-request-submission">
                 <label>Navn (obligatorisk)
-                    <input name="name" required placeholder="Per Person">
+                    <input name="full_name" required placeholder="Per Person" value="Per Person">
                 </label>
                 <label>
                     Fødselsår (frivillig, men legg det inn dersom du vet det)
-                    <input name="year_of_birth" type="number" placeholder="1981">
+                    <input name="year_of_birth" type="number" placeholder="1981" value="1980">
                 </label>
                 <label>
                     Sted/kommune (frivillig, men legg det inn dersom du vet det)
-                    <input name="county" placeholder="Feks Bærum">
+                    <input name="county" placeholder="Feks Bærum" value="Bærum">
                 </label>
                 <input type="submit" value="Legg til">
             </form>
@@ -114,6 +110,7 @@
             <ul>
                 <li>Per Person, født 1980, Bærum</li>
             </ul>
+            <my-snoke-requests></my-snoke-requests>
         </div>
     </details>
 

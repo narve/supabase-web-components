@@ -1,5 +1,6 @@
 import {UserLoggedIn} from "../src/events.js";
 import {showToastMessage, toastTypes} from "../src/toast.js";
+import {getSupabaseRoot} from "../app/index.js";
 
 export class SupabaseSignupHandler extends HTMLFormElement {
 
@@ -14,21 +15,9 @@ export class SupabaseSignupHandler extends HTMLFormElement {
         this.dispatchEvent(new CustomEvent(eventType, {detail, bubbles: true}))
     }
 
-    get supabaseRoot() {
-        let cur = this
-        while (cur &&
-        (cur.tagName !== 'SUPABASE-ROOT'
-            &&
-            cur.getAttribute('is') !== 'supabase-root')) {
-            console.log('miss: ', cur.getAttribute('is'))
-            cur = cur.parentNode
-
-        }
-        return cur
-    }
 
     get client() {
-        return this.supabaseRoot?.client
+        return getSupabaseRoot(this)?.client
     }
 
     async handle(event) {

@@ -19,7 +19,6 @@ export class SupabaseConnect extends HTMLElement {
             showToastMessage(toastTypes.startOperation, 'Connecting to ' + title)
             const client = createClient(url, key)
             showToastMessage(toastTypes.success, 'Connected to ' + title)
-            // this.dispatch(ClientCreated, {client, siteTitle: title})
             this.dispatchEvent(new CustomEvent(ClientCreated, {detail: {client}, bubbles: true}))
         }, 1)
     }

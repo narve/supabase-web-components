@@ -53,7 +53,7 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
 
     cbToast.Toast({
         title,
-        description: description || '', // Override default ,
+        description: description || ' ', // Override default ,
         timeOut,
         position: 'top-right',
         type,

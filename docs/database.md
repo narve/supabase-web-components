@@ -31,6 +31,22 @@ Creating id columns
 
 To create a function to set owner_id
 ---
+
+```postgresql
+truncate table snoke_request;
+alter table snoke_request add column 
+    created_by uuid not null references auth.users(id);
+alter table snoke_request add column 
+    modified_by uuid not null references auth.users(id);
+alter table snoke_request add column 
+    created_at timestamp not null default now();
+alter table snoke_request add column 
+    modified_at timestamp not null default now();
+
+
+```
+
+
 ```postgresql
 
     create or replace function public.tg_before_insert() returns trigger
@@ -52,11 +68,16 @@ To create a function to set owner_id
 Add trigger to a new table
 ---
 
-    create trigger XXX_before_insert
+
+```postgresql
+    create trigger snoke_request_before_insert
     before insert
-    on public.XXX
+    on public.snoke_request
     for each row
     execute procedure public.tg_before_insert();
+
+
+```
 
 
 To set password for a user
