@@ -28,6 +28,12 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
         document.body.append(cbToast)
     }
 
+    if(type === toastTypes.startOperation) {
+        // Don't show this to users
+        return
+    }
+
+
     console.debug('TOAST: ', {
         type,
         title,
@@ -35,11 +41,6 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
         timeOut,
         position: 'top-right',
     })
-
-    if(type === toastTypes.startOperation) {
-        // Don't show this to users
-        return
-    }
 
     if(!cbToast) {
         console.error('Could not find cbToast element')

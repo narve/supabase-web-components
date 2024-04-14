@@ -5,7 +5,7 @@ export class SupabaseSignupHandler extends HTMLFormElement {
 
     constructor() {
         super();
-        console.log('constructing', this.constructor.name)
+        // console.log('constructing', this.constructor.name)
         this.addEventListener('submit', e => this.handle(e))
     }
 
@@ -38,15 +38,15 @@ export class SupabaseSignupHandler extends HTMLFormElement {
         const email = formData.get('email')
         const password = formData.get('password')
         showToastMessage(toastTypes.startOperation, 'Requesting email link', 'E-mail: ' + email)
-        const {data, error} = await this.client.auth.signInWithPassword({
+        const {data, error} = await this.client.auth.signInWithOtp({
             email,
             password,
         })
         if (error) {
             showToastMessage(toastTypes.error, 'E-mail link request failed', error.message)
         } else {
-            showToastMessage(toastTypes.success, 'E-mail link request success', data.user.email)
-            this.dispatch(UserLoggedIn, {client: this.client, user: data.user})
+            showToastMessage(toastTypes.success, 'E-mail link request success', data.user?.email)
+            // this.dispatch(UserLoggedIn, {client: this.client, user: data.user})
         }
     }
 }

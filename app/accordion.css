@@ -14,7 +14,7 @@ details {
 }
 
 summary {
-    /*padding: 1rem;*/
+    padding: 1rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -34,7 +34,9 @@ details > *:not(summary) {
     border-top: 1px solid lightgray;
 }
 
-/* Remove the summary element's default small collapsing arrow marker on the left, which points right to replace it with a better one positioned on the right and pointing down)*/
+/* Remove the summary element's default small collapsing arrow marker on the left,
+which points right to replace it with a better one
+ positioned on the right and pointing down)*/
 details>summary::marker, details>summary::-webkit-details-marker {
     display: none;
 }
@@ -45,7 +47,8 @@ details>summary::-moz-list-bullet {
     display: none;
 }
 
-/* Create custom rotating down-up-arrow with an inline svg - replace with your own arrow if this caret isn't to your liking */
+/* Create custom rotating down-up-arrow with an inline svg -
+ replace with your own arrow if this caret isn't to your liking */
 
 details>summary:after {
     content: ' ';
