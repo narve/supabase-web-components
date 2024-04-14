@@ -9,14 +9,19 @@
 export {NewItem, SourceSelected} from "./events.js"
 export {SWCElement} from "../customized-built-in-elements/SWCElement.js"
 
+export {showToastMessage, toastTypes} from "./toast.js"
+
+
 export {SupabaseIndex} from "../customized-built-in-elements/supabase-index.js"
 export {SupabaseItem} from "../customized-built-in-elements/supabase-item.js"
 export {SupabaseTable} from "../customized-built-in-elements/supabase-table.js"
 export {SupabaseSite} from "../customized-built-in-elements/supabase-site.js"
 export {SupabaseLoginEmail} from "../customized-built-in-elements/supabase-login-email.js"
 export {SupabaseLoginHandler} from "../customized-built-in-elements/supabase-login-handler.js"
+export {SupabaseSignupHandler} from "../customized-built-in-elements/supabase-signup-handler.js"
+export {SupabaseRoot} from "../customized-built-in-elements/supabase-root.js"
+export {SupabaseConnect} from "../customized-built-in-elements/supabase-connect.js"
 
-export {showToastMessage, toastTypes} from "./toast.js"
 
 
 import './index-externals.js'

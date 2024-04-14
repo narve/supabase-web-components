@@ -45,6 +45,11 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
         console.error('Could not find cbToast element')
         return
     }
+    if(!cbToast.Toast) {
+        console.error('Could not find Toast function in element', cbToast)
+        return
+    }
+
     cbToast.Toast({
         title,
         description: description || '', // Override default ,

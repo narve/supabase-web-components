@@ -1,0 +1,66 @@
+/* --------------------------------- */
+/* details/summary magic starts here */
+
+
+summary:hover {
+    cursor: pointer;
+}
+
+details {
+    border: 1px solid lightgray;
+    display: block;
+    /*max-width: 42em;*/
+    margin: 2rem;
+}
+
+summary {
+    /*padding: 1rem;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+summary {
+    font-size: 1.4rem;
+}
+
+summary div {
+    margin-top: .5rem;
+}
+
+details > *:not(summary) {
+    padding: 1rem;
+    border-top: 1px solid lightgray;
+}
+
+/* Remove the summary element's default small collapsing arrow marker on the left, which points right to replace it with a better one positioned on the right and pointing down)*/
+details>summary::marker, details>summary::-webkit-details-marker {
+    display: none;
+}
+
+details>summary::-moz-list-bullet {
+    list-style-type: none;
+    list-style: none;
+    display: none;
+}
+
+/* Create custom rotating down-up-arrow with an inline svg - replace with your own arrow if this caret isn't to your liking */
+
+details>summary:after {
+    content: ' ';
+    width: 4rem;
+    height: 4rem;
+    display: inline-block;
+    transform: rotate(90deg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-image: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="4rem" height="4rem"><path d="M0 0h24v24H0V0z" fill="none"/><path fill="lightgray" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>');
+}
+
+/* Rotate the arrow when the collapsible is open */
+details[open]>summary:after {
+    transform: rotate(-90deg);
+}
+

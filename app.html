@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Snok</title>
+
+    <link rel="shortcut icon" type="image/jpg" href="app/favicon.ico"/>
+
+    <link id="classless_stylesheet" rel="stylesheet" type="text/css"
+          href="https://unpkg.com/chimeracss/build/chimera.css"/>
+
+    <script type="module" src="src/index.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="app/app.css"/>
+    <link rel="stylesheet" type="text/css" href="app/accordion.css"/>
+
+</head>
+<body>
+
+<cb-toast></cb-toast>
+
+<h1>APP</h1>
+
+<div is="supabase-root">
+
+    <supabase-connect
+        title="AppServer"
+        url="https://wuxcrmvzflfdqccxkeig.supabase.co"
+        key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1eGNybXZ6ZmxmZHFjY3hrZWlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1Nzk1OTYsImV4cCI6MjAyODE1NTU5Nn0.48D1wN5alsizO3mT28Ct3C8rT6JkOF2XCS39PUgc6u8"
+        >
+    </supabase-connect>
+
+
+    <details>
+        <summary>0 - Hva er dette?</summary>
+        <div>forklaring</div>
+    </details>
+
+    <details open>
+        <summary>1 - Registrering (anonymt om ønskelig)</summary>
+        <div>
+            <p>
+                Registrer deg her med din e-post. Din e-post er ikke synlig for noen, og brukes
+                kun til innlogging og til å sende deg varsler.
+            </p>
+            <p>
+                Dersom du ønsker å være enda mer anonym, kan du bruke en e-post <i>relay</i>/<i>maskering</i>,
+                feks <a href="https://relay.firefox.com" target="_blank">Firefox sin relay tjeneste</a>.
+            </p>
+            <p>
+                Etter at du har registrert deg, vil du få en e-post med en innloggings-lenke.
+                Lenken vil ta deg tilbake hit, ferdig innlogget.
+            </p>
+            <div>
+
+                <form is="supabase-signup-handler">
+                    <label for="signup_email">
+                        <input id="signup_email" type="email" placeholder="e-postadresse">
+                    </label>
+                    <input type="submit">
+
+                </form>
+
+            </div>
+        </div>
+    </details>
+
+
+    <details>
+        <summary>2 - Legg inn hvem du ønsker å se skatteinformasjon for</summary>
+        <div>
+            <p>Legg inn navn her. Hvis du vet sted og fødselsår, legg også inn dette,
+                spesielt dersom navnet ikke er helt unikt. </p>
+            <form>
+                <label>Navn (obligatorisk)
+                    <input name="name" required placeholder="Per Person">
+                </label>
+                <label>
+                    Fødselsår (frivillig, men legg det inn dersom du vet det)
+                    <input name="year_of_birth" type="number" placeholder="1981">
+                </label>
+                <label>
+                    Sted/kommune (frivillig, men legg det inn dersom du vet det)
+                    <input name="county" placeholder="Feks Bærum">
+                </label>
+                <input type="submit" value="Legg til">
+            </form>
+            <p>Her er listen over personer du ønsker å se skatteinformasjon til: </p>
+            <ul>
+                <li>Per Person, født 1980, Bærum</li>
+            </ul>
+        </div>
+    </details>
+
+
+    <details>
+        <summary>3 - Finn skatteinformasjon for andre</summary>
+        <div>
+
+            <p>
+                Her er listen over noen vi ønsker skatteinformasjon for - velg en
+                tilfeldig person herfra, og hent skatteinformasjon deres herfra:
+                <a target="_blank" href="https://www.skatteetaten.no/skjema/sok-i-skattelistene/">Skatteetaten sine
+                    sider</a>.
+            </p>
+            <ul>
+                <li>Per Person, født 1980, Bærum</li>
+            </ul>
+        </div>
+    </details>
+
+    <details>
+        <summary>4 - Se skatteinformasjon</summary>
+        <div>
+            <p>
+                Vent på e-postvarsel, eller besøk denne siden senere, dersom
+                skatteinformasjonen ikke har kommet ennå.
+            </p>
+            <p>
+                Her er listen over dine utførte snoke-ønsker:
+            </p>
+            <ul>
+                <li>
+                    <p class="name">Per Person</p>
+                    <p class="year_of_birth">1999</p>
+                    <p class="tax_county">Bergen</p>
+                    <p class="wealth">300000</p>
+                    <p class="income">300000</p>
+                    <p class="tax">300000</p>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+</body>
+</html>
