@@ -31,7 +31,7 @@ export class SupabaseRoot extends HTMLDivElement {
                 // handle user updated event
             }
         })
-        // console.log('auth data', data)
+        console.log('auth data', data)
 
         // call unsubscribe to remove the callback
         // data.subscription.unsubscribe()

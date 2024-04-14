@@ -47,13 +47,13 @@
                 Hvorfor ønsker man å søke i skattelistene? Det kan være mange grunner til det -
                 det er ikke bare snoking og nysgjerrighet. Innsyn i skattelistene kan brukes
                 til å avdekke korrupsjon og misbruk av firmamidler, sjekke om
-                firma overholder likelønnsprinsipper, etc.
+                firma overholder likelønnsprinsipper, være et grunnlag for lønnsforhandlinger, etc.
             </p>
             <p>
                 Dette er en tjeneste der du kan få <strong>andre</strong> til å søke opp
                 skatteinformasjon for de du ønsker, slik at ingen vet at det var akkurat
                 deg som ønsket den informasjon. Til gjengjeld må du selv søke opp andre
-                (tilfeldige fremmede) sin skatteinformasjon for andre.
+                (tilfeldige fremmede) sin skatteinformasjon, for andre.
             </p>
         </div>
     </details>
@@ -61,6 +61,10 @@
     <details>
         <summary>1 - Registrering (anonymt om ønskelig)</summary>
         <div>
+            <user-info></user-info>
+            <html-include no-shadow src="../html/login-email.html"
+                          @user-logged-in="${e => this.logAndHandle( e, () => this.user = e.detail.user)}"
+            ></html-include>
             <p>
                 Registrer deg her med din e-post. Din e-post er ikke synlig for noen, og brukes
                 kun til innlogging og til å sende deg varsler.
@@ -87,7 +91,7 @@
     </details>
 
 
-    <details open>
+    <details>
         <summary>2 - Legg inn hvem du ønsker å SNOKE på</summary>
         <div>
             <p>Legg inn navn her. Hvis du vet sted og fødselsår, legg også inn dette,
@@ -107,15 +111,12 @@
                 <input type="submit" value="Legg til">
             </form>
             <p>Her er listen over personer du ønsker å se skatteinformasjon til: </p>
-            <ul>
-                <li>Per Person, født 1980, Bærum</li>
-            </ul>
             <my-snoke-requests></my-snoke-requests>
         </div>
     </details>
 
 
-    <details>
+    <details open>
         <summary>3 - SNOK på fremmede, for andre med-snokere</summary>
         <div>
 
@@ -123,21 +124,24 @@
                 Systemet baserer seg på noen andre snoker for deg, og du snoker for andre.
                 De som har snoket for andre vil bli prioritert - dersom du ikke bidrar
                 til snoke-fellesskapet, er det usannsynlig at noen vil snoke for deg.
+                Listen over snoke-forespørsler blir sortert slik at de som har besvart
+                forespørsler blir prioritert over de som ikke har gjort en innsats.
             </p>
             <p>
                 Her er listen over noen vi ønsker skatteinformasjon for - velg en
                 tilfeldig person herfra, og hent skatteinformasjon deres herfra:
-                <a target="_blank" href="https://www.skatteetaten.no/skjema/sok-i-skattelistene/">Skatteetaten sine
-                    sider</a>.
+                <a target="_blank" href="https://www.skatteetaten.no/skjema/sok-i-skattelistene/">
+                    Skatteetaten sine sider</a>.
+                Merk at du må være minst 16 år gammel, og identifisere deg
+                vha BankID.
             </p>
-            <ul>
-                <li>Per Person, født 1980, Bærum</li>
-            </ul>
+            <p>Trykk på en av radene for å registrere resultatet av en SNOKING!</p>
+            <open-snoke-requests></open-snoke-requests>
         </div>
     </details>
 
     <details>
-        <summary>4 - Se hva andre har SNOKET frem for deg</summary>
+        <summary>4 - Se hva andre har SNOKET frem for deg!</summary>
         <div>
             <p>
                 Vent på e-postvarsel, eller besøk denne siden senere, dersom
@@ -146,16 +150,7 @@
             <p>
                 Her er listen over dine utførte snoke-ønsker:
             </p>
-            <ul>
-                <li>
-                    <p class="name">Per Person</p>
-                    <p class="year_of_birth">1999</p>
-                    <p class="tax_county">Bergen</p>
-                    <p class="wealth">300.000</p>
-                    <p class="income">300.000</p>
-                    <p class="tax">300.000</p>
-                </li>
-            </ul>
+            <my-snoke-responses></my-snoke-responses>
         </div>
     </details>
 </div>

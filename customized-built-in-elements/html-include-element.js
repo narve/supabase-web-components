@@ -3,18 +3,18 @@ import './supabase-login-email.js'
 
 const LINK_LOAD_SUPPORTED = 'onload' in HTMLLinkElement.prototype;
 
-function instantiateCustomElements(fragment) {
-    const customElements = fragment.querySelectorAll('supabase-login-email');
-    customElements.forEach(element => {
-        const newElement = document.createElement('supabase-login-email');
-        // Copy attributes from the parsed element to the new instance
-        Array.from(element.attributes).forEach(attr => {
-            newElement.setAttribute(attr.name, attr.value);
-        });
-        // Replace the parsed element with the new instance
-        element.replaceWith(newElement);
-    });
-}
+// function instantiateCustomElements(fragment) {
+//     const customElements = fragment.querySelectorAll('supabase-login-email');
+//     customElements.forEach(element => {
+//         const newElement = document.createElement('supabase-login-email');
+//         // Copy attributes from the parsed element to the new instance
+//         Array.from(element.attributes).forEach(attr => {
+//             newElement.setAttribute(attr.name, attr.value);
+//         });
+//         // Replace the parsed element with the new instance
+//         element.replaceWith(newElement);
+//     });
+// }
 
 /**
  * Firefox may throw an error when accessing a not-yet-loaded cssRules property.

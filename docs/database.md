@@ -33,6 +33,7 @@ To create a function to set owner_id
 ---
 
 ```postgresql
+
 truncate table snoke_request;
 alter table snoke_request add column 
     created_by uuid not null references auth.users(id);
