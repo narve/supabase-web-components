@@ -43,5 +43,19 @@ from snoke_request req
 where resp.id is null
 order by random();
 
+alter table snoke_request enable row level security;
+create policy snoke_request_select_policy
+    on snoke_request
+    for all
+    using (auth.uid() = created_by);
+
+alter table snoke_response enable row level security;
+create policy snoke_response_select_policy
+    on snoke_response
+    for all
+    using (auth.uid() = created_by);
+
+select auth.uid()
+
 select *
 from open_snoke_requests
