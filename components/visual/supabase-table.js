@@ -1,8 +1,8 @@
-import {html, styleMap} from '../src/index-externals.js';
-import {SWCElement} from "./SWCElement.js";
-import {showToastMessage, toastTypes} from "../src";
-import {NewItem, EditItem, RequestSelector} from "../src/events.js";
-import {getFatSelect} from "../src/supabase-utils.js";
+import {html, styleMap} from '../../src/index-externals.js';
+import {SWCElement} from "../SWCElement.js";
+import {showToastMessage, toastTypes} from "../../src";
+import {NewItem, EditItem, RequestSelector} from "../../src/events.js";
+import {getFatSelect} from "../../src/supabase-utils.js";
 
 export class SupabaseTable extends SWCElement {
     static properties = {

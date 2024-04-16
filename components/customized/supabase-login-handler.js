@@ -1,12 +1,12 @@
-import {UserLoggedIn} from "../src/events.js";
-import {showToastMessage, toastTypes} from "../src/toast.js";
-import {getSupabaseRoot} from "../app";
+import {UserLoggedIn} from "../../src/events.js";
+import {showToastMessage, toastTypes} from "../../src/toast.js";
+import {getSupabaseRoot} from "../../app";
 
 export class SupabaseLoginHandler extends HTMLFormElement {
 
     constructor() {
         super();
-        console.log('constructing', this.constructor.name)
+        // console.log('constructing', this.constructor.name)
         this.addEventListener('submit', this.login)
     }
 

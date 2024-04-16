@@ -1,18 +1,34 @@
 
-To fake a user in SQL
+Fake a user in SQL session
 ---
 
-    select id from auth.users where ...
-    SET SESSION request.jwt.claims to '{"sub":"e2b4de4e-a6f2-4845-bac8-0305ed1c2d60" }';
+```postgresql
+    select id, email, jsonb_build_object('sub', id::text) claims
+    from auth.users
+    where email = 'mrnarve@gmail.com';
+
+    SET SESSION request.jwt.claims to '{"sub": "bd770cb8-8039-4c45-8fee-dd4a7ca23ecb"}';
     set role authenticated;
+
     select auth.uid();
 
+    select id, created_by from public.snoke_request;
+    select * from public.snoke_response;
+    select * from public.open_snoke_requests;
 
-To revert to non-fake-user mode
+
+```    
+
+
+Revert to non-fake-user mode
 ---
+```postgresql
 
-    set role postgres
+    set role postgres;
+    SET SESSION request.jwt.claims to '';
 
+
+```
 
 Reload cache
 ---

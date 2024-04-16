@@ -1,4 +1,4 @@
-import {SWCElement} from "../customized-built-in-elements/SWCElement.js";
+import {SWCElement} from "../components/SWCElement.js";
 import {html} from "../src/index-externals.js";
 import {getSupabaseRoot} from "./index.js";
 import {ClientCreated} from "../src/events.js";
@@ -24,9 +24,7 @@ export class ListMySnokeRequests extends SWCElement {
 
     async connectedCallback() {
         super.connectedCallback()
-        // super.connectedCallback();
         const root = getSupabaseRoot(this)
-        console.log(this.constructor.name, 'connectedCallback', root);
         root.addEventListener('list-my-requests', async () => await this.fetch())
         root.addEventListener(ClientCreated, async () => {
             setTimeout(async () => await this.fetch(), 1);
@@ -35,7 +33,7 @@ export class ListMySnokeRequests extends SWCElement {
 
     async fetch(event) {
         const client = getSupabaseRoot(this)?.client
-        console.log(this.constructor.name, 'fetch');
+        // console.log(this.constructor.name, 'fetch');
         const {error, data } = await client
             .from('snoke_request')
             .select()

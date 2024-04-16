@@ -5,3 +5,4 @@ import './open-snoke-requests.js'
 import './user-info.js'
 import './my-snoke-responses.js'
 
+import './accordion.js'

@@ -7,20 +7,20 @@
  */
 
 export {NewItem, SourceSelected} from "./events.js"
-export {SWCElement} from "../customized-built-in-elements/SWCElement.js"
+export {SWCElement} from "../components/SWCElement.js"
 
 export {showToastMessage, toastTypes} from "./toast.js"
 
 
-export {SupabaseIndex} from "../customized-built-in-elements/supabase-index.js"
-export {SupabaseItem} from "../customized-built-in-elements/supabase-item.js"
-export {SupabaseTable} from "../customized-built-in-elements/supabase-table.js"
-export {SupabaseSite} from "../customized-built-in-elements/supabase-site.js"
-export {SupabaseLoginEmail} from "../customized-built-in-elements/supabase-login-email.js"
-export {SupabaseLoginHandler} from "../customized-built-in-elements/supabase-login-handler.js"
-export {SupabaseSignupHandler} from "../customized-built-in-elements/supabase-signup-handler.js"
-export {SupabaseRoot} from "../customized-built-in-elements/supabase-root.js"
-export {SupabaseConnect} from "../customized-built-in-elements/supabase-connect.js"
+export {SupabaseIndex} from "../components/visual/supabase-index.js"
+export {SupabaseItem} from "../components/visual/supabase-item.js"
+export {SupabaseTable} from "../components/visual/supabase-table.js"
+export {SupabaseSite} from "../components/visual/supabase-site.js"
+export {SupabaseLoginEmail} from "../components/visual/supabase-login-email.js"
+export {SupabaseLoginHandler} from "../components/customized/supabase-login-handler.js"
+export {SupabaseSignupHandler} from "../components/customized/supabase-signup-handler.js"
+export {SupabaseRoot} from "../components/customized/supabase-root.js"
+export {SupabaseConnect} from "../components/functional/supabase-connect.js"
 
 
 

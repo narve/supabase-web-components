@@ -1,6 +1,6 @@
-import {UserLoggedIn} from "../src/events.js";
-import {showToastMessage, toastTypes} from "../src/toast.js";
-import {getSupabaseRoot} from "../app/index.js";
+import {UserLoggedIn} from "../../src/events.js";
+import {showToastMessage, toastTypes} from "../../src/toast.js";
+import {getSupabaseRoot} from "../../app";
 
 export class SupabaseSignupHandler extends HTMLFormElement {
 

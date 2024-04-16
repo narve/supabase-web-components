@@ -1,11 +1,11 @@
-import {html} from '../src/index-externals.js';
-import {SWCElement} from "./SWCElement.js";
-import {ApiFetched, SourceSelected} from "../src/events.js";
+import {html} from '../../src/index-externals.js';
+import {SWCElement} from "../SWCElement.js";
+import {ApiFetched, SourceSelected} from "../../src/events.js";
 
 import "./supabase-login-email.js";
 import "./supabase-connection.js";
-import {NamedJSONComparer} from "../src/main.js";
-import {showToastMessage, toastTypes} from "../src/toast.js";
+import {NamedJSONComparer} from "../../src/main.js";
+import {showToastMessage, toastTypes} from "../../src/toast.js";
 
 
 export class SupabaseIndex extends SWCElement {

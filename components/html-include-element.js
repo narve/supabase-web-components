@@ -1,5 +1,5 @@
 
-import './supabase-login-email.js'
+import './visual/supabase-login-email.js'
 
 const LINK_LOAD_SUPPORTED = 'onload' in HTMLLinkElement.prototype;
 
