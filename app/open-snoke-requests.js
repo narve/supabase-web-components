@@ -2,7 +2,7 @@ import {html} from "../src/index-externals.js";
 import {getSupabaseRoot} from "./utils.js";
 import {ClientCreated} from "../src/events.js";
 import {SWCElement} from "../components/SWCElement.js";
-import {showToastMessage, toastTypes} from "../src";
+import {showToastMessage, toastTypes} from "../src/index.js";
 
 export class OpenSnokeRequest extends SWCElement{
     static properties = {

@@ -1,6 +1,6 @@
 import {html, styleMap} from '../../src/index-externals.js';
 import {SWCElement} from "../SWCElement.js";
-import {showToastMessage, toastTypes} from "../../src";
+import {showToastMessage, toastTypes} from "../../src/index.js";
 import {NewItem, EditItem, RequestSelector} from "../../src/events.js";
 import {getFatSelect} from "../../src/supabase-utils.js";
 
