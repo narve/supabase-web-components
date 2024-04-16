@@ -1,6 +1,6 @@
 import {UserLoggedIn, UserLoggedOut} from "../src/events.js";
 
-const root = document.querySelector('div[is="supabase-root"]')
+const root = document.querySelector('[is="supabase-root"]')
 root.addEventListener(UserLoggedOut, () => {
     setIsOpen('authenticated', false)
     setIsOpen('unauthenticated', true)
