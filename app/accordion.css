@@ -9,8 +9,7 @@ summary:hover {
 details {
     border: 1px solid lightgray;
     display: block;
-    /*max-width: 42em;*/
-    margin: 2rem;
+    margin: 2rem 2rem 2rem 0;
 }
 
 summary {

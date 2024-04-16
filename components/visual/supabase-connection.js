@@ -1,7 +1,7 @@
-import {html, when, createClient} from '../src/index-externals.js';
-import {SWCElement} from "./SWCElement.js";
-import {ClientCreated} from "../src/events.js";
-import {showToastMessage, toastTypes} from "../src";
+import {html, when, createClient} from '../../src/index-externals.js';
+import {SWCElement} from "../SWCElement.js";
+import {ClientCreated} from "../../src/events.js";
+import {showToastMessage, toastTypes} from "../../src/index.js";
 
 const configs = [
     {

@@ -1,4 +1,4 @@
-import {ClientCreated} from "../src/events.js";
+import {ClientCreated, UserLoggedIn, UserLoggedOut} from "../../src/events.js";
 
 export class SupabaseRoot extends HTMLDivElement {
     constructor() {
@@ -9,20 +9,30 @@ export class SupabaseRoot extends HTMLDivElement {
         this.addEventListener(ClientCreated, e => this.client = e.detail.client)
     }
 
+    get client() {
+        return this._client
+    }
+
+    get user() {
+        return this._user
+    }
+
     set client(client) {
         // console.log("Client connected", client);
         this._client = client;
-
-
-        const { data } = client.auth.onAuthStateChange((event, session) => {
-            console.log('AUTH EVENT', event, session)
+        client.auth.onAuthStateChange((event, session) => {
+            // console.log('AUTH EVENT', event, session)
 
             if (event === 'INITIAL_SESSION') {
                 // handle initial session
             } else if (event === 'SIGNED_IN') {
-                // handle sign in event
+                console.log('SIGNED_IN', session.user.email)
+                this.dispatchEvent(new CustomEvent(UserLoggedIn, {detail: {user: session.user}}))
+                this._user = session.user
             } else if (event === 'SIGNED_OUT') {
-                // handle sign out event
+                console.log('SIGNED_OUT', event)
+                this.dispatchEvent(new CustomEvent(UserLoggedOut))
+                this._user = null
             } else if (event === 'PASSWORD_RECOVERY') {
                 // handle password recovery event
             } else if (event === 'TOKEN_REFRESHED') {
@@ -31,15 +41,12 @@ export class SupabaseRoot extends HTMLDivElement {
                 // handle user updated event
             }
         })
-        console.log('auth data', data)
+        // console.log('auth data', data)
 
         // call unsubscribe to remove the callback
         // data.subscription.unsubscribe()
     }
 
-    get client() {
-        return this._client;
-    }
 }
 
 customElements.define('supabase-root', SupabaseRoot, {extends: "div"});

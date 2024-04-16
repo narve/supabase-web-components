@@ -6,23 +6,23 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/jpg" href="app/favicon.ico"/>
+    <link rel="shortcut icon" type="image/jpg" href="favicon.ico"/>
 
     <link id="classless_stylesheet" rel="stylesheet" type="text/css"
           href="https://unpkg.com/chimeracss/build/chimera.css"/>
 
-    <script type="module" src="src/index.js"></script>
-    <script type="module" src="app/index.js"></script>
+    <script type="module" src="../src/index.js"></script>
+    <script type="module" src="index.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="app/app.css"/>
-    <link rel="stylesheet" type="text/css" href="app/accordion.css"/>
+    <link rel="stylesheet" type="text/css" href="app.css"/>
+    <link rel="stylesheet" type="text/css" href="accordion.css"/>
 
 </head>
 <body>
 
 <cb-toast></cb-toast>
 
-<h1>SNOKING.no</h1>
+<h1>SkatteSnok!</h1>
 
 <div is="supabase-root">
 
@@ -34,7 +34,7 @@
     </supabase-connect>
 
 
-    <details>
+    <details class="unauthenticated">
         <summary>0 - Hva er dette?</summary>
         <div>
             <p>
@@ -58,7 +58,7 @@
         </div>
     </details>
 
-    <details>
+    <details class="unauthenticated">
         <summary>1 - Registrering (anonymt om ønskelig)</summary>
         <div>
             <user-info></user-info>
@@ -91,7 +91,7 @@
     </details>
 
 
-    <details>
+    <details class="authenticated">
         <summary>2 - Legg inn hvem du ønsker å SNOKE på</summary>
         <div>
             <p>Legg inn navn her. Hvis du vet sted og fødselsår, legg også inn dette,
@@ -116,7 +116,7 @@
     </details>
 
 
-    <details open>
+    <details class="authenticated">
         <summary>3 - SNOK på fremmede, for andre med-snokere</summary>
         <div>
 
@@ -140,7 +140,7 @@
         </div>
     </details>
 
-    <details>
+    <details class="authenticated">
         <summary>4 - Se hva andre har SNOKET frem for deg!</summary>
         <div>
             <p>

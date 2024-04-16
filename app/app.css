@@ -2,8 +2,7 @@ a[target=_blank]:after {
     content: '↗';
 }
 
-/*a[target=_blank] {*/
-/*    font-weight: bold;*/
-/*    text-decoration: underline;*/
-/*    content:*/
-/*}*/
+body {
+    margin: auto;
+    max-width: 800px;
+}

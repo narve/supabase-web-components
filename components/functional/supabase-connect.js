@@ -1,6 +1,6 @@
-import {showToastMessage, toastTypes} from "../src/index.js";
-import {createClient} from "../src/index-externals.js";
-import {ClientCreated} from "../src/events.js";
+import {showToastMessage, toastTypes} from "../../src/index.js";
+import {createClient} from "../../src/index-externals.js";
+import {ClientCreated} from "../../src/events.js";
 
 export class SupabaseConnect extends HTMLElement {
     // static observedAttributes = ["size", "siteTitle"];

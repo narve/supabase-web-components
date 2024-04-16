@@ -1,8 +1,8 @@
-import {html} from '../src/index-externals.js';
-import {SWCElement} from "./SWCElement.js";
-import {UserLoggedIn} from "../src/events.js";
-import {showToastMessage, toastTypes} from "../src/toast.js";
-import {getFatSelect} from "../src/supabase-utils.js";
+import {html} from '../../src/index-externals.js';
+import {SWCElement} from "../SWCElement.js";
+import {UserLoggedIn} from "../../src/events.js";
+import {showToastMessage, toastTypes} from "../../src/toast.js";
+import {getFatSelect} from "../../src/supabase-utils.js";
 
 export class SupabaseLoginEmail extends SWCElement {
 

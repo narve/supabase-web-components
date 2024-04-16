@@ -1,9 +1,9 @@
-import {html} from '../src/index-externals.js';
-import {SWCElement} from "./SWCElement.js";
-import '../src'
-import {NamedJSONComparer} from "../src/main.js";
-import {showToastMessage, toastTypes} from "../src/toast.js";
-import {UserLoggedIn} from "../src/events.js";
+import {html} from '../../src/index-externals.js';
+import {SWCElement} from "../SWCElement.js";
+import '../../src'
+import {NamedJSONComparer} from "../../src/main.js";
+import {showToastMessage, toastTypes} from "../../src/toast.js";
+import {UserLoggedIn} from "../../src/events.js";
 
 
 export class SupabaseSite extends SWCElement {
