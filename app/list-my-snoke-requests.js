@@ -1,7 +1,7 @@
-import {SWCElement} from "../components/SWCElement.js";
-import {html} from "../src/index-externals.js";
+import {SWCElement} from "./index.js";
+import {html} from "./index.js";
 import {getSupabaseRoot} from "./index.js";
-import {ClientCreated} from "../src/events.js";
+import {ClientCreated} from "./index.js";
 
 export class ListMySnokeRequests extends SWCElement {
     static properties = {

@@ -1,4 +1,4 @@
-import {UserLoggedIn, UserLoggedOut} from "swc/events.js";
+import {UserLoggedIn, UserLoggedOut} from "./index.js";
 
 const root = document.querySelector('[is="supabase-root"]')
 root.addEventListener(UserLoggedOut, () => {

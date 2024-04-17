@@ -1,7 +1,7 @@
-import {SWCElement} from "../components/SWCElement.js";
-import {html} from "../src/index-externals.js";
-import {getSupabaseRoot} from "./utils.js";
-import {ClientCreated} from "../src/events.js";
+import {SWCElement} from "./index.js";
+import {html} from "./index.js";
+import {getSupabaseRoot} from "../src/utils.js";
+import {ClientCreated} from "./index.js";
 
 export class MySnokeResponses extends SWCElement{
     static properties = {

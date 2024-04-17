@@ -1,5 +1,5 @@
 import {html} from "../src/index-externals.js";
-import {getSupabaseRoot} from "./utils.js";
+import {getSupabaseRoot} from "../src/utils.js";
 import {ClientCreated} from "../src/events.js";
 import {SWCElement} from "../components/SWCElement.js";
 import {showToastMessage, toastTypes} from "../src/index.js";

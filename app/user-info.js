@@ -1,6 +1,6 @@
 import {SWCElement} from "../components/SWCElement.js";
 import {html} from "../src/index-externals.js";
-import {getSupabaseRoot} from "./utils.js";
+import {getSupabaseRoot} from "../src/utils.js";
 import {ClientCreated, UserLoggedIn, UserLoggedOut} from "../src/events.js";
 
 export class UserInfo extends SWCElement {

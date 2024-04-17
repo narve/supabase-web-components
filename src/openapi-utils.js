@@ -68,15 +68,20 @@ export const getSchema = (api, path, method, responseCode = null) => {
         responseCode = method === 'get' ? 200 : 201
     }
     if(!pathObject)
-        throw new Error('Schema not found for path: ' + path)
+        return null
+        // throw new Error('Schema not found for path: ' + path)
     if(!pathObject[method])
-        throw new Error('Schema not found for method: ' + method)
+        return null
+        // throw new Error('Schema not found for method: ' + method)
     if(!pathObject[method].responses[responseCode])
         throw new Error('Schema not found for response code: ' + responseCode)
-    const schemaObj = pathObject[method].responses[responseCode].schema
+    const responseObj = pathObject[method].responses[responseCode]
+    const schemaObj = responseObj.schema
     if(!schemaObj) {
-        console.error('Schema not found for method: ' + method, {obj:pathObject[method].responses[responseCode]})
-        throw new Error(`Schema not found for ${path}` )
+        const msg = `Schema not found for path '${path}', method ${method}, responseCode: ${responseCode}`
+        console.error(msg, responseObj)
+        throw new Error(msg)
+
     }
     const fullRef = schemaObj.items['$ref']
     const ref = fullRef.substring(2).split('/')

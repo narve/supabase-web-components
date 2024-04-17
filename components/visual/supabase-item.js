@@ -34,13 +34,17 @@ export class SupabaseItem extends SWCElement {
                 return o1[ref[1]]
             }
 
-            const p0Ref = this.api.paths[this.source[0]]['post']['parameters'][0]['$ref']
-            // console.log({p0})
-            // const p0ref = p0.substring("#/parameters/".length)
-            const pDef = getRef(p0Ref)
-            console.log({pDef})
+            // TODO: Use proper POST schema
+            const schema = getSchema(this.api, this.source[0], 'get')
+            console.log({schema})
 
-            const schema = getRef(pDef.schema['$ref'])
+            // const pRef = this.api.paths[this.source[0]]['post']['parameters'][0]['$ref']
+            // // console.log({p0})
+            // // const pRef = p0.substring("#/parameters/".length)
+            // const pDef = getRef(p0Ref)
+            // console.log({pDef})
+            //
+            // const schema = getRef(pDef.schema['$ref'])
             console.log({sRef: schema})
             this.schema = schema
 

@@ -1,5 +1,5 @@
 import {getSupabaseRoot} from "./index.js";
-import {showToastMessage, toastTypes} from "../src/index.js";
+import {showToastMessage, toastTypes} from "./index.js";
 
 export class SnokeRequest extends HTMLFormElement {
     constructor() {
