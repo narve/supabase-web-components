@@ -16,7 +16,7 @@ export class SnokeRequest extends HTMLFormElement {
         const county = formData.get('county')
         const obj = {
             full_name,
-            year_of_birth: year_of_birth.length > 0 ? int.parse(year_of_birth) : null,
+            year_of_birth: year_of_birth.length > 0 ? parseInt(year_of_birth) : null,
             county
         }
 
