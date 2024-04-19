@@ -1,6 +1,6 @@
 import {SWCElement} from "./index.js";
 import {html} from "./index.js";
-import {getSupabaseRoot} from "../src/utils.js";
+import {getSupabaseRoot} from "./index.js";
 import {ClientCreated} from "./index.js";
 
 export class MySnokeResponses extends SWCElement{

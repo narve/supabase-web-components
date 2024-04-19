@@ -1,4 +1,7 @@
-export * from '@swc/src/utils.js'
+import {getSupabaseRoot} from '@swc/src/utils.js'
+export { getSupabaseRoot }
+
+// export * from '@swc/src/utils.js'
 export * from '@swc/src/toast.js'
 export * from '@swc/src/events.js'
 
