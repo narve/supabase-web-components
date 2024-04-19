@@ -33,10 +33,10 @@
 <div is="supabase-root">
 
     <supabase-connect
-        title="AppServer"
-        url="https://wuxcrmvzflfdqccxkeig.supabase.co"
-        key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1eGNybXZ6ZmxmZHFjY3hrZWlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1Nzk1OTYsImV4cCI6MjAyODE1NTU5Nn0.48D1wN5alsizO3mT28Ct3C8rT6JkOF2XCS39PUgc6u8"
-        >
+            title="AppServer"
+            url="https://wuxcrmvzflfdqccxkeig.supabase.co"
+            key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1eGNybXZ6ZmxmZHFjY3hrZWlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1Nzk1OTYsImV4cCI6MjAyODE1NTU5Nn0.48D1wN5alsizO3mT28Ct3C8rT6JkOF2XCS39PUgc6u8"
+    >
     </supabase-connect>
 
 
@@ -67,32 +67,7 @@
     <details class="unauthenticated">
         <summary>1 - Registrering (anonymt om ønskelig)</summary>
         <div>
-            <user-info></user-info>
-            <html-include no-shadow src="../html/login-email.html"
-                          @user-logged-in="${e => this.logAndHandle( e, () => this.user = e.detail.user)}"
-            ></html-include>
-            <p>
-                Registrer deg her med din e-post. Din e-post er ikke synlig for noen, og brukes
-                kun til innlogging og til å sende deg varsler.
-            </p>
-            <p>
-                Dersom du ønsker å være enda mer anonym, kan du bruke en e-post <i>relay</i>/<i>maskering</i>,
-                f.eks. <a href="https://relay.firefox.com" target="_blank">Firefox sin relay tjeneste</a>.
-            </p>
-            <p>
-                Etter at du har registrert deg, vil du få en e-post med en innloggings-lenke.
-                Lenken vil ta deg tilbake hit, ferdig innlogget.
-            </p>
-            <div>
-
-                <form is="supabase-signup-handler">
-                    <label for="signup_email">
-                        <input id="signup_email" name="email" type="email" placeholder="e-postadresse">
-                    </label>
-                    <input type="submit">
-                </form>
-
-            </div>
+            <login-or-register></login-or-register>
         </div>
     </details>
 

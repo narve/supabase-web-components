@@ -27,6 +27,7 @@ export class OpenSnokeRequest extends SWCElement{
         const {error, data } = await client
             .from('open_snoke_requests')
             .select()
+            .order('created_at')
             .limit(5)
         this.requests = data
     }
@@ -71,7 +72,11 @@ export class OpenSnokeRequest extends SWCElement{
     }
 
     render() {
-        const text = r => `${r.created_at} ${r.full_name} - ${r.year_of_birth} - ${r.county}`
+        // const relativeDate = r => new Date(r.created_at).toString()
+        const relativeDate = r => html`
+            <sl-relative-time date="${r.created_at}"></sl-relative-time>
+        `
+        const text = r => html`${relativeDate(r)} ${r.full_name} - ${r.year_of_birth} - ${r.county}`
         const item = r => html`
             <li style="cursor: pointer" @click="${() => this.openResponseDialog(r)}">${text(r)}
             </li>`

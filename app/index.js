@@ -14,3 +14,6 @@ import './open-snoke-requests.js'
 import './user-info.js'
 import './my-snoke-responses.js'
 import './accordion.js'
+import './login-or-register.js'
+
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/components/relative-time/relative-time.js';

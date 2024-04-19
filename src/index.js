@@ -11,7 +11,6 @@ export {SWCElement} from "../components/SWCElement.js"
 
 export {showToastMessage, toastTypes} from "./toast.js"
 
-
 export {SupabaseIndex} from "../components/visual/supabase-index.js"
 export {SupabaseItem} from "../components/visual/supabase-item.js"
 export {SupabaseTable} from "../components/visual/supabase-table.js"
@@ -22,7 +21,4 @@ export {SupabaseSignupHandler} from "../components/customized/supabase-signup-ha
 export {SupabaseRoot} from "../components/customized/supabase-root.js"
 export {SupabaseConnect} from "../components/functional/supabase-connect.js"
 
-
-
-import './index-externals.js'
-
+export * from './index-externals.js'
