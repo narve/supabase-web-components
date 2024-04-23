@@ -22,10 +22,10 @@ export class LoginOrRegister extends SWCElement {
         this.user = null
         this.client = null
         this.root = null
+        this.setupListeners()
     }
 
-    connectedCallback() {
-        super.connectedCallback()
+    setupListeners() {
         this.root = getSupabaseRoot(this)
         this.root.addEventListener(UserLoggedIn, async (e) => {
             setTimeout(() => {
@@ -45,6 +45,10 @@ export class LoginOrRegister extends SWCElement {
                 this.user = null
             }, 1);
         })
+    }
+
+    connectedCallback() {
+        super.connectedCallback()
     }
 
     async logout() {

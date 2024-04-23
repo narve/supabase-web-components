@@ -3,11 +3,12 @@ import {ClientCreated, UserLoggedIn, UserLoggedOut} from "../../src/events.js";
 export class SupabaseRoot extends HTMLDivElement {
     constructor() {
         super();
-    }
-
-    connectedCallback() {
         this.addEventListener(ClientCreated, e => this.client = e.detail.client)
     }
+
+    // connectedCallback() {
+    //     super.connectedCallback()
+    // }
 
     get client() {
         return this._client
@@ -18,7 +19,7 @@ export class SupabaseRoot extends HTMLDivElement {
     }
 
     set client(client) {
-        // console.log("Client connected", client);
+        console.log("Client connected", client);
         this._client = client;
         client.auth.onAuthStateChange((event, session) => {
             // console.log('AUTH EVENT', event, session)
@@ -26,9 +27,13 @@ export class SupabaseRoot extends HTMLDivElement {
             if (event === 'INITIAL_SESSION') {
                 // handle initial session
             } else if (event === 'SIGNED_IN') {
-                console.log('SIGNED_IN', session.user.email)
-                this.dispatchEvent(new CustomEvent(UserLoggedIn, {detail: {user: session.user}}))
-                this._user = session.user
+                if(this._user) {
+                    // already logged in, why do i receive this?
+                } else {
+                    console.log('SIGNED_IN', session.user.email)
+                    this.dispatchEvent(new CustomEvent(UserLoggedIn, {detail: {user: session.user}}))
+                    this._user = session.user
+                }
             } else if (event === 'SIGNED_OUT') {
                 console.log('SIGNED_OUT', event)
                 this.dispatchEvent(new CustomEvent(UserLoggedOut))
