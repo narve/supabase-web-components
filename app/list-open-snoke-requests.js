@@ -3,23 +3,16 @@ import {getSupabaseRoot} from "@swc/src/utils.js";
 import {ClientCreated} from "@swc/src/events.js";
 import {SWCElement} from "@swc/components/SWCElement.js";
 import {showToastMessage, toastTypes} from "@swc/src/index.js";
+import {ListBase} from "./list-base.js";
 
-export class OpenSnokeRequest extends SWCElement{
+export class ListOpenSnokeRequest extends ListBase{
     static properties = {
-        requests: {state:true}
+        items: {state:true}
     }
     constructor() {
         super()
-        this.requests = []
-    }
-
-    connectedCallback(){
-        super.connectedCallback()
-        const root = getSupabaseRoot(this)
-        root.addEventListener(ClientCreated, async () => {
-            setTimeout(async () => await this.fetch(), 1);
-        })
-
+        this.source = 'open_snoke_requests'
+        this.subscribeSource = 'snoke_request'
     }
 
     async fetch() {
@@ -29,7 +22,7 @@ export class OpenSnokeRequest extends SWCElement{
             .select()
             .order('created_at')
             .limit(5)
-        this.requests = data
+        this.items = data
     }
 
     async openResponseDialog(item) {
@@ -40,7 +33,7 @@ export class OpenSnokeRequest extends SWCElement{
                 input.value = item[n]
         })
 
-        console.log('openResponseDialog', item, dialog)
+        this.log('openResponseDialog', item, dialog)
         dialog.showModal()
     }
 
@@ -115,7 +108,7 @@ export class OpenSnokeRequest extends SWCElement{
             </dialog>
 
             <ul>
-                ${this.requests.map(r => item(r))}
+                ${this.items.map(r => item(r))}
             </ul>
             <button @click="${this.fetch}">Hent på nytt</button>
             (listen er tilfeldig så du kan få nye navn hvis du henter listen på nytt)
@@ -123,4 +116,4 @@ export class OpenSnokeRequest extends SWCElement{
     }
 }
 
-customElements.define('open-snoke-requests', OpenSnokeRequest);
+customElements.define('open-snoke-requests', ListOpenSnokeRequest);
