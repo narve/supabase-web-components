@@ -15,14 +15,17 @@ export class ListOpenSnokeRequest extends ListBase{
         this.subscribeSource = 'snoke_request'
     }
 
-    async fetch() {
+    async handleTableEvent(payload) {
+        await this.fetch()
+    }
+
+    async fetchImpl() {
         const client = getSupabaseRoot(this)?.client
-        const {error, data } = await client
+        return await client
             .from('open_snoke_requests')
             .select()
             .order('created_at')
             .limit(5)
-        this.items = data
     }
 
     async openResponseDialog(item) {
@@ -65,10 +68,15 @@ export class ListOpenSnokeRequest extends ListBase{
     }
 
     render() {
+        this.log('render', 'relativeDate', this.items.at(0)?.created_at)
         // const relativeDate = r => new Date(r.created_at).toString()
-        const relativeDate = r => html`
-            <sl-relative-time date="${r.created_at}"></sl-relative-time>
-        `
+        const relativeDate = r => {
+            // Supabase returns dates in iso but without tz:
+            const date = new Date(r.created_at + "Z")
+            return html`
+                <sl-relative-time date="${date}"></sl-relative-time>
+            `;
+        }
         const text = r => html`${relativeDate(r)} ${r.full_name} - ${r.year_of_birth} - ${r.county}`
         const item = r => html`
             <li style="cursor: pointer" @click="${() => this.openResponseDialog(r)}">${text(r)}

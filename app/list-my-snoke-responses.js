@@ -14,6 +14,20 @@ export class ListMySnokeResponses extends ListBase {
         this.source = 'snoke_response'
     }
 
+    async fetchImpl() {
+        const root = getSupabaseRoot(this)
+        const client = root?.client
+        const myUserId = root.user?.id
+        // this.log({root, user: root?.user, myUserId})
+
+        if(!myUserId) {
+            return {data: []}
+        }
+        return await client
+            .from(this.source)
+            .select()
+            .neq('created_by', myUserId)
+    }
 
     render() {
         const text = r => `

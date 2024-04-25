@@ -22,11 +22,11 @@ window.addEventListener('unhandledrejection', event => {
 export const showToastMessage = (type, title, description = '', timeOut = 1000) => {
     let cbToast = document.querySelector('cb-toast')
 
-    if(!cbToast) {
-        console.debug('Appending cbToast element')
-        cbToast = document.createElement('cb-toast')
-        document.body.append(cbToast)
-    }
+    // if(!cbToast) {
+    //     console.debug('Appending cbToast element')
+    //     cbToast = document.createElement('cb-toast')
+    //     document.body.append(cbToast)
+    // }
 
     if(type === toastTypes.startOperation) {
         // Don't show this to users
@@ -34,16 +34,14 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
     }
 
 
-    console.debug('TOAST: ', {
-        type,
-        title,
-        description,
-        timeOut,
-        position: 'top-right',
-    })
-
     if(!cbToast) {
-        console.error('Could not find cbToast element')
+        console.debug('TOAST: ', {
+            type,
+            title,
+            description,
+            timeOut,
+            position: 'top-right',
+        })
         return
     }
     if(!cbToast.Toast) {

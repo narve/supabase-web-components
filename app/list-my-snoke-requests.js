@@ -20,7 +20,7 @@ export class ListMySnokeRequests extends ListBase {
                 <button @click="${() => this.delete(r)}">&#x1F5D1;</button>
                 ${text(r)}
             </li>`
-        this.log({items: this.items})
+        // this.log({items: this.items})
         return html`
             <ul>
                 ${this.items.map(r => item(r))}

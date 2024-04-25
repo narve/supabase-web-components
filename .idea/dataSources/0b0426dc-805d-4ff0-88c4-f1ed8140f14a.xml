@@ -11,7 +11,7 @@
 5||-9223372036854775808|T|G
 5||10|T|G
 5||16595|T|G</Grants>
-      <IntrospectionStateNumber>1797</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2183</IntrospectionStateNumber>
       <ServerVersion>15.1</ServerVersion>
       <StartupTime>1712579638</StartupTime>
       <TimeZones>true ACDT
@@ -1498,7 +1498,7 @@ true posixrules
 16949||16732|C|G
 16949||16420|U|G
 16949||16732|U|G</Grants>
-      <IntrospectionStateNumber>1797</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2183</IntrospectionStateNumber>
       <ObjectId>5</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -5618,8 +5618,8 @@ idle_in_transaction_session_timeout=60000</Config>
 28573||10|w|G
 28573||16535|w|G
 28573||16595|w|G</Grants>
-      <IntrospectionStateNumber>1797</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-04-24.21:20:53</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>2014</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-04-25.05:07:44</LastIntrospectionLocalTimestamp>
       <ObjectId>16488</ObjectId>
       <StateNumber>859</StateNumber>
       <OwnerName>supabase_admin</OwnerName>
@@ -5884,8 +5884,8 @@ idle_in_transaction_session_timeout=60000</Config>
 29361||16478|w|G
 29361||16479|w|G
 29361||16480|w|G</Grants>
-      <IntrospectionStateNumber>1797</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-04-24.21:20:53</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>2183</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-04-25.05:37:46</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>749</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -6214,7 +6214,7 @@ webauthn</Labels>
     </table>
     <table id="333" parent="290" name="snoke_response">
       <ObjectId>29231</ObjectId>
-      <StateNumber>1489</StateNumber>
+      <StateNumber>1995</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -6227,13 +6227,13 @@ webauthn</Labels>
     <view id="335" parent="290" name="my_open_snoke_requests">
       <ObjectId>29361</ObjectId>
       <SourceTextLength>294</SourceTextLength>
-      <StateNumber>1757</StateNumber>
+      <StateNumber>1936</StateNumber>
       <OwnerName>postgres</OwnerName>
     </view>
     <view id="336" parent="290" name="open_snoke_requests">
       <ObjectId>29257</ObjectId>
       <SourceTextLength>285</SourceTextLength>
-      <StateNumber>1796</StateNumber>
+      <StateNumber>1951</StateNumber>
       <OwnerName>postgres</OwnerName>
     </view>
     <view id="337" parent="290" name="users">
@@ -8103,10 +8103,10 @@ default</CollationNames>
       <StateNumber>1343</StateNumber>
       <UnderlyingIndexId>29145</UnderlyingIndexId>
     </key>
-    <security-policy id="596" parent="332" name="snoke_request_select_policy">
+    <security-policy id="596" parent="332" name="snoke_request_creator_policy">
       <ObjectId>29266</ObjectId>
       <Permissive>1</Permissive>
-      <StateNumber>1485</StateNumber>
+      <StateNumber>1967</StateNumber>
       <UsingExpression>(auth.uid() = created_by)</UsingExpression>
     </security-policy>
     <trigger id="597" parent="332" name="snoke_request_before_insert">
@@ -8240,7 +8240,7 @@ default</CollationNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>29239</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>1446</StateNumber>
+      <StateNumber>1995</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
@@ -8251,20 +8251,29 @@ default</CollationNames>
       <StateNumber>1446</StateNumber>
       <UnderlyingIndexId>29239</UnderlyingIndexId>
     </key>
-    <security-policy id="615" parent="333" name="snoke_response_select_policy">
-      <ObjectId>29267</ObjectId>
+    <security-policy id="615" parent="333" name="snoke_response_creator_policy">
+      <ObjectId>29371</ObjectId>
       <Permissive>1</Permissive>
-      <StateNumber>1490</StateNumber>
+      <StateNumber>1984</StateNumber>
       <UsingExpression>(auth.uid() = created_by)</UsingExpression>
     </security-policy>
-    <trigger id="616" parent="333" name="snoke_response_before_insert">
+    <security-policy id="616" parent="333" name="snoke_response_requester_policy">
+      <ObjectId>29376</ObjectId>
+      <OperationType>select</OperationType>
+      <Permissive>1</Permissive>
+      <StateNumber>2013</StateNumber>
+      <UsingExpression>(auth.uid() = ( SELECT snoke_request.created_by
+   FROM snoke_request
+  WHERE (snoke_request.id = snoke_response.snoke_request_id)))</UsingExpression>
+    </security-policy>
+    <trigger id="617" parent="333" name="snoke_response_before_insert">
       <Events>I</Events>
       <ObjectId>29256</ObjectId>
       <StateNumber>1448</StateNumber>
       <Turn>before-row</Turn>
       <CallRoutineId>29038</CallRoutineId>
     </trigger>
-    <column id="617" parent="334" name="id">
+    <column id="618" parent="334" name="id">
       <DasType>uuid|0s</DasType>
       <DefaultExpression>gen_random_uuid()</DefaultExpression>
       <NotNull>1</NotNull>
@@ -8272,20 +8281,20 @@ default</CollationNames>
       <StateNumber>1145</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="618" parent="334" name="title">
+    <column id="619" parent="334" name="title">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>1145</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="619" parent="334" name="location_id">
+    <column id="620" parent="334" name="location_id">
       <DasType>uuid|0s</DasType>
       <Position>4</Position>
       <StateNumber>1166</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="620" parent="334" name="priority">
+    <column id="621" parent="334" name="priority">
       <DasType>integer|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
@@ -8293,7 +8302,7 @@ default</CollationNames>
       <StateNumber>1145</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="621" parent="334" name="completed">
+    <column id="622" parent="334" name="completed">
       <DasType>boolean|0s</DasType>
       <DefaultExpression>true</DefaultExpression>
       <NotNull>1</NotNull>
@@ -8301,7 +8310,7 @@ default</CollationNames>
       <StateNumber>1145</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="622" parent="334" name="is_public">
+    <column id="623" parent="334" name="is_public">
       <DasType>boolean|0s</DasType>
       <DefaultExpression>true</DefaultExpression>
       <NotNull>1</NotNull>
@@ -8309,21 +8318,21 @@ default</CollationNames>
       <StateNumber>1329</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="623" parent="334" name="created_by">
+    <column id="624" parent="334" name="created_by">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>1256</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="624" parent="334" name="modified_by">
+    <column id="625" parent="334" name="modified_by">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>1258</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="625" parent="334" name="created_at">
+    <column id="626" parent="334" name="created_at">
       <DasType>timestamp|0s</DasType>
       <DefaultExpression>now()</DefaultExpression>
       <NotNull>1</NotNull>
@@ -8331,7 +8340,7 @@ default</CollationNames>
       <StateNumber>1260</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="626" parent="334" name="modified_at">
+    <column id="627" parent="334" name="modified_at">
       <DasType>timestamp|0s</DasType>
       <DefaultExpression>now()</DefaultExpression>
       <NotNull>1</NotNull>
@@ -8339,7 +8348,7 @@ default</CollationNames>
       <StateNumber>1262</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <foreign-key id="627" parent="334" name="todo_location_id_fkey">
+    <foreign-key id="628" parent="334" name="todo_location_id_fkey">
       <ColNames>location_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>29061</ObjectId>
@@ -8347,7 +8356,7 @@ default</CollationNames>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>29046</RefTableId>
     </foreign-key>
-    <foreign-key id="628" parent="334" name="todo_created_by_fkey">
+    <foreign-key id="629" parent="334" name="todo_created_by_fkey">
       <ColNames>created_by</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>29087</ObjectId>
@@ -8359,7 +8368,7 @@ default</CollationNames>
       <RefTableKind>table</RefTableKind>
       <RefTableParentName>auth</RefTableParentName>
     </foreign-key>
-    <foreign-key id="629" parent="334" name="todo_modified_by_fkey">
+    <foreign-key id="630" parent="334" name="todo_modified_by_fkey">
       <ColNames>modified_by</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>29092</ObjectId>
@@ -8371,7 +8380,7 @@ default</CollationNames>
       <RefTableKind>table</RefTableKind>
       <RefTableParentName>auth</RefTableParentName>
     </foreign-key>
-    <index id="630" parent="334" name="todo_pkey">
+    <index id="631" parent="334" name="todo_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>29005</ObjectId>
@@ -8380,104 +8389,104 @@ default</CollationNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="631" parent="334" name="todo_pkey">
+    <key id="632" parent="334" name="todo_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>29006</ObjectId>
       <Primary>1</Primary>
       <StateNumber>1145</StateNumber>
       <UnderlyingIndexId>29005</UnderlyingIndexId>
     </key>
-    <security-policy id="632" parent="334" name="CRUD OWN RECORDS">
+    <security-policy id="633" parent="334" name="CRUD OWN RECORDS">
       <ObjectId>29135</ObjectId>
       <Permissive>1</Permissive>
       <StateNumber>1318</StateNumber>
       <UsingExpression>(created_by = auth.uid())</UsingExpression>
     </security-policy>
-    <trigger id="633" parent="334" name="location_before_insert">
+    <trigger id="634" parent="334" name="location_before_insert">
       <Events>I</Events>
       <ObjectId>29045</ObjectId>
       <StateNumber>1172</StateNumber>
       <Turn>before-row</Turn>
       <CallRoutineId>29038</CallRoutineId>
     </trigger>
-    <trigger id="634" parent="334" name="todo_before_insert">
+    <trigger id="635" parent="334" name="todo_before_insert">
       <Events>I</Events>
       <ObjectId>29039</ObjectId>
       <StateNumber>1160</StateNumber>
       <Turn>before-row</Turn>
       <CallRoutineId>29038</CallRoutineId>
     </trigger>
-    <column id="635" parent="335" name="id">
+    <column id="636" parent="335" name="id">
       <DasType>uuid|0s</DasType>
       <Position>1</Position>
       <StateNumber>1757</StateNumber>
     </column>
-    <column id="636" parent="335" name="full_name">
+    <column id="637" parent="335" name="full_name">
       <DasType>text|0s</DasType>
       <Position>2</Position>
       <StateNumber>1757</StateNumber>
     </column>
-    <column id="637" parent="335" name="county">
+    <column id="638" parent="335" name="county">
       <DasType>text|0s</DasType>
       <Position>3</Position>
       <StateNumber>1757</StateNumber>
     </column>
-    <column id="638" parent="335" name="year_of_birth">
+    <column id="639" parent="335" name="year_of_birth">
       <DasType>integer|0s</DasType>
       <Position>4</Position>
       <StateNumber>1757</StateNumber>
     </column>
-    <column id="639" parent="335" name="created_by">
+    <column id="640" parent="335" name="created_by">
       <DasType>uuid|0s</DasType>
       <Position>5</Position>
       <StateNumber>1757</StateNumber>
     </column>
-    <column id="640" parent="335" name="modified_by">
+    <column id="641" parent="335" name="modified_by">
       <DasType>uuid|0s</DasType>
       <Position>6</Position>
       <StateNumber>1757</StateNumber>
     </column>
-    <column id="641" parent="335" name="created_at">
+    <column id="642" parent="335" name="created_at">
       <DasType>timestamp|0s</DasType>
       <Position>7</Position>
       <StateNumber>1757</StateNumber>
     </column>
-    <column id="642" parent="335" name="modified_at">
+    <column id="643" parent="335" name="modified_at">
       <DasType>timestamp|0s</DasType>
       <Position>8</Position>
       <StateNumber>1757</StateNumber>
     </column>
-    <column id="643" parent="336" name="snoke_request_id">
+    <column id="644" parent="336" name="snoke_request_id">
       <DasType>uuid|0s</DasType>
       <Position>1</Position>
       <StateNumber>1450</StateNumber>
     </column>
-    <column id="644" parent="336" name="created_at">
+    <column id="645" parent="336" name="created_at">
       <DasType>timestamp|0s</DasType>
       <Position>2</Position>
       <StateNumber>1450</StateNumber>
     </column>
-    <column id="645" parent="336" name="full_name">
+    <column id="646" parent="336" name="full_name">
       <DasType>text|0s</DasType>
       <Position>3</Position>
       <StateNumber>1450</StateNumber>
     </column>
-    <column id="646" parent="336" name="year_of_birth">
+    <column id="647" parent="336" name="year_of_birth">
       <DasType>integer|0s</DasType>
       <Position>4</Position>
       <StateNumber>1450</StateNumber>
     </column>
-    <column id="647" parent="336" name="county">
+    <column id="648" parent="336" name="county">
       <DasType>text|0s</DasType>
       <Position>5</Position>
       <StateNumber>1450</StateNumber>
     </column>
-    <column id="648" parent="337" name="id">
+    <column id="649" parent="337" name="id">
       <DasType>uuid|0s</DasType>
       <Position>1</Position>
       <StateNumber>1222</StateNumber>
     </column>
-    <column id="649" parent="337" name="email">
+    <column id="650" parent="337" name="email">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>1222</StateNumber>

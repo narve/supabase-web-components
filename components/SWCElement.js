@@ -8,7 +8,7 @@ export class SWCElement extends LitElement {
             : this;
     }
 
-    log(args) {
+    log(...args) {
         console.log(this.constructor.name + ": ",  args)
     }
 

@@ -1,8 +1,9 @@
 import {SWCElement} from "./index.js";
-import {html} from "./index.js";
+
 import {getSupabaseRoot} from "./index.js";
-import {ClientCreated} from "./index.js";
+import {ClientCreated, } from "./index.js";
 import {showToastMessage, toastTypes} from "../src/index.js";
+import {UserLoggedIn} from "../src/events.js";
 
 export class ListBase extends SWCElement {
     constructor() {
@@ -17,7 +18,7 @@ export class ListBase extends SWCElement {
         super.connectedCallback()
         const root = getSupabaseRoot(this)
         // root.addEventListener('list-my-requests', async () => await this.fetch())
-        root.addEventListener(ClientCreated, async () => {
+        root.addEventListener(UserLoggedIn, async () => {
             setTimeout(
                 async () => {
                     await this.fetch()
@@ -27,33 +28,33 @@ export class ListBase extends SWCElement {
         })
     }
 
+    async handleTableEvent(payload) {
+        console.log(this.constructor.name, 'Change received!', payload)
+        if(payload.eventType === 'DELETE') {
+            const index = this.items.findIndex(r => r.id === payload?.old?.id)
+            this.log('slicing: ', index)
+            this.items.splice(index,1)
+            this.update()
+        } else if(payload.eventType === 'INSERT') {
+            this.items.push(payload.new)
+            this.update()
+        } else {
+            await this.fetch()
+        }
+    }
+
 
     async subscribe() {
         // Initialize the JS client
         const client = getSupabaseRoot(this)?.client
 
-        const handleTableEvent = async (payload) => {
-            console.log(this.constructor.name, 'Change received!', payload)
-            if(payload.eventType === 'DELETE') {
-                const index = this.items.findIndex(r => r.id === payload.old.id)
-                this.log('slicing: ', index)
-                this.items.splice(index,1)
-                this.update()
-            } else if(payload.eventType === 'INSERT') {
-                this.items.push(payload.new)
-                this.update()
-            } else {
-                await this.fetch()
-            }
-        }
-
         const subscribeSource = this.subscribeSource || this.source
-        console.log(this.constructor.name, 'subscribing', {subscribeSource})
+        // console.log(this.constructor.name, 'subscribing', {subscribeSource})
         client
             .channel(this.constructor.name + "__" + subscribeSource)
             .on('postgres_changes',
                 { event: '*', schema: 'public', table: subscribeSource },
-                handleTableEvent)
+                (event) => this.handleTableEvent(event))
             .subscribe()
     }
 
@@ -62,7 +63,7 @@ export class ListBase extends SWCElement {
         const client = getSupabaseRoot(this).client
         const {id} = item
         const response = await client
-            .from(this.source)
+            .from(this.subscribeSource || this.source)
             .delete({count:'exact'})
             .eq('id', id)
         const {error, count } = response
@@ -77,12 +78,20 @@ export class ListBase extends SWCElement {
         }
     }
 
-    async fetch(event) {
+    async fetchImpl() {
         const client = getSupabaseRoot(this)?.client
-        // this.log(this.constructor.name, 'fetch');
-        const {error, data } = await client
+        return await client
             .from(this.source)
             .select()
-        this.items = data
+    }
+
+    async fetch(event) {
+        // this.log(this.constructor.name, 'fetch');
+        const {error, data } = await this.fetchImpl()
+        if(this.error) {
+            showToastMessage(toastTypes.error, "Ops!", error.message, 3000)
+        } else {
+            this.items = data
+        }
     }
 }

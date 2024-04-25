@@ -19,7 +19,7 @@ export class SupabaseRoot extends HTMLDivElement {
     }
 
     set client(client) {
-        console.log("Client connected", client);
+        // console.log("Client connected", client);
         this._client = client;
         client.auth.onAuthStateChange((event, session) => {
             // console.log('AUTH EVENT', event, session)
