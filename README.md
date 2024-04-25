@@ -56,12 +56,18 @@ Getting started
     <cb-toast></cb-toast>
 ```    
 
-3. Add your first table (or view) to the page (this needs to be accessible without logging in)
+3. Add your first table (or view) to the page (this needs to be accessible without logging in). 
+   This will create a table view showing all columns, sortable, and (optionally) with actions for 
+   adding, editing and deleting records. 
 
 ```html
     <supabase-table 
         source="my_table_or_view"
-    ></supabase-table>
+    >
+    
+    <!-- Optional: Add an item editor (below the table) -->
+    <supabase-item-editor></supabase-item-editor>
+</supabase-table>
 ```
 
 

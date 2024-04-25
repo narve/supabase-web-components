@@ -69,7 +69,9 @@ export class LoginOrRegister extends SWCElement {
     async signup(email, password) {
         const {data, error} = await this.client.auth.signInWithOtp({
             email,
-            password,
+            options: {
+                emailRedirectTo: 'https://snok.netlify.app',
+            },
         })
         if (error) {
             showToastMessage(toastTypes.error, 'E-mail link request failed', error.message)
