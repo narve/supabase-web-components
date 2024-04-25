@@ -13,6 +13,7 @@ Fake a user in SQL session
     select auth.uid();
 
     select id, created_by from public.snoke_request;
+    select * from public.my_open_snoke_requests;
     select * from public.snoke_response;
     select * from public.open_snoke_requests;
 

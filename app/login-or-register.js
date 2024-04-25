@@ -29,19 +29,19 @@ export class LoginOrRegister extends SWCElement {
         this.root = getSupabaseRoot(this)
         this.root.addEventListener(UserLoggedIn, async (e) => {
             setTimeout(() => {
-                console.log(this.constructor.name, UserLoggedIn, e.detail.user)
+                // console.log(this.constructor.name, UserLoggedIn, e.detail.user)
                 return this.user = e.detail.user;
             }, 1);
         })
         this.root.addEventListener(ClientCreated, async (e) => {
             setTimeout(() => {
-                console.log(this.constructor.name, ClientCreated, e.detail.user)
+                // console.log(this.constructor.name, ClientCreated, e.detail.user)
                 this.client = e.detail.client;
             }, 1);
         })
         this.root.addEventListener(UserLoggedOut, async (e) => {
             setTimeout(() => {
-                console.log(this.constructor.name, UserLoggedOut)
+                // console.log(this.constructor.name, UserLoggedOut)
                 this.user = null
             }, 1);
         })
@@ -56,7 +56,7 @@ export class LoginOrRegister extends SWCElement {
     }
 
     async handleForm(event) {
-        console.log(this.constructor.name, 'handleForm', event)
+        // console.log(this.constructor.name, 'handleForm', event)
         event.preventDefault()
         const isOtp = event.submitter.value.indexOf('lenke') > 0
         if(!isOtp) {

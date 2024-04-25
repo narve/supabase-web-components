@@ -8,6 +8,12 @@ export class SWCElement extends LitElement {
             : this;
     }
 
+    log(...args) {
+        console.log(this.constructor.name + ": ",  args)
+    }
+
+
+
     dispatch(eventType, detail) {
         console.log(`SWCElement::${this.constructor.name} dispatch`, eventType, detail)
         this.dispatchEvent(new CustomEvent(eventType, {detail}))

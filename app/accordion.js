@@ -13,7 +13,7 @@ root.addEventListener(UserLoggedIn, () => {
 const setIsOpen = (className, isOpen) => {
     document.querySelectorAll(`details.${className}`)
         .forEach(e => {
-            console.debug('setting open to ', isOpen, ' for element ', e)
+            // console.debug('setting open to ', isOpen, ' for element ', e)
             e.open = isOpen;
         })
 }
