@@ -1,9 +1,8 @@
 import {SWCElement} from "./index.js";
 
 import {getSupabaseRoot} from "./index.js";
-import {ClientCreated, } from "./index.js";
-import {showToastMessage, toastTypes} from "../src/index.js";
-import {UserLoggedIn} from "../src/events.js";
+import {showToastMessage, toastTypes} from "./index.js";
+import {UserLoggedIn} from "./index.js";
 
 export class ListBase extends SWCElement {
     constructor() {
