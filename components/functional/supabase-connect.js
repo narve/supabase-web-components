@@ -18,11 +18,10 @@ export class SupabaseConnect extends HTMLElement {
         setTimeout(() => {
             showToastMessage(toastTypes.startOperation, 'Connecting to ' + title)
             const client = createClient(url, key)
-            showToastMessage(toastTypes.success, 'Connected to ' + title)
+            showToastMessage(toastTypes.startOperation, 'Connected to ' + title)
             this.dispatchEvent(new CustomEvent(ClientCreated, {detail: {client}, bubbles: true}))
         }, 1)
     }
-
 }
 
 customElements.define('supabase-connect', SupabaseConnect);

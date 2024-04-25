@@ -5,10 +5,10 @@
     <title>Snok</title>
     <script type="importmap">
         {
-          "imports": {
-            "@swc/": "https://narve.github.io/supabase-web-components/",
-            "@swcxxx/": "../"
-          }
+            "imports": {
+                "@swcxxx/": "https://narve.github.io/supabase-web-components/",
+                "@swc/": "../"
+            }
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,9 +28,17 @@
 
 <cb-toast></cb-toast>
 
-<h1>SkatteSnok!</h1>
-
 <div is="supabase-root">
+
+
+    <div style="display:flex;">
+        <h1>SkatteSnok!</h1>
+        <div>
+        <span style="float:right; outline: red 2px solid">
+            <user-info></user-info>
+        </span>
+        </div>
+    </div>
 
     <supabase-connect
             title="AppServer"
