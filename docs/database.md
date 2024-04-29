@@ -186,9 +186,10 @@ E-mail notifications
 
 ```postgresql
 
+drop table if exists outgoing_email;
 create table outgoing_email (
     id uuid primary key default gen_random_uuid(),
-    snoke_request_id uuid not null references snoke_request(id),
+    snoke_request_id uuid not null references snoke_response(id),
     recipient text not null,
     subject text not null,
     body text not null,
@@ -198,19 +199,26 @@ create table outgoing_email (
 
 alter table outgoing_email enable row level security;
 
--- create a trigger for email: 
+-- create a trigger for email:
+drop function if exists tg_after_insert_response; 
 create or replace function public.tg_after_insert_response() returns trigger
     language plpgsql
+    security definer
     as
     $$
     begin
         insert into outgoing_email (snoke_request_id, recipient, subject, body)
-        select new.id, u.email, 'SNOKING utført', 'Du har fått et snoke-svar. Logg inn for å se det.'
-        from auth.users u
-        where u.id = new.created_by;
+        select new.id, 
+               req_creator.email, 
+               'SNOKING utført', 
+               'Du har fått et snoke-svar. Logg inn for å se det: https://snok.netflify.app'
+        from auth.users req_creator inner join snoke_request req on req.created_by = req_creator.id
+        where req.id = new.snoke_request_id;
+        return new;
     end;
     $$;
 
+drop trigger if exists snoke_response_after_insert on public.snoke_response;
 create trigger snoke_response_after_insert
     after insert
     on public.snoke_response
@@ -218,6 +226,8 @@ create trigger snoke_response_after_insert
     execute procedure public.tg_after_insert_response();
 
 insert into snoke_response (snoke_request_id, created_by, response)
+
+select * from outgoing_email;
 
 ```
 
