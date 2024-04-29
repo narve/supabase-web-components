@@ -30,9 +30,17 @@
 
 <cb-toast></cb-toast>
 
-<h1>SkatteSnok!</h1>
-
 <div is="supabase-root">
+
+
+    <div style="display:flex;">
+        <h1>SkatteSnok!</h1>
+        <div>
+        <span style="float:right; outline: red 2px solid">
+            <user-info></user-info>
+        </span>
+        </div>
+    </div>
 
     <supabase-connect
             title="AppServer"
