@@ -179,3 +179,47 @@ create table snoke_request (
     year_of_birth int4
 )
 ```
+
+
+E-mail notifications
+===
+
+```postgresql
+
+create table outgoing_email (
+    id uuid primary key default gen_random_uuid(),
+    snoke_request_id uuid not null references snoke_request(id),
+    recipient text not null,
+    subject text not null,
+    body text not null,
+    created_at timestamp not null default now(),
+    sent_at timestamp
+);
+
+alter table outgoing_email enable row level security;
+
+-- create a trigger for email: 
+create or replace function public.tg_after_insert_response() returns trigger
+    language plpgsql
+    as
+    $$
+    begin
+        insert into outgoing_email (snoke_request_id, recipient, subject, body)
+        select new.id, u.email, 'SNOKING utført', 'Du har fått et snoke-svar. Logg inn for å se det.'
+        from auth.users u
+        where u.id = new.created_by;
+    end;
+    $$;
+
+create trigger snoke_response_after_insert
+    after insert
+    on public.snoke_response
+    for each row
+    execute procedure public.tg_after_insert_response();
+
+insert into snoke_response (snoke_request_id, created_by, response)
+
+```
+
+```postgresql
+```
