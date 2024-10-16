@@ -4,15 +4,31 @@
     <meta charset="UTF-8">
     <title>Snok</title>
 
+    <script>
+        const importMap = {
+            imports: {
+                // If running in localhost, map to local copy to enable offline work:
+                "@swc/" : window.location.hostname === "localhost"
+                    ? "../"
+                    : "https://narve.github.io/supabase-web-components/",
+            },
+        };
 
-    <script type="importmap">
-        {
-          "imports": {
-            "@swc/": "https://narve.github.io/supabase-web-components/",
-            "@../": "https://narve.github.io/supabase-web-components/"
-          }
+        const isLocalhost = window.location.hostname === "localhost";
+        if(isLocalhost) {
+            importMap.imports["@swc/"] = "../";
+            importMap.imports["../"] = "../";
+        } else {
+            importMap.imports["@swc/"] = "https://narve.github.io/supabase-web-components/";
+            importMap.imports["../"] = "https://narve.github.io/supabase-web-components/";
         }
+
+        const importmap = document.createElement("script");
+        importmap.type = "importmap";
+        importmap.textContent = JSON.stringify(importMap);
+        document.currentScript.after(importmap);
     </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" type="image/jpg" href="favicon.ico"/>
