@@ -2,7 +2,7 @@
  *  This file will export all the components, events, etc. that are part of the SWC library.
  *  It will also import the external libraries that are used by the components.
  *
- *  To reference the external libraries, please import them from the `index-externals.js` file.
+ *  To reference the external libraries, import them from the `index-externals.js` file.
  *
  */
 

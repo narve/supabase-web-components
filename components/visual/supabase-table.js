@@ -26,12 +26,6 @@ export class SupabaseTable extends SWCElement {
 
     constructor() {
         super();
-        // console.log('SupabaseTable constructor', {source: this.source, shadow: this.shadow})
-        // Declare reactive properties
-        // this.order = {
-        //     column: 'id',
-        //     // ascending: true
-        // }
         this.order = null
         this.select = "*"
         this.shadow = false
@@ -63,10 +57,19 @@ export class SupabaseTable extends SWCElement {
         const sourceUrl = this.source[0].substring(1)
         // const sourceUrl = this.select
 
-        const response = await this.client
+        let query = this.client
             .from(sourceUrl)
-            .select(this.select, {count: 'exact'})
+            .select()
             .range(this.range[0], this.range[1])
+        if(this.order) {
+            console.log('using order: ', this.order)
+            query = query.order(this.order.column, this.order)
+        }
+        const response = await query;
+        // const response = await this.client
+        //     .from(sourceUrl)
+        //     .select(this.select, {count: 'exact'})
+        //     .order(this.order?.column || "")
         // const response =
         // this.order
         // ? await responsePreOrder
@@ -111,18 +114,15 @@ export class SupabaseTable extends SWCElement {
 
     _setOrder(order) {
         console.log('setOrder: ', order)
-        this.order = {
-            column: order,
-            ascending: !this.order.ascending
-        }
+        this.order = order
         this._fetch().finally(() => console.log('fetched: ', this.source))
     }
 
-    _headerCell(header) {
+    _headerCell(column) {
         return html`
-            <th>${header}
-                <button style=${styleMap(this.buttonStyles)} @click="${() => this._setOrder(header)}">&uArr;</button>
-                <button style=${styleMap(this.buttonStyles)} @click="${() => this._setOrder(header)}">&dArr;</button>
+            <th>${column}
+                <button style=${styleMap(this.buttonStyles)} @click="${() => this._setOrder({column})}">&uArr;</button>
+                <button style=${styleMap(this.buttonStyles)} @click="${() => this._setOrder({column, ascending:false})}">&dArr;</button>
             </th>`
     }
 
