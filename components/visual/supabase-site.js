@@ -2,6 +2,9 @@ import {html} from '../../src/index-externals.js';
 import {SWCElement} from "../SWCElement.js";
 import '../../src/index.js'
 import {NamedJSONComparer} from "../../src/main.js";
+// import {showToastMessage, toastTypes} from "../../src/index";
+import {UserLoggedIn} from "../../src/events.js";
+import {getSupabaseRoot} from "../../src/utils.js";
 
 export class SupabaseSite extends SWCElement {
     static properties = {
@@ -11,13 +14,18 @@ export class SupabaseSite extends SWCElement {
         user: {state: true},
         source: {state: true, hasChanged: NamedJSONComparer('SupabaseSite.source')},
         item: {state: true, hasChanged: NamedJSONComparer('SupabaseSite.item')},
+
+        title: {state: true},
+        url: {state: true},
+        key: {state: true},
     }
 
     constructor() {
         super()
-        // this.addEventListener(UserLoggedIn, e => {
-        //     this.logAndHandle( e, () => this.user = e.detail.user)
-        // })
+        console.log('Constructing ' + this.constructor.name)
+        getSupabaseRoot(this).addEventListener(UserLoggedIn, e => {
+            this.logAndHandle( e, () => this.user = e.detail.user)
+        })
     }
 
     logAndHandle(event, action) {
@@ -25,14 +33,25 @@ export class SupabaseSite extends SWCElement {
         action()
     }
 
+    connectedCallback() {
+        super.connectedCallback()
+        this.title = this.getAttribute("title")
+        this.url = this.getAttribute("url")
+        this.key = this.getAttribute("key")
+    }
+
     render() {
         return html`
-            <h1>Supabase </h1>
+            
+            <div is="supabasee-root">
+            
+            <h1>${this.title || 'SWC'}</h1>
 
             <details ?open="${!this.client}">
                 <summary>${this.client ? 'Connected!' : 'Connect'}</summary>
                 <div>
                     <supabase-connection
+                            siteTitle="${this.title}" supabaseUrl="${this.url}" supabaseKey="${this.key}"
                             @client-created="${e => this.client = e.detail.client}"
                     ></supabase-connection>
                 </div>
@@ -45,6 +64,7 @@ export class SupabaseSite extends SWCElement {
                                   @user-logged-in="${e => this.logAndHandle( e, () => this.user = e.detail.user)}"
                     ></html-include>
 
+                    <html-include no-shadow src="../html/register-email.html"></html-include>
 
                     
                     
@@ -89,6 +109,8 @@ export class SupabaseSite extends SWCElement {
                     ></supabase-item>
                 </div>
             </details>
+
+            </div>
         `
     }
 }

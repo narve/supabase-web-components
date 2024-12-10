@@ -3,12 +3,10 @@ import {ClientCreated, UserLoggedIn, UserLoggedOut} from "../../src/events.js";
 export class SupabaseRoot extends HTMLDivElement {
     constructor() {
         super();
-        this.addEventListener(ClientCreated, e => this.client = e.detail.client)
+        const options = {capture: true, passive: true}
+        this.addEventListener(ClientCreated, e => this.client = e.detail.client, options)
+        console.log('Constructing ' + this.constructor.name)
     }
-
-    // connectedCallback() {
-    //     super.connectedCallback()
-    // }
 
     get client() {
         return this._client

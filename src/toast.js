@@ -30,7 +30,7 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
 
     if(type === toastTypes.startOperation) {
         // Don't show this to users
-        return
+        // return
     }
 
 
@@ -48,6 +48,14 @@ export const showToastMessage = (type, title, description = '', timeOut = 1000) 
         console.error('Could not find Toast function in element', cbToast)
         return
     }
+
+    console.log('TOAST: ', {
+        type,
+        title,
+        description,
+        timeOut,
+        position: 'top-right',
+    })
 
     cbToast.Toast({
         title,

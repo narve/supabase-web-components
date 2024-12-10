@@ -4,11 +4,16 @@ import {ClientCreated} from "../../src/events.js";
 import {showToastMessage, toastTypes} from "../../src/index.js";
 
 const configs = [
-    {
-        siteTitle: 'Enrest',
-        supabaseUrl: 'https://wuxcrmvzflfdqccxkeig.supabase.co',
-        supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1eGNybXZ6ZmxmZHFjY3hrZWlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1Nzk1OTYsImV4cCI6MjAyODE1NTU5Nn0.48D1wN5alsizO3mT28Ct3C8rT6JkOF2XCS39PUgc6u8',
-    },
+    // {
+    //     siteTitle: 'Enrest',
+    //     supabaseUrl: 'https://wuxcrmvzflfdqccxkeig.supabase.co',
+    //     supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1eGNybXZ6ZmxmZHFjY3hrZWlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI1Nzk1OTYsImV4cCI6MjAyODE1NTU5Nn0.48D1wN5alsizO3mT28Ct3C8rT6JkOF2XCS39PUgc6u8',
+    // },
+    // {
+    //     siteTitle: 'DV8MultiApp',
+    //     supabaseUrl: 'https://xupzhicrqmyvtgztrmjb.supabase.co',
+    //     supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxMDExNjg5NCwiZXhwIjoxOTI1NjkyODk0fQ.cvK8Il2IbFqU03Q4uOhSQ9jxFkWELLACX7mJKyy_Ue0',
+    // },
     // {
     //     siteTitle: 'DV8MultiApp',
     //     supabaseUrl: 'https://xupzhicrqmyvtgztrmjb.supabase.co',
@@ -54,12 +59,19 @@ export class SupabaseConnection extends SWCElement {
         // console.log('SupabaseConnection::apply: ', {siteTitle: this.siteTitle, supabaseUrl: this.supabaseUrl, supabaseKey: this.supabaseKey})
         const client = createClient(this.supabaseUrl, this.supabaseKey)
         showToastMessage(toastTypes.startOperation, 'Connected to ' + this.siteTitle)
-        this.dispatch(ClientCreated, {client, siteTitle: this.siteTitle})
+        this.dispatch(ClientCreated, {client, siteTitle: this.siteTitle, bubbles:true})
     }
 
     connectedCallback() {
         super.connectedCallback();
-        if (showConfigs()) {
+        this.siteTitle = this.getAttribute("siteTitle")
+        this.supabaseUrl = this.getAttribute("supabaseUrl")
+        this.supabaseKey = this.getAttribute("supabaseKey")
+        const hasConfig = !!this.siteTitle && !!this.supabaseUrl && !!this.supabaseKey
+
+        if (hasConfig) {
+            this.apply(new Event('click'))
+        } else if (showConfigs()) {
             this.setConfig(configs[0])
             // Apply immediately:
             this.apply(new Event('click'))

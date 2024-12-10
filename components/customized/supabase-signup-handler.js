@@ -10,10 +10,10 @@ export class SupabaseSignupHandler extends HTMLFormElement {
         this.addEventListener('submit', e => this.handle(e))
     }
 
-    dispatch(eventType, detail) {
-        console.debug(`${this.constructor.name} dispatch`, eventType, detail)
-        this.dispatchEvent(new CustomEvent(eventType, {detail, bubbles: true}))
-    }
+    // dispatch(eventType, detail) {
+    //     console.debug(`${this.constructor.name} dispatch`, eventType, detail)
+    //     this.dispatchEvent(new CustomEvent(eventType, {detail, bubbles: true}))
+    // }
 
 
     get client() {
@@ -23,13 +23,17 @@ export class SupabaseSignupHandler extends HTMLFormElement {
     async handle(event) {
         event.preventDefault()
         console.log('signup-handler: ', {root: this.supabaseRoot, client: this.client, event})
+        const emailRedirectTo = document.location.href
         const formData = new FormData(this);
         const email = formData.get('email')
-        const password = formData.get('password')
+        // const password = formData.get('password')
         showToastMessage(toastTypes.startOperation, 'Requesting email link', 'E-mail: ' + email)
         const {data, error} = await this.client.auth.signInWithOtp({
             email,
-            password,
+            // password,
+            options: {
+                emailRedirectTo
+            }
         })
         if (error) {
             showToastMessage(toastTypes.error, 'E-mail link request failed', error.message)

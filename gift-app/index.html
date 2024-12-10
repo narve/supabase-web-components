@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta charset="UTF-8">
+    <title>SWC</title>
+
+    <script>
+        const importMap = {
+            imports: {
+                // If running in localhost, map to local copy to enable offline work:
+                "@swc/": window.location.hostname === "localhost"
+                    ? "../"
+                    : "https://narve.github.io/supabase-web-components/",
+            },
+        };
+
+        const isLocalhost = window.location.hostname === "localhost";
+        if (isLocalhost) {
+            importMap.imports["@swc/"] = "../";
+            importMap.imports["../"] = "../";
+        } else {
+            importMap.imports["@swc/"] = "https://narve.github.io/supabase-web-components/";
+            importMap.imports["../"] = "https://narve.github.io/supabase-web-components/";
+        }
+
+        const importmap = document.createElement("script");
+        importmap.type = "importmap";
+        importmap.textContent = JSON.stringify(importMap);
+        document.currentScript.after(importmap);
+    </script>
+
+    <script src="src/index.js" type="module"></script>
+
+    <link href="../favicon.ico" rel="shortcut icon" type="image/jpg"/>
+    <link href="https://unpkg.com/chimeracss/build/chimera.css" rel="stylesheet"/>
+
+    <style>
+        li {
+            display: inline-block;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+<div is="supabase-root">
+    <supabase-site
+            key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6Y2R2aWN4dmZndmF1Znp0dXJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM4MTU4NzQsImV4cCI6MjA0OTM5MTg3NH0.pVO3U-w4TiI5pPPCDxFJ86TyfiSybzQxENRyOeod-S4"
+            title="MyAppServer"
+            url="https://szcdvicxvfgvaufzturt.supabase.co"
+    ></supabase-site>
+</div>
+<cb-toast></cb-toast>
+</body>
+
+</html>

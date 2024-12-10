@@ -36,7 +36,7 @@ export class SupabaseItem extends SWCElement {
 
             // TODO: Use proper POST schema
             const schema = getSchema(this.api, this.source[0], 'get')
-            console.log({schema})
+            // console.log({schema})
 
             // const pRef = this.api.paths[this.source[0]]['post']['parameters'][0]['$ref']
             // // console.log({p0})
@@ -45,7 +45,7 @@ export class SupabaseItem extends SWCElement {
             // console.log({pDef})
             //
             // const schema = getRef(pDef.schema['$ref'])
-            console.log({sRef: schema})
+            // console.log({sRef: schema})
             this.schema = schema
 
             this.schema = getSchema(this.api, this.source[0], 'get')

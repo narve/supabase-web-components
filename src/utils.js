@@ -5,8 +5,8 @@ export const getSupabaseRoot = (cur) => {
         cur.getAttribute('is') !== 'supabase-root')) {
         // console.log('miss: ', cur.getAttribute('is'))
         cur = cur.parentNode
-
     }
+    console.log({cur})
     return cur
 }
 
