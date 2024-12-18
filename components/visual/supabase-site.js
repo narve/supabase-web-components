@@ -26,6 +26,18 @@ export class SupabaseSite extends SWCElement {
         getSupabaseRoot(this).addEventListener(UserLoggedIn, e => {
             this.logAndHandle( e, () => this.user = e.detail.user)
         })
+
+
+        // const shadow = this.attachShadow({mode: 'open'});
+        const stylesheet = new CSSStyleSheet();
+        fetch('/supabase-web-components/components/visual/hamburger.css')
+            .then(response => response.text())
+            .then(css => {
+                stylesheet.replaceSync(css);
+                document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
+                // shadow.adoptedStyleSheets = [stylesheet];
+            });
+
     }
 
     logAndHandle(event, action) {
@@ -40,14 +52,45 @@ export class SupabaseSite extends SWCElement {
         this.key = this.getAttribute("key")
     }
 
+    toggleVisibility(id) {
+        console.log('toggling visibility of: ', id)
+        const el = document.getElementById(id)
+        el.open = !el.open
+        el.style.display = el.open ? 'block' : 'none'
+    }
+
     render() {
         return html`
             
-            <div is="supabasee-root">
-            
+            <div is="supabase-root">
+
+
+                <nav>
+                    <!-- Always visible items in the nav bar -->
+                    <ul>
+                        <li>
+                            <a
+                                @click="${() => this.toggleVisibility('swc-supabase-connection')}"
+                            >AppInfo</a>
+                        </li>
+                    </ul>
+                    <!-- The hamburger menu -->
+                    <label for='menu' tabindex="0">
+                        🍔
+                    </label>
+                    <input id='menu' type='checkbox' />
+                    <!-- The collapsable menu -->
+                    <ul>
+                        <li><a>Mastodon</a></li>
+                        <li><a>Twitter</a></li>
+                        <li><a>Github</a></li>
+                    </ul>
+                </nav>           
+                
+                
             <h1>${this.title || 'SWC'}</h1>
 
-            <details ?open="${!this.client}">
+            <details id="swc-supabase-connection" ?open="${!this.client}">
                 <summary>${this.client ? 'Connected!' : 'Connect'}</summary>
                 <div>
                     <supabase-connection
