@@ -67,11 +67,11 @@ export class SupabaseSite extends SWCElement {
 
                 <nav>
                     <!-- Always visible items in the nav bar -->
-                    <ul>
+                    <ul style="display: none">
                         <li>
                             <a
                                 @click="${() => this.toggleVisibility('swc-supabase-connection')}"
-                            >AppInfo</a>
+                            >${this.title || 'AppInfo'}</a>
                         </li>
                     </ul>
                     <!-- The hamburger menu -->
@@ -81,16 +81,26 @@ export class SupabaseSite extends SWCElement {
                     <input id='menu' type='checkbox' />
                     <!-- The collapsable menu -->
                     <ul>
-                        <li><a>Mastodon</a></li>
-                        <li><a>Twitter</a></li>
-                        <li><a>Github</a></li>
+                        <li>
+                            <a
+                                @click="${() => this.toggleVisibility('swc-supabase-connection')}"
+                            >${this.title || 'AppInfo'}</a>
+                        </li>
+                        <li>
+                            <a
+                                    @click="${() => this.toggleVisibility('swc-supabase-authentication')}"
+                            >
+                                ${this.user ? this.user.email : 'Sign in/up'}
+                            </a>
+
+                        </li>
                     </ul>
                 </nav>           
                 
                 
             <h1>${this.title || 'SWC'}</h1>
 
-            <details id="swc-supabase-connection" ?open="${!this.client}">
+            <details style="display: none" id="swc-supabase-connection" ?open="${!this.client}">
                 <summary>${this.client ? 'Connected!' : 'Connect'}</summary>
                 <div>
                     <supabase-connection
@@ -100,7 +110,7 @@ export class SupabaseSite extends SWCElement {
                 </div>
             </details>
 
-            <details ?open="${this.client && !this.user}">
+            <details style="display: none" id="swc-supabase-authentication" ?open="${this.client && !this.user}">
                 <summary>${this.user ? `Logged in as ${this.user.email}` : 'Log in'}</summary>
                 <div>
                     <html-include no-shadow src="../html/login-email.html"

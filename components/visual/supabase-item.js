@@ -134,9 +134,20 @@ export class SupabaseItem extends SWCElement {
                 item[n] = v
         }
 
-        const {data, error} = await this.client.from(this.source[0].substring(1))
-            .upsert([item])
-            .select()
+        let data = null
+        let error = null
+        if(item.id) {
+            item.id = undefined;
+            ({data, error} = await this.client.from(this.source[0].substring(1))
+                .update(item)
+                .match({ id: this.item.id })
+                .select())
+        } else {
+            ({data, error} = await this.client.from(this.source[0].substring(1))
+                .insert(item)
+                .select())
+        }
+
         console.log({data, error})
         if (error) {
             showToastMessage(toastTypes.error, 'Could not save item', error.message, 5000)
