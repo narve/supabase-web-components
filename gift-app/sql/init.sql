@@ -60,6 +60,7 @@ create table gift_wish
     constraint fk_gift_wish_creator foreign key (created_by) references auth.users(id),
     constraint fk_gift_wish_updater foreign key (updated_by) references auth.users(id)
 );
+comment on table gift_wish is 'Wishes\n\nA wish for a gift.';
 
 DROP TRIGGER IF EXISTS gift_wish_modified_trigger ON gift_wish;
 CREATE TRIGGER gift_wish_modified_trigger BEFORE UPDATE OR INSERT ON gift_wish FOR EACH ROW EXECUTE FUNCTION row_modified();

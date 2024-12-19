@@ -98,7 +98,7 @@ export class SupabaseSite extends SWCElement {
                 </nav>           
                 
                 
-            <h1>${this.title || 'SWC'}</h1>
+            ${this.title && html`<h1>${this.title || 'SWC'}</h1>`}
 
             <details style="display: none" id="swc-supabase-connection" ?open="${!this.client}">
                 <summary>${this.client ? 'Connected!' : 'Connect'}</summary>
@@ -130,18 +130,22 @@ export class SupabaseSite extends SWCElement {
                 </div>
             </details>
 
+                <!--
             <details ?open="${this.client}">
                 <summary>Index</summary>
                 <div>
+                -->
                     <supabase-index
                             .client="${this.client}"
                             @supabase-source-selected="${e => this.source = e.detail.source}"
                             @api-fetched="${e => this.api = e.detail.api}"
                     ></supabase-index>
+                <!--
                 </div>
             </details>
+            -->
 
-            <details ?open="${this.client && this.source}">
+            <details ?open="${this.client && this.source && !this.item}">
                 <summary>Data</summary>
                 <div>
                     <supabase-table

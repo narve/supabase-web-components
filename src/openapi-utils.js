@@ -1,4 +1,3 @@
-
 /**
  * @typedef PathObject
  * @prop {?object} get
@@ -64,20 +63,20 @@ const getRef = s => {
  */
 export const getSchema = (api, path, method, responseCode = null) => {
     const pathObject = api.paths[path]
-    if(!responseCode) {
+    if (!responseCode) {
         responseCode = method === 'get' ? 200 : 201
     }
-    if(!pathObject)
+    if (!pathObject)
         return null
-        // throw new Error('Schema not found for path: ' + path)
-    if(!pathObject[method])
+    // throw new Error('Schema not found for path: ' + path)
+    if (!pathObject[method])
         return null
-        // throw new Error('Schema not found for method: ' + method)
-    if(!pathObject[method].responses[responseCode])
+    // throw new Error('Schema not found for method: ' + method)
+    if (!pathObject[method].responses[responseCode])
         throw new Error('Schema not found for response code: ' + responseCode)
     const responseObj = pathObject[method].responses[responseCode]
     const schemaObj = responseObj.schema
-    if(!schemaObj) {
+    if (!schemaObj) {
         const msg = `Schema not found for path '${path}', method ${method}, responseCode: ${responseCode}`
         console.error(msg, responseObj)
         throw new Error(msg)
@@ -88,6 +87,18 @@ export const getSchema = (api, path, method, responseCode = null) => {
     const obj1 = api[ref[0]]
     const obj2 = obj1[ref[1]]
     return obj2
- }
+}
 
- // TODO: create get-operation-parameters, similar to getSchema, based on code in supabase-item
+export const getSchemaFriendlyName = (api, path) => {
+    const schema = getSchema(api, path, 'get')
+    if (!schema)
+        throw new Error('No schema found')
+    if(schema.description) {
+        return schema.description.split('\\n')[0]
+    }
+    const name = path.split('').slice(1, 100).join('')
+        .split('_').at(-1)
+    return name[0].toUpperCase() + name.slice(1)
+}
+
+// TODO: create get-operation-parameters, similar to getSchema, based on code in supabase-item

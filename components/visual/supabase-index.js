@@ -6,6 +6,7 @@ import "./supabase-login-email.js";
 import "./supabase-connection.js";
 import {NamedJSONComparer} from "../../src/main.js";
 import {showToastMessage, toastTypes} from "../../src/toast.js";
+import {getSchemaFriendlyName} from "../../src/openapi-utils.js";
 
 
 export class SupabaseIndex extends SWCElement {
@@ -36,14 +37,16 @@ export class SupabaseIndex extends SWCElement {
 
     render() {
         // if(!this.sources) return null
+
         return html`
-            client: ${this.client}
+<!--            client: ${this.client}-->
             <ul>
                 ${this.sources.map(source => html`
                     <li>
-                        <a href="#${source}" @click="${() => this._selectSource(source)}">
-                            ${source[0]}
-                        </a> (${Object.keys(source[1]).join(",")})
+                        <a href="#${source[0]}" @click="${() => this._selectSource(source)}">
+                            ${getSchemaFriendlyName(this.api, source[0])}
+                        </a>
+                            <!--(${Object.keys(source[1]).join(",")})-->
                     </li>`)}
             </ul>
         `
