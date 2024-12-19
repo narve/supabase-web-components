@@ -1,4 +1,4 @@
-import {html} from '../../src/index-externals.js';
+import {html, nothing} from '../../src/index-externals.js';
 import {SWCElement} from "../SWCElement.js";
 import {RequestSelector} from "../../src/events.js";
 import {showToastMessage, toastTypes} from "../../src/toast.js";
@@ -58,6 +58,17 @@ export class SupabaseItem extends SWCElement {
         const isFk = value.description?.indexOf(".<fk") >= 0
         // const label = name + (hasDesc ? ": " + value.description : "")
 
+
+        const hasDefault = value.default &&
+            (value.default.indexOf('CURRENT_TIMESTAMP') >= 0
+                ||
+                value.default.indexOf('uuid_generate') >= 0
+                ||
+                value.default.indexOf('auth.uid()') >= 0)
+        if (hasDefault) {
+            return nothing;
+        }
+
         if (isFk) {
             const parts = /.*<fk table='(.*)' column='(.*)'\/>.*/.exec(value.description);
             const table = parts[1]
@@ -91,11 +102,14 @@ export class SupabaseItem extends SWCElement {
 
         console.log({hasDesc, noteIndex, label})
 
+
         if (isPk) {
-            return html`
-                <label for="${name}">${label} </label>
-                <input type="text" id="${name}" name="${name}" value="${this.item[name]}" readonly disabled>
-            `
+            return nothing;
+
+            // return html`
+            //     <label for="${name}">${label} </label>
+            //     <input type="text" id="${name}" name="${name}" value="${this.item[name]}" readonly disabled>
+            // `
         }
 
         return html`

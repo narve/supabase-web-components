@@ -59,7 +59,7 @@ export class SupabaseTable extends SWCElement {
 
         let query = this.client
             .from(sourceUrl)
-            .select()
+            .select(this.select, {count: 'exact'})
             .range(this.range[0], this.range[1])
         if(this.order) {
             console.log('using order: ', this.order)
@@ -320,7 +320,8 @@ export class SupabaseTable extends SWCElement {
             <datalist id="${ref}">
             ${data.map(row => `
                 <option value='${row[column]}'>
-                ${Object.values(row).join(', ')}
+                <!-- ${Object.values(row).join(', ')} -->
+                ${row.name || row.id}
                 </option>`)
             .join('')}
             </datalist>

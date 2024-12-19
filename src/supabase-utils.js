@@ -13,7 +13,7 @@ export const getFatSelect = (api, path) => {
 
     let selects = []
     for (const [colName, colInfo] of Object.entries(schema.properties)) {
-        if (isFK(colInfo)) {
+        if (isFK(colInfo) && colName.indexOf('_by') < 0) {
 
             // const referencedTableLabelColumn = 'name'
             const [table, column] = getFKRef(colName, colInfo)

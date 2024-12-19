@@ -15,7 +15,7 @@ export class SupabaseSite extends SWCElement {
         source: {state: true, hasChanged: NamedJSONComparer('SupabaseSite.source')},
         item: {state: true, hasChanged: NamedJSONComparer('SupabaseSite.item')},
 
-        title: {state: true},
+        appTitle: {state: true},
         url: {state: true},
         key: {state: true},
     }
@@ -47,7 +47,7 @@ export class SupabaseSite extends SWCElement {
 
     connectedCallback() {
         super.connectedCallback()
-        this.title = this.getAttribute("title")
+        this.appTitle = this.getAttribute("appTitle")
         this.url = this.getAttribute("url")
         this.key = this.getAttribute("key")
     }
@@ -66,17 +66,15 @@ export class SupabaseSite extends SWCElement {
 
 
                 <nav>
-                    <!-- Always visible items in the nav bar -->
                     <ul style="display: none">
                         <li>
                             <a
                                 @click="${() => this.toggleVisibility('swc-supabase-connection')}"
-                            >${this.title || 'AppInfo'}</a>
+                            >${this.appTitle || 'AppInfo'}</a>
                         </li>
                     </ul>
-                    <!-- The hamburger menu -->
                     <label for='menu' tabindex="0">
-                        🍔
+                        🍔 / ☰
                     </label>
                     <input id='menu' type='checkbox' />
                     <!-- The collapsable menu -->
@@ -84,7 +82,7 @@ export class SupabaseSite extends SWCElement {
                         <li>
                             <a
                                 @click="${() => this.toggleVisibility('swc-supabase-connection')}"
-                            >${this.title || 'AppInfo'}</a>
+                            >${this.appTitle || 'AppInfo'}</a>
                         </li>
                         <li>
                             <a
@@ -98,13 +96,13 @@ export class SupabaseSite extends SWCElement {
                 </nav>           
                 
                 
-            ${this.title && html`<h1>${this.title || 'SWC'}</h1>`}
+            ${this.appTitle && html`<h1>${this.appTitle || 'SWC'}</h1>`}
 
             <details style="display: none" id="swc-supabase-connection" ?open="${!this.client}">
                 <summary>${this.client ? 'Connected!' : 'Connect'}</summary>
                 <div>
                     <supabase-connection
-                            siteTitle="${this.title}" supabaseUrl="${this.url}" supabaseKey="${this.key}"
+                            siteTitle="${this.appTitle}" supabaseUrl="${this.url}" supabaseKey="${this.key}"
                             @client-created="${e => this.client = e.detail.client}"
                     ></supabase-connection>
                 </div>
